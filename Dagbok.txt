@@ -14,10 +14,11 @@ To-do listi:
 - Tilnefna verkefnastjóra sem skilar inn dagbókafærslunum.
 - Horfa á Git myndböndin (What is Git, Git Basics, Git Intermediate, Setting up Git).
 - Gera Git handbók
+- Stilla upp Github Desktop + Visual Studio Code (með því að nota git handbókina)
 - Gera notendahópa greiningu.
 - Gera kröfulista.
 - Gera klasarit.
 Staða hópmeðlima:
 - Karl Jr - git master og ýmis önnur störf.
 - Katrín bauð sig fram til að halda utan um dagbókarfærslur og skila þeim inn. Samþykkt af hópmeðlimum.
-- Ræddum styrkleika og veikleika hópmeðlima.
+- Ræddum styrkleika og veikleika hópmeðlima og væntingar þeirra til verkefnisins.
