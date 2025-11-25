@@ -31,17 +31,22 @@ Dagsetning: 25/11/25
 Tími: 10:30
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
-Komin aðeins áleiðis.
+Komin aðeins áleiðis. (17 bls)
+breytum og löguðum kröfulistan
+búin að gera notandahópagreiningu
+ákváðum að hafa notandatilvik flokkuð eftir hópum notandahópagreiningu en eigum eftir að fá að vita frá kennara hvort það sé í lagi
+Byrjuð að gera beinagrind af state-diagrams og klasarit. 
+Kominn með virknikröfur 
+Búin að gera beinagrind af flest öllu.
+Reyndum að fá aðstoð að sunnan því TA á Akureyri var ekki til staðar en fengum ekki aðstoð.
 To-do listi:
 Fara yfir kröfurnar.
 Taka fund um kröfurnar.
 Setja upp í kröfulista.
 Gera notendahópa greiningu
 
-
-
 Staða hópmeðlima: …
-
+Náði að halda fund varðandi kröfulistana og ýmis annað 
 
 
 
