@@ -13,7 +13,7 @@ To-do listi:
 Allir hópmeðlimir að lesa vel yfir verkefnalýsinguna.
 Hópmeðlimir að ræða styrkleika, veikleika og væntingarnar sem að við höfum til verkefnisins.
 Tilnefna verkefnastjóra sem skilar inn dagbókafærslunum.
-Gera Git handbók
+Gera Git handbók.
 Gera notendahópa greiningu.
 Gera kröfulista.
 Gera klasarit.
@@ -57,29 +57,27 @@ Náði að halda fund varðandi kröfulistana og ýmis annað
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 Færsla 3
 Dagsetning: 26/11/25 
 Tími: …
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
-Staða verkefnis: …
+Staða verkefnis: 
+-Haldinn var morgunfundur þar sem farið var yfir verkefni dagsins og ákveðið hvað myndi teljast til sér virknikrafa. 
+-Notendagreining er fullkláruð. 
+-Virknikröfur og klasarit eru mjög langt á veg komin, þarfnast fyrst og fremst fínpússunar og frekari stöðlunar.
+-Hafist hefur verið handa á notkunartilvikum og frekari vinna á þeim mun fara fram í kvöld.
+- Git handbók hefur verið skrifuð að miklu leyti og nú er unnið að því að koma henni á staðlað form. 
 
-To-do listi: …
+To-do listi:
+Rannsaka efni til innblásturs að Lofi-prototýpu.
+Búa til Lofi-prototýpu.
+Klára klasarit.
+Klára virknikröfur.
+Vinna í notkunartilvikum.
+Gera happy paths.
 
-Staða hópmeðlima: …
-
+Staða hópmeðlima:
+Hópmeðlimir eru samrýndir og með verkefni. Allir hafa mætt á fyrirfram ákveðnum tímasetningum. 
 
 
 
