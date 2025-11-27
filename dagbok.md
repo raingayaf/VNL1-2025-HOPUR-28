@@ -59,7 +59,7 @@ Náði að halda fund varðandi kröfulistana og ýmis annað
 
 Færsla 3
 Dagsetning: 26/11/25 
-Tími: …
+Tími: 14:40
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis: 
 -Haldinn var morgunfundur þar sem farið var yfir verkefni dagsins og ákveðið hvað myndi teljast til sér virknikrafa. 
@@ -85,32 +85,21 @@ Hópmeðlimir eru samrýndir og með verkefni. Allir hafa mætt á fyrirfram ák
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Færsla 4
 Dagsetning: 27/11/25
-Tími: …
+Tími: 10:40
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
-Staða verkefnis: …
+Staða verkefnis: 
+Kröfur fækkaðar frá 26 til 23
+-Í upphafi dags er staðan sú að stefnt er á að fara yfir stóru málin, Lofi-proto typing, Happy paths og Main UI, hugmyndir skráðar á blað og fundin sambærileg forrit til innblásturs.
+Það var haldinn smá mini fundur til að ræða hvernig staðan á verkefninu er 
+Rætt um use cases 
+To-do listi: 
+Git handbókinn
 
-To-do listi: …
 
-Staða hópmeðlima: …
-
+Staða hópmeðlima:
+Kalli Jr er að klára Github Handbókinni, sem verður tilbúin fyrir notkun á 28 nóv
 
 
 
