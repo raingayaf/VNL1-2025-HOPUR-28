@@ -127,8 +127,23 @@ Færsla 5
 Dagsetning: 28/11/25
 Tími: …
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
-Staða verkefnis: …
+Staða verkefnis:
+Kröfur færðar frá 23 - 21.
+Notandatilvik kláruð en mögulega þarfnast smá yfirfærslu.
+“Wire-frame” komið áleiðis.
+Frumgerða prófun byrjuð í hönnun.
+Notandahópagreining löguð.
+Farið yfir klasarit og stöðurit.
+Happy-paths komið áleiðis.
 
-To-do listi: …
 
-Staða hópmeðlima: …
+To-do listi: 
+Gera happy-paths
+Gera wire frame
+
+Staða hópmeðlima: 
+Kalli Jr að vinna heima, er veikur. Kláraði git handbókinni
+Kalli senior að vinna í notandatilvikum, fer seinn að hjálpa í happy-paths.
+Þorsteinn að gera wire-frame og happy-paths.
+Katrín að hjálpa í wire-frame og happy-paths.
+Herdís er að klára “non-functional requirements” og fer síðan í happy-paths.
