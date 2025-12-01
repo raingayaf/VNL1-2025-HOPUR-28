@@ -140,6 +140,8 @@ Happy-paths komið áleiðis.
 To-do listi: 
 Gera happy-paths
 Gera wire frame
+Klára Notandatilvik
+Byrja á frumgerðahönnun.
 
 Staða hópmeðlima: 
 Kalli Jr að vinna heima, er veikur. Kláraði git handbókinni
@@ -147,3 +149,18 @@ Kalli senior að vinna í notandatilvikum, fer seinn að hjálpa í happy-paths.
 Þorsteinn að gera wire-frame og happy-paths.
 Katrín að hjálpa í wire-frame og happy-paths.
 Herdís er að klára “non-functional requirements” og fer síðan í happy-paths.
+
+Færsla 6
+Dagsetning: 1/12/25
+Tími: 11:20
+Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
+Staða verkefnis:
+Fengið endurgjöf 
+To-do listi: 
+Fá aðstaðanda kennara til að gefa meira feedback um endurgjöf
+Model clasa
+Halda fund varðandi hvernig á að framkvæma kóðann
+Gera smá Git æfingar
+Gera smá breytingar á skýrslunni
+Staða hópmeðlima: 
+Kalli Sr vinnur frá heiman
