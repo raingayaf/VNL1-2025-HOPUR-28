@@ -155,12 +155,45 @@ Dagsetning: 1/12/25
 Tími: 11:20
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
-Fengið endurgjöf 
+Fengið endurgjöf, talaði við aðstoða kennara
+Uppfærði skýrsluna
+Erum búin að fara í Git
+Fundur var haldinn 
 To-do listi: 
-Fá aðstaðanda kennara til að gefa meira feedback um endurgjöf
-Model clasa
 Halda fund varðandi hvernig á að framkvæma kóðann
 Gera smá Git æfingar
 Gera smá breytingar á skýrslunni
 Staða hópmeðlima: 
-Kalli Sr vinnur frá heiman
+Kalli Sr vinnur frá heiman vegna þvi að hann er með veikt barn
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+Færsla 7
+Dagsetning: 1/12/25
+Tími: 1:40
+Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
+Staða verkefnis:
+Frumgerðir fyrir hvernig forritið á að virka eru á gangi
+Fundur var haldinn varðandi hvernig á að gera forritið
+Kalli Jr þýddi nokkur model klösurit til forrit 
+To-do listi: 
+Forritun 
+Klárun skýrslunni
+Staða hópmeðlima: 
+Kalli Jr vinnur frá heima
+
