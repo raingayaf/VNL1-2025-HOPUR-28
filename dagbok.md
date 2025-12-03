@@ -4,24 +4,25 @@ Dagsetning: 24/11/25
 Tími: 10:40
 Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn.
 Staða verkefnis: 
--Búin að koma okkur upp aðstöðu.
--Búin að búa til git Repo.
--Búin að ákveða tímann sem við ætlum að vinna í verkefninu, n.t.t. virka daga frá ca. 8-16.
--Búin að búa til skjal til þess að halda utan um dagbókarfærslur, skýrslu og kröfur.
--Búin að ákveða að Kalli Jr verði master yfir Git handbókinni.
+Búin að koma okkur upp aðstöðu.
+Búin að búa til git Repo.
+Búin að ákveða tímann sem við ætlum að vinna í verkefninu, n.t.t. virka daga frá ca. 8-16.
+Búin að búa til skjal til þess að halda utan um dagbókarfærslur, skýrslu og kröfur.
+Búin að ákveða að Kalli Jr verði master yfir Git handbókinni.
 To-do listi: 
--Allir hópmeðlimir að lesa vel yfir verkefnalýsinguna.
--Hópmeðlimir að ræða styrkleika, veikleika og væntingarnar sem að við höfum til verkefnisins.
--Tilnefna verkefnastjóra sem skilar inn dagbókafærslunum.
--Gera Git handbók.
--Gera notendahópa greiningu.
--Gera kröfulista.
--Gera klasarit.
+Allir hópmeðlimir að lesa vel yfir verkefnalýsinguna.
+Hópmeðlimir að ræða styrkleika, veikleika og væntingarnar sem að við höfum til verkefnisins.
+Tilnefna verkefnastjóra sem skilar inn dagbókafærslunum.
+Gera Git handbók.
+Gera notendahópa greiningu.
+Gera kröfulista.
+Gera klasarit.
+
 Staða hópmeðlima:
--Karl Jr sá um að búa til repoið og git handbók
--Katrín bauð sig fram til að halda utan um dagbókarfærslur og skila þeim inn. Samþykkt af hópmeðlimum.
--Ræddum styrkleika og veikleika hópmeðlima.
--Búin að stilla upp Github Desktop + Visual Studio Code (með því að nota git handbókinni)
+Karl Jr sá um að búa til repoið og git handbók
+Katrín bauð sig fram til að halda utan um dagbókarfærslur og skila þeim inn. Samþykkt af hópmeðlimum.
+Ræddum styrkleika og veikleika hópmeðlima.
+Búin að stilla upp Github Desktop + Visual Studio Code (með því að nota git handbókinni)
 
 
 
@@ -30,21 +31,29 @@ Dagsetning: 25/11/25
 Tími: 10:30
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
--Komin aðeins áleiðis. (17 bls)
--breytum og löguðum kröfulistan
--búin að gera notandahópagreiningu
--ákváðum að hafa notandatilvik flokkuð eftir hópum notandahópagreiningu en eigum eftir að fá að vita frá kennara hvort það sé í lagi
--Byrjuð að gera beinagrind af state-diagrams og klasarit. 
--Kominn með virknikröfur 
--Búin að gera beinagrind af flest öllu.
--Reyndum að fá aðstoð að sunnan því TA á Akureyri var ekki til staðar en fengum ekki aðstoð.
+Komin aðeins áleiðis. (17 bls)
+breytum og löguðum kröfulistan
+búin að gera notandahópagreiningu
+ákváðum að hafa notandatilvik flokkuð eftir hópum notandahópagreiningu en eigum eftir að fá að vita frá kennara hvort það sé í lagi
+Byrjuð að gera beinagrind af state-diagrams og klasarit. 
+Kominn með virknikröfur 
+Búin að gera beinagrind af flest öllu.
+Reyndum að fá aðstoð að sunnan því TA á Akureyri var ekki til staðar en fengum ekki aðstoð.
 To-do listi:
--Fara yfir kröfurnar.
--Taka fund um kröfurnar.
--Setja upp í kröfulista.
--Gera notendahópa greiningu
-Staða hópmeðlima: 
--Náði að halda fund varðandi kröfulistana og ýmis annað 
+Fara yfir kröfurnar.
+Taka fund um kröfurnar.
+Setja upp í kröfulista.
+Gera notendahópa greiningu
+
+Staða hópmeðlima: …
+Náði að halda fund varðandi kröfulistana og ýmis annað 
+
+
+
+
+
+
+
 
 
 
@@ -58,15 +67,21 @@ Staða verkefnis:
 -Virknikröfur og klasarit eru mjög langt á veg komin, þarfnast fyrst og fremst fínpússunar og frekari stöðlunar.
 -Hafist hefur verið handa á notkunartilvikum og frekari vinna á þeim mun fara fram í kvöld.
 - Git handbók hefur verið skrifuð að miklu leyti og nú er unnið að því að koma henni á staðlað form. 
+
 To-do listi:
--Rannsaka efni til innblásturs að Lofi-prototýpu.
--Búa til Lofi-prototýpu.
--Klára klasarit.
--Klára virknikröfur.
--Vinna í notkunartilvikum.
--Gera happy paths.
+Rannsaka efni til innblásturs að Lofi-prototýpu.
+Búa til Lofi-prototýpu.
+Klára klasarit.
+Klára virknikröfur.
+Vinna í notkunartilvikum.
+Gera happy paths.
+
 Staða hópmeðlima:
--Hópmeðlimir eru samrýndir og með verkefni. Allir hafa mætt á fyrirfram ákveðnum tímasetningum. 
+Hópmeðlimir eru samrýndir og með verkefni. Allir hafa mætt á fyrirfram ákveðnum tímasetningum. 
+
+
+
+
 
 
 
@@ -75,14 +90,36 @@ Dagsetning: 27/11/25
 Tími: 10:40
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis: 
--Kröfur fækkaðar frá 26 til 23
+Kröfur fækkaðar frá 26 til 23
 -Í upphafi dags er staðan sú að stefnt er á að fara yfir stóru málin, Lofi-proto typing, Happy paths og Main UI, hugmyndir skráðar á blað og fundin sambærileg forrit til innblásturs.
--Það var haldinn smá mini fundur til að ræða hvernig staðan á verkefninu er 
--Rætt um use cases 
+Það var haldinn smá mini fundur til að ræða hvernig staðan á verkefninu er 
+Rætt um use cases 
 To-do listi: 
--Git handbókinn
+Git handbókinn
+
+
 Staða hópmeðlima:
--Kalli Jr er að klára Github Handbókinni, sem verður tilbúin fyrir notkun á 28 nóv
+Kalli Jr er að klára Github Handbókinni, sem verður tilbúin fyrir notkun á 28 nóv
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -91,42 +128,58 @@ Dagsetning: 28/11/25
 Tími: …
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
--Kröfur færðar frá 23 - 21.
--Notandatilvik kláruð en mögulega þarfnast smá yfirfærslu.
--“Wire-frame” komið áleiðis.
--Frumgerða prófun byrjuð í hönnun.
--Notandahópagreining löguð.
--Farið yfir klasarit og stöðurit.
--Happy-paths komið áleiðis.
+Kröfur færðar frá 23 - 21.
+Notandatilvik kláruð en mögulega þarfnast smá yfirfærslu.
+“Wire-frame” komið áleiðis.
+Frumgerða prófun byrjuð í hönnun.
+Notandahópagreining löguð.
+Farið yfir klasarit og stöðurit.
+Happy-paths komið áleiðis.
+
+
 To-do listi: 
--Gera happy-paths
--Gera wire frame
--Klára Notandatilvik
--Byrja á frumgerðahönnun.
+Gera happy-paths
+Gera wire frame
+Klára Notandatilvik
+Byrja á frumgerðahönnun.
+
 Staða hópmeðlima: 
--Kalli Jr að vinna heima, er veikur. Kláraði git handbókinni
--Kalli senior að vinna í notandatilvikum, fer seinn að hjálpa í happy-paths.
--Þorsteinn að gera wire-frame og happy-paths.
--Katrín að hjálpa í wire-frame og happy-paths.
--Herdís er að klára “non-functional requirements” og fer síðan í happy-paths.
-
-
+Kalli Jr að vinna heima, er veikur. Kláraði git handbókinni
+Kalli senior að vinna í notandatilvikum, fer seinn að hjálpa í happy-paths.
+Þorsteinn að gera wire-frame og happy-paths.
+Katrín að hjálpa í wire-frame og happy-paths.
+Herdís er að klára “non-functional requirements” og fer síðan í happy-paths.
 
 Færsla 6
 Dagsetning: 1/12/25
 Tími: 11:20
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
--Fengið endurgjöf, talaði við aðstoða kennara
--Uppfærði skýrsluna
--Erum búin að fara í Git
--Fundur var haldinn 
+Fengið endurgjöf, talaði við aðstoða kennara
+Uppfærði skýrsluna
+Erum búin að fara í Git
+Fundur var haldinn 
 To-do listi: 
--Halda fund varðandi hvernig á að framkvæma kóðann
--Gera smá Git æfingar
--Gera smá breytingar á skýrslunni
+Halda fund varðandi hvernig á að framkvæma kóðann
+Gera smá Git æfingar
+Gera smá breytingar á skýrslunni
 Staða hópmeðlima: 
--Kalli Sr vinnur frá heiman vegna þvi að hann er með veikt barn
+Kalli Sr vinnur frá heiman vegna þvi að hann er með veikt barn
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
 
 
 
@@ -135,11 +188,43 @@ Dagsetning: 1/12/25
 Tími: 1:40
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
--Frumgerðir fyrir hvernig forritið á að virka eru á gangi
--Fundur var haldinn varðandi hvernig á að gera forritið
--Kalli Jr þýddi nokkur model klösurit til forrit 
+Frumgerðir fyrir hvernig forritið á að virka eru á gangi
+Fundur var haldinn varðandi hvernig á að gera forritið
+Kalli Jr þýddi nokkur model klösurit til forrit 
 To-do listi: 
--Forritun 
--Klárun skýrslunni
+Forritun 
+Klárun skýrslunni
 Staða hópmeðlima: 
--Kalli Jr vinnur frá heima
+Kalli Jr vinnur frá heima
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Færsla 8
+Dagsetning: 1/12/25
+Tími: 12:20
+Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
+Staða verkefnis:
+Teymið er byrjað að kóða og búa till features fyrir fortritinu
+Mikið trial and error í að nota Git
+To-do listi: 
+Forritun
+Klárun skýrslunni (sett á ís)
+Staða hópmeðlima: 
+Þorsteinn búin að gera klasa, er að vinna í data layer. Kalli Sr er að implementa að lesa skjal og skila lista í data layer, Katrín er að gera UI
