@@ -1,0 +1,49 @@
+player_id,name,date_of_birth,address,phone,email,link,handle,team_name
+P001,Sam Segfault,2003-04-12,Studentagata 1 Reykjavik,+3546110001,segfault.sam@example.com,https://twitch.tv/SegFaultSam,SegFaultSam,SegFault Spartans
+P002,Sara Stacksmash,2004-09-23,Studentagata 2 Reykjavik,+3546110002,stacksmash.sara@example.com,https://github.com/StackSmashSara,StackSmashSara,SegFault Spartans
+P003,Karl Coredump,2005-01-08,Studentagata 3 Reykjavik,+3546110003,core.karl@example.com,https://twitter.com/CoreDumpKarl,CoreDumpKarl,SegFault Spartans
+P004,Nina Null,2004-02-10,Kennarabraut 1 Reykjavik,+3546110004,nina.null@example.com,https://twitch.tv/NullPointerNina,NullPointerNina,NullPointer Ninjas
+P005,Dan Dangling,2003-11-30,Kennarabraut 2 Reykjavik,+3546110005,dan.dangling@example.com,https://github.com/DanglingPtrDan,DanglingPtrDan,NullPointer Ninjas
+P006,Val Void,2005-06-21,Kennarabraut 3 Reykjavik,+3546110006,val.void@example.com,https://twitter.com/VoidStarVal,VoidStarVal,NullPointer Ninjas
+P007,Olaf Offby,2003-07-19,Sundurvegur 1 Kopavogur,+3546110007,olaf.offby@example.com,https://twitch.tv/OffByOneOlaf,OffByOneOlaf,OffByOne Offense
+P008,Frida Fencepost,2004-12-03,Sundurvegur 2 Kopavogur,+3546110008,frida.fencepost@example.com,https://github.com/FencepostFrida,FencepostFrida,OffByOne Offense
+P009,Ian Index,2005-03-15,Sundurvegur 3 Kopavogur,+3546110009,ian.index@example.com,https://twitter.com/IndexMinusOne,IndexMinusOne,OffByOne Offense
+P010,Palli Pepsi,2003-05-05,LANgata 1 Reykjavik,+3546110010,palli.pepsi@example.com,https://twitch.tv/PepsiMaxPalli,PepsiMaxPalli,Pepsi Max Punishers
+P011,Asta Aspartame,2004-08-17,LANgata 2 Reykjavik,+3546110011,asta.aspartame@example.com,https://github.com/AspartameAssassin,AspartameAssassin,Pepsi Max Punishers
+P012,Sigurjon Zero,2005-10-29,LANgata 3 Reykjavik,+3546110012,sigurjon.zero@example.com,https://twitter.com/ZeroSugarZeroSkill,ZeroSugarZeroSkill,Pepsi Max Punishers
+P013,Rik Roundhouse,2003-09-09,Turnhut 1 Reykjavik,+3546110013,rik.roundhouse@example.com,https://twitch.tv/RoundhouseRik,RoundhouseRik,Chuck Norris Fan Club
+P014,Nora Norris,2004-01-14,Turnhut 2 Reykjavik,+3546110014,nora.norris@example.com,https://github.com/ChuckNorrisMain,ChuckNorrisMain,Chuck Norris Fan Club
+P015,Steini SpinKick,2005-02-22,Turnhut 3 Reykjavik,+3546110015,steini.spinkick@example.com,https://twitter.com/SegfaultByRoundhouse,SegfaultByRoundhouse,Chuck Norris Fan Club
+P016,Ina Indent,2003-11-01,Pythonvegur 1 Reykjavik,+3546110016,ina.indent@example.com,https://twitch.tv/IndentationErrorIna,IndentationErrorIna,IndentationError Invaders
+P017,Kjartan Key,2004-04-04,Pythonvegur 2 Reykjavik,+3546110017,kjartan.key@example.com,https://github.com/KeyErrorKjartan,KeyErrorKjartan,IndentationError Invaders
+P018,Tinna Type,2005-07-07,Pythonvegur 3 Reykjavik,+3546110018,tinna.type@example.com,https://twitter.com/TypeErrorTinna,TypeErrorTinna,IndentationError Invaders
+P019,Maria Movax,2003-03-03,Asmstraeti 1 Reykjavik,+3546110019,maria.movax@example.com,https://twitch.tv/MovAxMaria,MovAxMaria,Assembly Avengers
+P020,Jon Jump,2004-06-16,Asmstraeti 2 Reykjavik,+3546110020,jon.jump@example.com,https://github.com/JumpIfCarryJon,JumpIfCarryJon,Assembly Avengers
+P021,Siggi Syscall,2005-09-27,Asmstraeti 3 Reykjavik,+3546110021,siggi.syscall@example.com,https://twitter.com/Syscall1337Siggi,Syscall1337Siggi,Assembly Avengers
+P022,Bjarni Bit,2003-01-19,Datalabvegur 1 Reykjavik,+3546110022,bjarni.bit@example.com,https://twitch.tv/BitTwiddlerBjarni,BitTwiddlerBjarni,Datalab Dominators
+P023,Tora TwoComp,2004-10-10,Datalabvegur 2 Reykjavik,+3546110023,tora.twocomp@example.com,https://github.com/TwoCompWizardTora,TwoCompWizardTora,Datalab Dominators
+P024,Mia Mask,2005-12-12,Datalabvegur 3 Reykjavik,+3546110024,mia.mask@example.com,https://twitter.com/MaskAndShiftMia,MaskAndShiftMia,Datalab Dominators
+P025,Dori Defusal,2003-02-02,Bomblabstigur 1 Reykjavik,+3546110025,dori.defusal@example.com,https://twitch.tv/BombDefusalDori,BombDefusalDori,Bomblab Bombers
+P026,Eydis Phase,2004-05-15,Bomblabstigur 2 Reykjavik,+3546110026,eydis.phase@example.com,https://github.com/Phase4EnjoyerEydis,Phase4EnjoyerEydis,Bomblab Bombers
+P027,Gunnar Gdb,2005-08-18,Bomblabstigur 3 Reykjavik,+3546110027,gunnar.gdb@example.com,https://twitter.com/GdbNinjaGunnar,GdbNinjaGunnar,Bomblab Bombers
+P028,Kalli CopyPaste,2003-03-30,Overflowhagi 1 Reykjavik,+3546110028,kalli.copy@example.com,https://twitch.tv/CopyPasteKalli,CopyPasteKalli,StackOverflow Stackers
+P029,Reykur Recursion,2004-09-01,Overflowhagi 2 Reykjavik,+3546110029,reykur.recursion@example.com,https://github.com/RecursionReykur,RecursionReykur,StackOverflow Stackers
+P030,Tanja Tabs,2005-11-11,Overflowhagi 3 Reykjavik,+3546110030,tanja.tabs@example.com,https://twitter.com/TooManyTabsTanja,TooManyTabsTanja,StackOverflow Stackers
+P031,Lara L1,2003-06-06,Cachegata 1 Reykjavik,+3546110031,lara.l1@example.com,https://twitch.tv/L1CacheLara,L1CacheLara,CacheHit Crusaders
+P032,Toti TLB,2004-02-20,Cachegata 2 Reykjavik,+3546110032,toti.tlb@example.com,https://github.com/TLBmissToti,TLBmissToti,CacheHit Crusaders
+P033,Palli Prefetch,2005-05-25,Cachegata 3 Reykjavik,+3546110033,palli.prefetch@example.com,https://twitter.com/PrefetchPalli,PrefetchPalli,CacheHit Crusaders
+P034,Wendy While,2003-01-01,Lykkjugata 1 Reykjavik,+3546110034,wendy.while@example.com,https://twitch.tv/WhileTrueWendy,WhileTrueWendy,WhileTrue Tryhards
+P035,Bensi Break,2004-03-13,Lykkjugata 2 Reykjavik,+3546110035,bensi.break@example.com,https://github.com/BreakConditionBensi,BreakConditionBensi,WhileTrue Tryhards
+P036,Ida IndexError,2005-07-27,Lykkjugata 3 Reykjavik,+3546110036,ida.index@example.com,https://twitter.com/IndexErrorIda,IndexErrorIda,WhileTrue Tryhards
+P037,Stebbi Segfoul,2003-09-15,Signalbraut 1 Reykjavik,+3546110037,stebbi.segfoul@example.com,https://twitch.tv/SegmentationFoulStebbi,SegmentationFoulStebbi,Segmentation Foul
+P038,Oli OutOfBounds,2004-12-21,Signalbraut 2 Reykjavik,+3546110038,oli.outofbounds@example.com,https://github.com/OutOfBoundsOli,OutOfBoundsOli,Segmentation Foul
+P039,Brynja Bus,2005-10-05,Signalbraut 3 Reykjavik,+3546110039,brynja.bus@example.com,https://twitter.com/BusErrorBrynja,BusErrorBrynja,Segmentation Foul
+P040,Ragnhildur Race,2003-04-04,Threadgata 1 Reykjavik,+3546110040,ragnhildur.race@example.com,https://twitch.tv/RaceConditionRagnhildur,RaceConditionRagnhildur,RaceCondition Racers
+P041,Max Mutex,2004-06-26,Threadgata 2 Reykjavik,+3546110041,max.mutex@example.com,https://github.com/MutexMax,MutexMax,RaceCondition Racers
+P042,Danni Deadlock,2005-09-09,Threadgata 3 Reykjavik,+3546110042,danni.deadlock@example.com,https://twitter.com/DeadlockDanni,DeadlockDanni,RaceCondition Racers
+P043,Ulfar UB,2003-02-14,UBgata 1 Reykjavik,+3546110043,ulfar.ub@example.com,https://twitch.tv/UBUnitedUlfar,UBUnitedUlfar,Undefined Behavior United
+P044,Sara StrictAlias,2004-05-19,UBgata 2 Reykjavik,+3546110044,sara.strictalias@example.com,https://github.com/StrictAliasSara,StrictAliasSara,Undefined Behavior United
+P045,Vala Volatile,2005-08-28,UBgata 3 Reykjavik,+3546110045,vala.volatile@example.com,https://twitter.com/VolatileVala,VolatileVala,Undefined Behavior United
+P046,Petra PepsiOverflow,2003-07-07,Fizzgata 1 Reykjavik,+3546110046,petra.pepsioverflow@example.com,https://twitch.tv/PepsiMaxOverflowPetra,PepsiMaxOverflowPetra,Pepsi Max Overflow
+P047,Bogi Buffer,2004-01-25,Fizzgata 2 Reykjavik,+3546110047,bogi.buffer@example.com,https://github.com/BufferOverflowBogi,BufferOverflowBogi,Pepsi Max Overflow
+P048,Sif Canary,2005-03-29,Fizzgata 3 Reykjavik,+3546110048,sif.canary@example.com,https://twitter.com/StackCanarySif,StackCanarySif,Pepsi Max Overflow
