@@ -1,0 +1,17 @@
+team_id,team_name,captain_handle,website,logo
+1,SegFault Spartans,SegFaultSam,https://example.com/segfault_spartans,ASCII_SPARTAN_HELMET
+2,NullPointer Ninjas,NullPointerNina,https://example.com/nullpointer_ninjas,ASCII_NINJA_SHADOW
+3,OffByOne Offense,OffByOneOlaf,https://example.com/offbyone_offense,ASCII_FENCEPOST_BUG
+4,Pepsi Max Punishers,PepsiMaxPalli,https://example.com/pepsimax_punishers,ASCII_PEPSI_CAN
+5,Chuck Norris Fan Club,RoundhouseRik,https://example.com/chuck_fan_club,ASCII_ROUNDHOUSE_KICK
+6,IndentationError Invaders,IndentationErrorIna,https://example.com/indent_invaders,ASCII_INDENT_ICON
+7,Assembly Avengers,MovAxMaria,https://example.com/assembly_avengers,ASCII_OPCODES
+8,Datalab Dominators,BitTwiddlerBjarni,https://example.com/datalab_dominators,ASCII_BITMASK
+9,Bomblab Bombers,BombDefusalDori,https://example.com/bomblab_bombers,ASCII_BOMB_WIRE
+10,StackOverflow Stackers,CopyPasteKalli,https://example.com/stackoverflow_stackers,ASCII_STACK_FRAME
+11,CacheHit Crusaders,L1CacheLara,https://example.com/cachehit_crusaders,ASCII_CACHE_LINES
+12,WhileTrue Tryhards,WhileTrueWendy,https://example.com/whiletrue_tryhards,ASCII_LOOP_ICON
+13,Segmentation Foul,SegmentationFoulStebbi,https://example.com/segmentation_foul,ASCII_RED_CARD
+14,RaceCondition Racers,RaceConditionRagnhildur,https://example.com/racecondition_racers,ASCII_CHECKERED_FLAG
+15,Undefined Behavior United,UBUnitedUlfar,https://example.com/ub_united,ASCII_GLITCHED_LOGO
+16,Pepsi Max Overflow,PepsiMaxOverflowPetra,https://example.com/pepsimax_overflow,ASCII_OVERFLOWING_CAN
