@@ -1,8 +1,13 @@
 class DataLayer:
+    # TODO: create DataApi
+
     def __init__(self):
         pass
 
     def __str__(self):
+        pass
+
+    def ReadAll(self):
         pass
 
     def TournamentData(self):
