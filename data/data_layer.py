@@ -8,7 +8,12 @@ class DataLayer:
         pass
 
     def ReadAll(self):
-        pass
+        filename = "data/matches.csv"
+        try:
+            with open(filename, "r", encoding="utf-8") as file:
+                data = file.read
+        except FileNotFoundError:
+            print("file not found, please try again")
 
     def TournamentData(self):
         pass
