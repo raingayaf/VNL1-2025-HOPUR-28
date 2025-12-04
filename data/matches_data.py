@@ -1,22 +1,29 @@
 import csv
+from models.match import Match
+
 
 class MatchesData:
-    def read_all(self) -> list[matches]:
-        with open ("matches.csv", mode = "r", encoding = "utf-8") as file:
-            reader: csv.DictReader (file)
+    """Les og skrifar upplýsingar um matches úr matches.csv skránni"""
+    def read_all(self, file_path: str) -> list[Match]:
+        with open (file_path, mode = "r", encoding = "utf-8") as file:
+            reader = csv.DictReader (file)
+            matches: list[Match] = []
             for line in reader:
-                match_data: str = line.get("match_id", "")
-                match_data: str = line.get("tournament_id", "")
-                match_data: str = line.get("round", "")
-                match_data: str = line.get("match_number", "")
-                match_data: str = line.get("team_a_name", "")
-                match_data: str = line.get("team_b_name", "")
-                match_data: str = line.get("match_date", "")
-                match_data: str = line.get("match_time", "")
-                match_data: str = line.get("server_id", "")
-                match_data: str = line.get("score_a", "")
-                match_data: str = line.get("score_b", "")
-                match_data: str = line.get("winner_team_name", "")
-                match_data: str = line.get("completed", "")
+                match = Match(
+                    match_id = int(line["match_id"]),
+                    tournament_id = int(line["tournament_id"]),
+                    match_number = int(line["match_number"]),
+                    team_a_name = line["team_a_name"],
+                    team_b_name = line["team_b_name"],
+                    match_date = line["match_date"],
+                    match_time = line["match_time"],
+                    server_id = line["server_id"],
+                    score_a = int(line["score_a"]),
+                    score_b = int(line["score_b"]),
+                    winner_team_name = line["winner_team_name"],
+                    completed = line["completed"] == "TRUE"
+                )
+                matches.append(match)
 
+            return matches
 
