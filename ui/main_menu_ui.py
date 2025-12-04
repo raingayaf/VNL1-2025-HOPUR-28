@@ -14,6 +14,6 @@ class MainMenuUI:
         print('*' * self.WIDTH + '\n')
         # user_input = input('Sláðu inn númer aðgerðar: ')
 
-# main_menu = MainMenuUI()
-# main_menu.display_main_menu()
+main_menu = MainMenuUI()
+main_menu.display_main_menu()
 # --> Ef þið viljið sjá hvernig þetta prentast út 
