@@ -1,7 +1,7 @@
 from data.matches_data import MatchesData 
 
 
-class Matches:
+class Match:
     """Represents a match between two teams"""
 
     def __init__(self, match_id: int, team_a: Team, team_b: Team, scheduled_date: datetime, server_id: str, result: Optional[str] = None, completed = bool):
