@@ -1,0 +1,2 @@
+class TournamentMenuUI:
+    pass
