@@ -1,3 +1,4 @@
+# TODO: þarf að fara yfir og laga
 import csv
 import os
 
