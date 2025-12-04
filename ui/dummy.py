@@ -1,3 +1,5 @@
+# prufu file
+
 WIDTH = 60
 
 def display_main_menu():
@@ -10,11 +12,12 @@ def display_main_menu():
     print(' 2. Fyrirliði')
     print(' 3. Mótshaldari' + '\n')
     print('*' * WIDTH + '\n')
-    user_input = input('Sláðu inn númer aðgerðar: ')
+    # user_input = input('Sláðu inn númer aðgerðar: ')
 
 # display_main_menu() 
 # --> Ef þið viljið sjá hvernig þetta prentast út 
 
+# GENERAL USER! -HELD AÐ ALLIR GLUGGAR SÉU KOMNIR
 
 def display_tournaments():
     """Display all tournaments in the system to general users."""
@@ -26,7 +29,7 @@ def display_tournaments():
     print('*' * WIDTH + '\n')
     # user_input = input('Sláðu inn númer móts: ')
 
-display_tournaments() 
+# display_tournaments() 
 #--> Ef þið viljið sjá hvernig þetta prentast út 
 
 
@@ -89,6 +92,7 @@ def display_team_players():
     print('3. Player#3' + '\n')
     print('*' * WIDTH + '\n')
 
+# ORGANIZER!
 
 def display_organizer_menu():
     """Display menu options to tournament organizer."""
@@ -102,6 +106,7 @@ def display_organizer_menu():
     print('*' * WIDTH + '\n')
     # user_input = input('Sláðu inn númer aðgerðar: ')
 
+# TEAM CAPTAIN!
 
 def display_captain_menu():
     """Display menu options to team captain."""
@@ -112,8 +117,7 @@ def display_captain_menu():
     print(' 1. Skrá lið')
     print(' 2. Skoða lið' + '\n')
     print('*' * WIDTH + '\n')
-    # user_input = input('Sláðu inn númer aðgerðar: ')
-                                  
+    # user_input = input('Sláðu inn númer aðgerðar: ')                               
                                  
 
 
