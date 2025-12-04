@@ -23,6 +23,7 @@ class DataLayer:
             print("file not found, please try again")
 
     def ReadTournamentData(self) -> list[Tournaments]:
+        """Read tournament csv file and return a list with tournament data"""
         try:
             tournamentData: list[Tournaments] = []
             if not os.path.exists("data/data_base/tournaments.csv"):
