@@ -10,7 +10,7 @@ def display_main_menu():
     print(' 2. Fyrirliði')
     print(' 3. Mótshaldari' + '\n')
     print('*' * WIDTH + '\n')
-    # user_input = input('Sláðu inn númer aðgerðar: ')
+    user_input = input('Sláðu inn númer aðgerðar: ')
 
 # display_main_menu() 
 # --> Ef þið viljið sjá hvernig þetta prentast út 
@@ -26,7 +26,7 @@ def display_tournaments():
     print('*' * WIDTH + '\n')
     # user_input = input('Sláðu inn númer móts: ')
 
-# display_tournaments() 
+display_tournaments() 
 #--> Ef þið viljið sjá hvernig þetta prentast út 
 
 
