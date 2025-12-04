@@ -20,22 +20,21 @@ class LogicApi:
             contact_name = contact.name,
             contact_email = contact.email,
             contact_phone = contact.phone,
-            max_servers = contact.max_servers,   
         )
 
         self._tournaments.append(tournament)
         return tournament
     
-    def add_team_to_tournament(self, tournamentId: int, team: Team) -> bool:
+    def add_team_to_tournament(self, tournament_id: int, team: Team) -> bool:
         pass
 
-    def create_match(self, team1: Team, team2: Team, time: int) -> Match:
+    def create_match(self, team_1: Team, team_2: Team, time: int) -> Match:
         pass
 
     def register_player(self, player: Player) -> bool:
         pass
 
-    def archive_matches(self, matchId: int, winner: Team):
+    def archive_matches(self, match_id: int, winner: Team):
         pass
 
     def list_tournaments(self) -> list[Tournament]:
