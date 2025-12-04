@@ -9,7 +9,7 @@ class DataApi:
 
         self._matches_repo = MatchesData(matches_path)
         
-#inniheldur self.breytur af öllum data klösunum. Þannig að þegar logic player kallar á read
+#inniheldur self.breytur af öllum data klösunum. Þannig að þegar logic player kallar á readall() 
 
 
 

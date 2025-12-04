@@ -1,7 +1,8 @@
 from datetime import date
-
-
-from models.modelTournaments import Tournament   
+from models.modelTeam import Team
+from models.modelMatch import Match
+from models.modelPlayer import Player 
+from models.modelTournament import Tournament   
 from models.modelPerson import Person            
 
 class LogicApi:
@@ -24,6 +25,28 @@ class LogicApi:
 
         self._tournaments.append(tournament)
         return tournament
+    
+    def add_team_to_tournament(self, tournamentId: int, team: Team) -> bool:
+        pass
+
+    def create_match(self, team1: Team, team2: Team, time: int) -> Match:
+        pass
+
+    def register_player(self, player: Player) -> bool:
+        pass
+
+    def archive_matches(self, matchId: int, winner: Team):
+        pass
+
+    def list_tournaments(self) -> list[Tournament]:
+        pass
+
+    def list_matches(self) -> list[Match]:
+        pass
+
+    
+
+
 
 
 
