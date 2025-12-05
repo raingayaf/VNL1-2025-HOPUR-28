@@ -240,3 +240,15 @@ To-do listi:
 Forritun
 Klárun skýrslunni (sett á ís)
 Staða hópmeðlima: 
+
+Færsla 10
+Dagsetning: 5/12/25
+Tími: 12:40 
+Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
+Staða verkefnis:
+Model klasarnir eru tilbúnir, allt annað er vel komið á leið
+To-do listi: 
+Forritun
+Klárun skýrslunni (sett á ís)
+Gera tilbúið fyrir prufukeyrslu
+Staða hópmeðlima: Þorsteinn hefur yfirsýn á API og data, Kalli Sr vinnur á data layer, Kalli Jr vinnur í logic layer, Herdís og Katrín vinna í UI
