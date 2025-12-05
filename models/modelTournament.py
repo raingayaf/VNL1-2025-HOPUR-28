@@ -1,4 +1,7 @@
+from datetime import date
+
 class Tournament:
+    """Býr til nýtt mót"""
     def __init__(self, tournament_id: int, name: str, venue: str, start_date: date, end_date: date, contact_name: str, contact_email: str, contact_phone: str, max_servers: int):
         self.tournament_id = tournament_id
         self.name = name
@@ -9,4 +12,3 @@ class Tournament:
         self.contact_email = contact_email
         self.contact_phone = contact_phone
         self.max_servers = max_servers
-        
