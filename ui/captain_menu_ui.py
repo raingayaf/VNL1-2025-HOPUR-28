@@ -118,6 +118,6 @@ if __name__ == '__main__':
     #c_menu.display_captain_verification_menu()
     #c_menu.display_team_information_menu()
     #c_menu.display_select_player_menu()
-    c_menu.display_player_information_menu()
+    #c_menu.display_player_information_menu()
  
 
