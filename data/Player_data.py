@@ -3,17 +3,17 @@ from models.modelPlayer import Player
 import csv
 import os
 
-CVS_PATH = "data/data_base/players.csv"
+PLAYER_CSV_PATH = "data/data_base/players.csv"
 
 class playerData:
     def read_player_data(self) -> list[Player]:
         """Read player CSV file and return a list with player info"""
         try:
             PlayerData: list[Player] = []
-            if not os.path.exists(CVS_PATH):
+            if not os.path.exists(PLAYER_CSV_PATH):
                 return PlayerData
             
-            with open(CVS_PATH, mode ="r", encoding="utf-8", newline="") as file
+            with open(PLAYER_CSV_PATH, mode ="r", encoding="utf-8", newline="") as file
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
                     try:
@@ -41,7 +41,40 @@ class playerData:
             return PlayerData
         except OSError as exc:
             #TODO: raise error hér, þarf að gera exceptions í annari skrá.
-                f"ekki tókst að lesa skrá {CVS_PATH}: {exc}"
+                f"ekki tókst að lesa skrá {PLAYER_CSV_PATH}: {exc}"
+
+
+    def update_player_info(self, PlayerData: list[Player]) -> None:
+        with open(PLAYER_CSV_PATH, mode="w", encoding="utf-8", newline="") as file:
+            fieldnames = [
+                "player_id",
+                "name",
+                "date_of_birth",
+                "address",
+                "phone",
+                "email",
+                "link",
+                "handle",
+                "team_name",
+            ]
+
+            writer = csv.DictWriter(file, fieldnames = fieldnames)
+            writer.writeheader()
+
+            for player in PlayerData:
+                writer.writerow({
+                    "player_id": player.player_id,
+                    "name": player.name,
+                    "date_of_birth": player.date_of_birth,
+                    "address": player.address,
+                    "phone": player.phone,
+                    "email": player.email,
+                    "link": player.link,
+                    "handle": player.handle,
+                    "team_name": player.team_name,
+                    })
+                                
+                    
 
 
 
