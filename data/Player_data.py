@@ -1,15 +1,15 @@
 from datetime import date 
-from models.modelPlayers import Players
+from models.modelPlayer import Player
 import csv
 import os
 
 CVS_PATH = "data/data_base/players.csv"
 
 class playerData:
-    def read_player_data(self) -> list[Players]:
+    def read_player_data(self) -> list[Player]:
         """Read player CSV file and return a list with player info"""
         try:
-            PlayerData: list[Players] = []
+            PlayerData: list[Player] = []
             if not os.path.exists(CVS_PATH):
                 return PlayerData
             
@@ -26,7 +26,7 @@ class playerData:
                         link: str = row.get("link")
                         handle: str = row.get("handle")
                         team_name: str = row.get("team_name")
-                        Player: Players = Players(player_id, 
+                        Players: Player = Player(player_id, 
                                                   name, 
                                                   date_of_birth, 
                                                   address, phone, 
@@ -34,7 +34,7 @@ class playerData:
                                                   handle, 
                                                   team_name
                                                   )
-                        PlayerData.append(Player)
+                        PlayerData.append(Players)
                     except (KeyError, ValueError) as KVerror:
                         print("fake print fall")
                         #TODO: kalla í print fall sem segir error(KVerror)
