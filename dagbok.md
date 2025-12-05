@@ -184,7 +184,7 @@ Kalli Sr vinnur frá heiman vegna þvi að hann er með veikt barn
 
 
 Færsla 7
-Dagsetning: 1/12/25
+Dagsetning: 2/12/25
 Tími: 1:40
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
@@ -217,7 +217,7 @@ Kalli Jr vinnur frá heima
 
 
 Færsla 8
-Dagsetning: 1/12/25
+Dagsetning: 3/12/25
 Tími: 12:20
 Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
 Staða verkefnis:
@@ -228,3 +228,15 @@ Forritun
 Klárun skýrslunni (sett á ís)
 Staða hópmeðlima: 
 Þorsteinn búin að gera klasa, er að vinna í data layer. Kalli Sr er að implementa að lesa skjal og skila lista í data layer, Katrín er að gera UI
+
+
+Færsla 9
+Dagsetning: 4/12/25 
+Tími: 10:00
+Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
+Staða verkefnis:
+Mikil vinna gerð í data, logic og UI
+To-do listi: 
+Forritun
+Klárun skýrslunni (sett á ís)
+Staða hópmeðlima: 
