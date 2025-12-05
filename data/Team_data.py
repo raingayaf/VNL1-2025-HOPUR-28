@@ -33,6 +33,8 @@ class TeamData:
             return team_list
         except OSError as exc:
             raise  # DataAccessError(f"ekki tókst að lesa skrána)
+<<<<<<< HEAD
+=======
 
 
 # self.team_id = team_id
@@ -40,3 +42,4 @@ class TeamData:
 # self.captain_handle = captain_handle
 # self.website = website
 # self.logo = logo
+>>>>>>> 80ebbbeb2082cc8a33091c3ab239eb095a164d18

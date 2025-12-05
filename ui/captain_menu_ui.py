@@ -2,7 +2,7 @@ class CaptainMenuUI:
     """UI class for displaying menu screens and options to team captains. """
     
     WIDTH = 60
-    
+
     def display_captain_menu(self):
         """Display menu options to team captain."""
         print('\n' * 2 + '*' * self.WIDTH)
@@ -14,7 +14,6 @@ class CaptainMenuUI:
         print('*' * self.WIDTH + '\n')
         user_input = input('Sláðu inn númer aðgerðar: ')
         return user_input
-    
 
     def display_team_registration_menu(self):
         """Display team registration menu and obtain team name, captain handle and number of players."""
@@ -28,7 +27,6 @@ class CaptainMenuUI:
         number_of_players = int(input('skráðu fjölda leikmanna: '))
         #team_website?
         #team_logo?
-
 
     def display_player_registration_menu(self):
         """Display player registration menu and obtain information for each team player."""
@@ -48,7 +46,6 @@ class CaptainMenuUI:
         player_handle = input('Skráðu leikmanna nafn: ')
         #player_team_name --> Það er team_name í database...
 
-
     def display_captain_verification_menu(self):
         """Display team captain verification menu."""
         print('\n' * 2 + '*' * self.WIDTH)
@@ -57,7 +54,6 @@ class CaptainMenuUI:
         print('Liðið mitt'.center(self.WIDTH) + '\n')
         team_name = input('Sláðu inn heiti á liðinu þínu: ')
         captain_handle = input('Sláðu inn leikmanna nafn þitt: ')
-
 
     def display_team_information_menu(self):
         """Display information on team players to team captain and provide options to make changes or go back."""
@@ -74,7 +70,6 @@ class CaptainMenuUI:
         print('*' * self.WIDTH + '\n')
         user_input = input('Sláðu inn númer aðgerðar: ')
         return user_input
-    
 
     def display_select_player_menu(self):
         """Display information on team players and prompt user to choose player to make changes on."""
@@ -88,7 +83,6 @@ class CaptainMenuUI:
         print('*' * self.WIDTH + '\n')
         user_input = input('Sláðu inn númer leikmanns sem á að breyta: ')
         return user_input
-    
 
     def display_player_information_menu(self):
         """Display information on selected player and provide options to change information."""
@@ -101,7 +95,7 @@ class CaptainMenuUI:
         print('*' * self.WIDTH + '\n')
         user_input = input('Sláðu inn númer þess sem þú vilt breyta: ')
         return user_input
-    
+
     # sé fyrir mér að notandinn fer í númer þess sem hann vill breyta, breytir því og þegar hann ýtir á enter fer hann aftur til baka og hefur valmöguleikann á að breyta einhverju öðru eða fara tilbaka eða á heimasvæði.
 
 
@@ -109,7 +103,7 @@ class CaptainMenuUI:
 #        TIL AÐ PRUFU KEYRA
 # ------------------------------------
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     c_menu = CaptainMenuUI()
 
     #c_menu.display_captain_menu()
