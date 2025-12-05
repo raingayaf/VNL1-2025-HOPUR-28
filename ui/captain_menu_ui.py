@@ -1,4 +1,5 @@
 class CaptainMenuUI:
+    """UI class for displaying ... to team captains. """
     
     WIDTH = 60
     
@@ -15,27 +16,30 @@ class CaptainMenuUI:
         return user_input
     
 
-    def register_team_menu(self):
-        """ """
+    def display_team_registration_menu(self):
+        """Display team registration menu and obtain team name, captain handle and number of players."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
         print('Skrá lið'.center(self.WIDTH) + '\n')
+        #team_id?
         team_name = input('Skráðu heiti liðsins: ')
+        team_captain_handle = input('Skráðu leikmanna nafn fyrirliðans: ')
         number_of_players = int(input('skráðu fjölda leikmanna: '))
+        #team_website?
+        #team_logo?
         print()
 
 
-    def register_team_players_menu(self):
-        """ """
+    def display_player_registration_menu(self):
+        """Display player registration menu and obtain information for each team player."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
         print('XXXX'.center(self.WIDTH)) # XXXX er heitið á liðinu
         print('Skrá upplýsingar um leikmenn'.center(self.WIDTH) + '\n')
-
-        # kannski að hafa e-ð 'Leikmaður 1'
-        player_id = '' # Það er playerID í database...
+        # kannski að hafa e-ð 'Leikmaður 1 í header?'
+        #player_id --> Það er player_id í database...
         player_name = input('Skráðu fullt nafn: ')
         player_date_of_birth = input('Skráðu fæðingardag og ár: ')
         player_address = input('Skráðu heimilisfang: ')
@@ -43,11 +47,12 @@ class CaptainMenuUI:
         player_email = input('Skráðu netfang: ')
         player_link = input('Skráðu vefslóð: ')
         player_handle = input('Skráðu leikmanna nafn: ')
+        #player_team_name --> Það er team_name í database...
         print()
 
 
-    def verify_team_captain(self):
-        """ """
+    def display_captain_verification_menu(self):
+        """Display team captain verification menu."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
@@ -57,8 +62,8 @@ class CaptainMenuUI:
         print()
 
 
-    def information_on_team_players(self):
-        """ Display information to captain on team players."""
+    def display_team_information_menu(self):
+        """Display information on team players to team captain and provide options to make changes or go back."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
@@ -74,8 +79,8 @@ class CaptainMenuUI:
         return user_input
     
 
-    def choosing_player_to_change(self):
-        """ """
+    def display_select_player_menu(self):
+        """Display information on team players and prompt user to choose player to make changes on."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
@@ -88,8 +93,8 @@ class CaptainMenuUI:
         return user_input
     
 
-    def changing_player_information(self):
-        """ """
+    def display_player_information_menu(self):
+        """Display information on selected player and provide options to change information."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
@@ -103,7 +108,6 @@ class CaptainMenuUI:
     # sé fyrir mér að notandinn fer í númer þess sem hann vill breyta, breytir því og þegar hann ýtir á enter fer hann aftur til baka og hefur valmöguleikann á að breyta einhverju öðru eða fara tilbaka eða á heimasvæði.
 
 
-
 # ------------------------------------
 #        TIL AÐ PRUFU KEYRA
 # ------------------------------------
@@ -112,11 +116,11 @@ if __name__ == '__main__':
     c_menu = CaptainMenuUI()
 
     #c_menu.display_captain_menu()
-    #c_menu.register_team_menu()
-    #c_menu.register_team_players_menu()
-    #c_menu.verify_team_captain()
-    #c_menu.information_on_team_players()
-    #c_menu.choosing_player_to_change()
-    #c_menu.changing_player_information()
+    #c_menu.display_team_registration_menu()
+    #c_menu.display_player_registration_menu()
+    #c_menu.display_captain_verification_menu
+    #c_menu.display_team_information_menu
+    #c_menu.display_select_player_menu()
+    #c_menu.display_player_information_menu()
  
 
