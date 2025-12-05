@@ -33,4 +33,28 @@ class TeamData:
                         # TODO: senda í ui error message
             return team_list
         except OSError as exc:
-            raise DataAccessError(f"ekki tókst að lesa skrána: {TEAM_CSV_PATH}")
+            raise  # DataAccessError(f"ekki tókst að lesa skrána)
+
+    def update_team_info(self, team_list: list[Team]) -> None:
+        with open(TEAM_CSV_PATH, mode="w", encoding="utf-8", newline="") as file:
+            fieldnames = [
+                "team_id",
+                "team_name",
+                "captain_handle",
+                "website",
+                "logo",
+            ]
+
+            writer = csv.DictWriter(file, fieldnames=fieldnames)
+            writer.writeheader()
+
+            for team in team_list:
+                writer.writerow(
+                    {
+                        "team_id": team.team_id,
+                        "team_name": team.team_name,
+                        "captain_handle": team.captain_handle,
+                        "website": team.website,
+                        "logo": team.logo,
+                    }
+                )
