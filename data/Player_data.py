@@ -1,3 +1,4 @@
+from models.excpetions import DataAccessError
 from datetime import date 
 from models.modelPlayer import Player
 import csv
@@ -37,11 +38,12 @@ class playerData:
                         PlayerData.append(Players)
                     except (KeyError, ValueError) as KVerror:
                         print("fake print fall")
-                        #TODO: kalla í print fall sem segir error(KVerror)
+                        #TODO: kalla í print í UI fall sem segir error(KVerror)
             return PlayerData
         except OSError as exc:
-            #TODO: raise error hér, þarf að gera exceptions í annari skrá.
-                f"ekki tókst að lesa skrá {PLAYER_CSV_PATH}: {exc}"
+                raise DataAccessError(
+                f"ekki tókst að lesa skrá {PLAYER_CSV_PATH}: {exc}")
+                #TODO: mögulega gera print skipun í UI til að framkalla þessi skilaboð. 
 
 
     def update_player_info(self, PlayerData: list[Player]) -> None:
