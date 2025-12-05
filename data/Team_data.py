@@ -1,3 +1,4 @@
+from models.excpetions import DataAccessError
 from models.modelTeam import Team
 import csv
 import os
@@ -32,14 +33,4 @@ class TeamData:
                         # TODO: senda í ui error message
             return team_list
         except OSError as exc:
-            raise  # DataAccessError(f"ekki tókst að lesa skrána)
-<<<<<<< HEAD
-=======
-
-
-# self.team_id = team_id
-# self.team_name = team_name
-# self.captain_handle = captain_handle
-# self.website = website
-# self.logo = logo
->>>>>>> 80ebbbeb2082cc8a33091c3ab239eb095a164d18
+            raise DataAccessError(f"ekki tókst að lesa skrána: {TEAM_CSV_PATH}")
