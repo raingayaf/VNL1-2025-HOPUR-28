@@ -33,7 +33,7 @@ class TeamData:
                         # TODO: senda í ui error message
             return team_list
         except OSError as exc:
-            raise  # DataAccessError(f"ekki tókst að lesa skrána)
+            raise DataAccessError(f"Ekki tókst að lesa skrá: {TEAM_CSV_PATH}")
 
     def update_team_info(self, team_list: list[Team]) -> None:
         with open(TEAM_CSV_PATH, mode="w", encoding="utf-8", newline="") as file:
