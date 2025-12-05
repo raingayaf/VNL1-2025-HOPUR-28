@@ -113,7 +113,7 @@ def display_captain_menu():
     print('*' * WIDTH)
     print('E-SPORTS'.center(WIDTH))                                                          
     print('*' * WIDTH + '\n')
-    print('Velkominn mótshaldari'.center(WIDTH) + '\n')
+    print('Velkominn fyrirliði'.center(WIDTH) + '\n')
     print(' 1. Skrá lið')
     print(' 2. Skoða lið' + '\n')
     print('*' * WIDTH + '\n')
