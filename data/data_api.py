@@ -11,7 +11,7 @@ from data.Player_data import PlayersData
 
 
 class DataApi:
-    """API notaður til að logic layer geti sótt í data layer"""
+    """Api for the logic layer to be able to fetch from data layer"""
     def __init__(self, base_path: str = "data_base"):
         """Býr til rétta slóð fyrir .csv skrárnar og býr til repo object til að
         geta lesið og skrifað í allar .csv skrárnar"""
@@ -29,33 +29,33 @@ class DataApi:
 
 
     def read_all_matches(self) -> list[Match]:
-        """Les matches.csv og skilar lista af Match objects"""
+        """Reads matches.csv and returns a list of objects"""
         return self._matches_repo.read_all()
 
     def save_all_matches(self, matches: list[Match]) -> None:
-        """Skrifar Match objects inn í matches.csv skránna"""
+        """Writes match objects in matches.csv file"""
         self._matches_repo.write_all(matches)
 
     def read_all_players(self) -> list[Player]:
-        """Les players.csv og skilar lista af Player objects"""
+        """Reads players.csv and returns a list of objects"""
         return self._players_repo.read_all()
 
     def save_all_players(self, players: list[Player]) -> None:
-        """Skrifar Player objects inn í players.csv skránna """
+        """Writes player objects into players.csv file"""
         self._players_repo.write_all(players)
 
     def read_all_teams(self) -> list[Team]:
-        """Les teams.csv og skilar lista af Team objects"""
+        """Reads teams.csv and returns a list of objects"""
         return self._teams_repo.read_all()
 
     def save_all_teams(self, teams: list[Team]) -> None:
-        """Skrifar Team objects inn í teams.csv skránna"""
+        """Writes team objects into teams.csv file"""
         self._teams_repo.write_all(teams)
 
     def read_all_tournaments(self) -> list[Tournament]:
-        """Les tournaments.csv og skilar lista af Tournament objects"""
+        """Reads tournaments.csv and returns a list of objects"""
         return self._tournaments_repo.read_all()
 
     def save_all_tournaments(self, tournaments: list[Tournament]) -> None:
-        """Skrifar Tournament object inn í tournaments.csv skránna"""
+        """Writes tournament objects into tournaments.csv file"""
         self._tournaments_repo.write_all(tournaments)
