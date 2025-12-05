@@ -1,4 +1,5 @@
 class MainMenuUI:
+    """UI class for displaying the main menu of the E-SPORT system."""
     
     WIDTH = 60
 
@@ -12,7 +13,8 @@ class MainMenuUI:
         print(' 2. Fyrirliði')
         print(' 3. Mótshaldari' + '\n')
         print('*' * self.WIDTH + '\n')
-        # user_input = input('Sláðu inn númer aðgerðar: ')
+        user_input = input('Sláðu inn númer aðgerðar: ')
+        return user_input
 
 #main_menu = MainMenuUI()
 #main_menu.display_main_menu()
