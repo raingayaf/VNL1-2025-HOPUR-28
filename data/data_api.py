@@ -7,27 +7,31 @@ from models.modelPlayer import Player
 from data.matches_data import MatchesData
 from data.TournamentData import TournamentData
 from data.Team_data import TeamData
-from data.Player_data import PlayersData
+from data.Player_data import playerData
 
 
 class DataApi:
     """Api for the logic layer to be able to fetch from data layer"""
     def __init__(self, base_path: str = "data_base"):
-        """Býr til rétta slóð fyrir .csv skrárnar og býr til repo object til að
-        geta lesið og skrifað í allar .csv skrárnar"""
+        """Creates a correct file path for the .csv file and makes repo 
+    objects for reading and writing into them"""
+
+        #Connects matches repo to csv. file
         matches_path = os.path.join(base_path, "matches.csv")
         self._matches_repo = MatchesData(matches_path)
 
+        #Connects players repo to csv. file
         players_path = os.path.join(base_path, "players.csv")
-        self._players_repo = PlayersData(players_path)
+        self._players_repo = playerData(players_path)
 
+        #Connects tournaments repo to csv. file
         tournaments_path = os.path.join(base_path, "tournaments.csv")
         self._tournaments_repo = TournamentData(tournaments_path)
-
+        #Connects teams repo to csv. file
         teams_path = os.path.join(base_path, "teams.csv")
         self._teams_repo = TeamData(teams_path)
 
-
+    #All of these below have functions called write_all(), read_all() that should be used by the repos.
     def read_all_matches(self) -> list[Match]:
         """Reads matches.csv and returns a list of objects"""
         return self._matches_repo.read_all()
