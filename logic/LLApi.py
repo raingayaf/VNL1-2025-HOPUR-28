@@ -1,4 +1,4 @@
-
+from data.data_api import DataApi
 
 class TournamentDTO:
     """Represents a Tournament passed through the Api"""
