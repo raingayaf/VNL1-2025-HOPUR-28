@@ -12,6 +12,7 @@ class MainMenuUI:
         print(' 1. Notandi')
         print(' 2. Fyrirliði')
         print(' 3. Mótshaldari' + '\n')
+        print(' q: Loka forriti' + '\n')
         print('*' * self.WIDTH + '\n')
 
 #main_menu = MainMenuUI()
