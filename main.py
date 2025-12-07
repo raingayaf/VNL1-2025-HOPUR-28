@@ -11,13 +11,14 @@ def main():
     captain_menu = CaptainMenuUI()
     organizer_menu = OrganizerMenuUI()
 
-    while True:
+    running = True
+    while running:
         input_handler.clear_screen()
         main_menu_ui.display_main_menu()
 
         user_input = input_handler.get_menu_input(
             'Sláðu inn númer aðgerðar: ',
-            {'1', '2', '3'}
+            {'1', '2', '3', 'q'}
         )
 
         if user_input is None:
@@ -29,10 +30,38 @@ def main():
             tournament_menu.display_tournaments()
         elif user_input == '2':
             input_handler.clear_screen()
-            captain_menu.display_captain_menu()
+            captain_menu_loop(captain_menu, input_handler)
         elif user_input == '3':
             input_handler.clear_screen()
             organizer_menu.display_organizer_menu()
+        elif user_input == 'q':
+            running = False
+        
+        
+def captain_menu_loop(captain_menu: CaptainMenuUI, input_handler: InputHandler):
+    """ """
+    in_captain_menu = True
+
+    while in_captain_menu:
+        input_handler.clear_screen()
+        captain_menu.display_captain_menu()
+
+        captain_input = input_handler.get_menu_input(
+            'Sláðu inn númer aðgerðar: ',
+            {'1', '2', 'b'}
+        )
+
+        if captain_input == '1':
+            input_handler.clear_screen()
+            captain_menu.display_team_registration_menu()
+        
+        elif captain_input == '2':
+            input_handler.clear_screen()
+            captain_menu.display_captain_verification_menu()
+
+        elif captain_input == 'b':
+            in_captain_menu = False
+
 
 
 if __name__ == '__main__':
