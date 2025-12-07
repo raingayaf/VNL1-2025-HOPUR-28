@@ -27,14 +27,14 @@ class CaptainMenuUI:
         #team_website?
         #team_logo?
 
-    def display_player_registration_menu(self):
+    def display_player_registration_menu(self, team_name: str, player_index: int):
         """Display player registration menu and obtain information for each team player."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print('XXXX'.center(self.WIDTH)) # XXXX er heitið á liðinu
-        print('Skrá upplýsingar um leikmenn'.center(self.WIDTH) + '\n')
-        # kannski að hafa e-ð 'Leikmaður 1 í header?'
+        print(team_name.center(self.WIDTH))
+        subhead = f'Skrá upplýsingar um leikmann {player_index}'
+        print(subhead.center(self.WIDTH) + '\n')
         #player_id --> Það er player_id í database...
         #player_name = input('Skráðu fullt nafn: ')
         #player_date_of_birth = input('Skráðu fæðingardag og ár: ')
@@ -54,12 +54,12 @@ class CaptainMenuUI:
         #team_name = input('Sláðu inn heiti á liðinu þínu: ')
         #captain_handle = input('Sláðu inn leikmanna nafn þitt: ')
 
-    def display_team_information_menu(self):
+    def display_team_information_menu(self, team_name: str):
         """Display information on team players to team captain and provide options to make changes or go back."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print('XXXX'.center(self.WIDTH)) # XXXX er heitið á liðinu
+        print(team_name.center(self.WIDTH))
         print('Leikmenn'.center(self.WIDTH) + '\n')
         # Hér á að koma listi yfir leikmenn liðsins og upplýsingarnar um þá
         print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
@@ -70,12 +70,12 @@ class CaptainMenuUI:
         #user_input = input('Sláðu inn númer aðgerðar: ')
     
 
-    def display_select_player_menu(self):
+    def display_select_player_menu(self, team_name: str):
         """Display information on team players and prompt user to choose player to make changes on."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print('XXXX'.center(self.WIDTH)) # XXXX er heitið á liðinu
+        print(team_name.center(self.WIDTH))
         print('Breyta upplýsingum um leikmenn'.center(self.WIDTH) + '\n')
         # Hér á að koma listi yfir leikmenn liðsins og upplýsingarnar um þá
         print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
