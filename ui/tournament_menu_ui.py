@@ -11,8 +11,7 @@ class TournamentMenuUI:
         print('Mót'.center(self.WIDTH) + '\n')
         print(' 1. XXXX' + '\n') # XXXX á að vera heiti á móti
         print('*' * self.WIDTH + '\n')
-        user_input = input('Sláðu inn númer móts: ')
-        return user_input
+        #user_input = input('Sláðu inn númer móts: ')
 
 
     def display_tournament_menu(self):
@@ -25,8 +24,8 @@ class TournamentMenuUI:
         print(' 2. Stöðutafla')
         print(' 3. Keppnislið' + '\n')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Sláðu inn númer aðgerðar: ')
-        return user_input
+        #user_input = input('Sláðu inn númer aðgerðar: ')
+
 
 
     def display_tournament_schedule(self):
@@ -58,8 +57,7 @@ class TournamentMenuUI:
         print('2. Team#2')
         print('3. Team#3' + '\n')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Sláðu inn númer liðs: ')
-        return user_input
+        #ser_input = input('Sláðu inn númer liðs: ')
 
 
     def display_team_players(self):
