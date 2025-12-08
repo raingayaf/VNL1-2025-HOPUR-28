@@ -11,7 +11,7 @@ class TournamentData:
         # DataApi passes e.g. "data_base/tournaments.csv"
         self.file_path = file_path
 
-    def read_all(self) -> list[Tournament]:
+    def read_all_tournaments(self) -> list[Tournament]:
         """Read tournament CSV file and return a list of Tournament objects."""
         tournaments: list[Tournament] = []
 
