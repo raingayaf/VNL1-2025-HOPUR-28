@@ -1,3 +1,6 @@
+from models.model_team import Team
+from models.model_player import Player
+
 class TournamentMenuUI:
     """UI class for displaying tournament-related information to general users."""
 
@@ -55,7 +58,7 @@ class TournamentMenuUI:
         print('\n' + '*' * self.WIDTH + '\n')
 
 
-    def display_tournament_teams(self, tournament_name: str):
+    def display_tournament_teams(self, tournament_name: str, teams: list[Team]):
         """Display tournament teams."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
@@ -63,26 +66,26 @@ class TournamentMenuUI:
         print(tournament_name.center(self.WIDTH)) 
         print('Keppnislið'.center(self.WIDTH) + '\n')
         # Hér mun listi yfir keppnislið mótsins vera
-        #if not teams:
-            #print('Engin lið skráð á þetta mót.\n')
-        #else:
-            #for number, team in enumerate(teams, start=1):
-                #print(f'{number}. {team.name}')
-        #print('\n' + '*' * self.WIDTH + '\n')
-        #ser_input = input('Sláðu inn númer liðs: ')
+        if not teams:
+            print('Engin lið skráð á þetta mót.\n')
+        else:
+            for number, team in enumerate(teams, start=1):
+                print(f'{number}. {team.team_name}')
+        print('\nb: Til baka')
+        print('\n' + '*' * self.WIDTH + '\n')
 
 
-    def display_team_players(self):
+    def display_team_players(self, tournament_name: str, team_name: str, players: list[Player]):
         """Display players on a selected team who participate/d in the tournament."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print('XXXXX'.center(self.WIDTH) + '\n') # XXXXXX á að vera heiti á liði
-        # Hér á að koma listi yfir leikmenn liðsins
-        print('1. Player#1')   # dæmi
-        print('2. Player#2')
-        print('3. Player#3' + '\n')
-        print('*' * self.WIDTH + '\n')
+        print(tournament_name.center(self.WIDTH) + '\n')
+        print(team_name.center(self.WIDTH) + '\n')
+        print('Leikmenn:')
+        for i, player in enumerate(players, start=1):
+            print(f'{i}. {player.handle}')
+        print('\n' + '*' * self.WIDTH + '\n')
 
 
 # ------------------------------------

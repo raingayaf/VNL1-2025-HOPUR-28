@@ -7,9 +7,34 @@ from models.exceptions import ValidationError
 class TeamLogic:
     """Handles the logic for teams."""
 
-    def __init__(self, data_api):
-        self._data = data_api
+    def __init__(self, data_api: DataApi):
+        self._data_api = data_api
+    
+    def get_all_teams(self) -> list[Team]:
+        """Return all teams in the system."""
+        return self._data_api.read_all_teams()
+    
+    def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
+        """Return all matches from selected tournament."""
+        matches = self._data_api.read_all_matches()
+        return [m for m in matches if m.tournament_id == tournament_id]
+    
+    def get_teams_for_tournament(self, tournament_id: int) -> list[Team]:
+        """ """
+        matches = self.get_matches_for_tournaments(tournament_id)
 
+        team_names: set[str] = set()
+        for match in matches:
+            team_names.add(match.team_a_name)
+            team_names.add(match.team_b_name)
+
+        all_teams = self.get_all_teams()
+        participating_teams = [
+            team for team in all_teams if team.team_name in team_names
+        ]
+
+        return participating_teams
+ 
     def create_team(self, name: str, captain_handle: str, player_handles: list[str]) -> Team:
         """Creates a new team and validates rules such as player count and captain presence."""
 
