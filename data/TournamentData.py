@@ -1,7 +1,7 @@
 # TODO: þarf að fara yfir og laga
 import csv
 import os
-from models.excpetions import DataAccessError
+from models.exceptions import DataAccessError
 from models.modelTournament import Tournament
 
 TOURNAMENT_CSV_PATH = "data/data_base/tournaments.csv"

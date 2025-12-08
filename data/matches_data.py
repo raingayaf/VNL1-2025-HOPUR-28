@@ -31,8 +31,8 @@ class MatchesData:
                 match = Match(
                     match_id = int(line["match_id"]),
                     tournament_id = int(line["tournament_id"]),
-                    round = int(line["round"]),
                     match_number = int(line["match_number"]),
+                    round = line["round"],
                     team_a_name = line["team_a_name"],
                     team_b_name = line["team_b_name"],
                     match_date = line["match_date"],
@@ -57,7 +57,7 @@ class MatchesData:
                 "match_id",
                 "tournament_id",
                 "match_number",
-                "round"
+                "round",
                 "team_a_name",
                 "team_b_name",
                 "match_date",
@@ -68,7 +68,7 @@ class MatchesData:
                 "winner_team_name",
                 "completed",
             ]
-          
+
             writer = csv.DictWriter(file, fieldnames = fieldnames)
             writer.writeheader() #Skrifar header í .Csv skránna
 
