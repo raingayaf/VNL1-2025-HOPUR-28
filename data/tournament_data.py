@@ -3,11 +3,13 @@ import os
 from models.exceptions import DataAccessError
 from models.model_tournament import Tournament
 
+TOURNAMENT_CSV_PATH = "data/data_base/tournaments.csv"
+
 
 class TournamentData:
     """Repository class for reading and writing tournaments.csv"""
 
-    def __init__(self, file_path: str):
+    def __init__(self, file_path: str = TOURNAMENT_CSV_PATH):
         # DataApi passes e.g. "data_base/tournaments.csv"
         self.file_path = file_path
 
