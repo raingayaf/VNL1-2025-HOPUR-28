@@ -7,7 +7,7 @@ from models.model_player import Player
 from data.matches_data import MatchesData
 from data.tournament_data import TournamentData
 from data.Team_data import TeamData
-from data.player_data import PlayerData
+from data.Player_data import PlayerData
 
 
 class DataApi:
