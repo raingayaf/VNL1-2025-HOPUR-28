@@ -7,9 +7,10 @@ from ui.input_handler import InputHandler
 from logic.tournament_logic import TournamentLogic
 from data.tournament_data import TournamentData
 from data.tournament_data import TOURNAMENT_CSV_PATH
+from models.model_tournament import Tournament
 
 class UIController:
-    """Handles all UI flow and navigation between menu screens."""
+    """Handles all UI flow and navigation between screens."""
     def __init__(self):
         self.main_menu = MainMenuUI()
         self.tournament_menu = TournamentMenuUI()
@@ -58,8 +59,6 @@ class UIController:
         while in_tournament_menu:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournaments(tournament_names)
-            print('b: Til baka\n')
-
 
             valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {'b'}
 
@@ -73,24 +72,81 @@ class UIController:
             else:
                 index = int(user_input) - 1
                 selected_tournament = self.tournament_logic.get_tournament_by_index(index)
-                self.tournament_detail_flow(selected_tournament)
+                self.tournament_options_flow(selected_tournament)
 
 
 
-    def tournament_options_flow(self):
+    def tournament_options_flow(self, tournament: Tournament):
         """  """
+        in_tournament_options = True
+        while in_tournament_options:
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournament_menu(tournament.name)
 
-    def tournament_schedule_flow(self):
+            user_input = self.input_handler.get_menu_input(
+                'Sláðu inn númer aðgerðar eða til baka: ',
+                {'1', '2', '3', 'b'}
+            )
+
+            if user_input == '1':
+                self.tournament_schedule_flow(tournament)
+
+            elif user_input == '2':
+                self.tournament_scoreboard_flow(tournament)
+
+            elif user_input == '3':
+                self.tournament_teams_flow(tournament)
+
+            elif user_input == 'b':
+                in_tournament_options = False    
+
+    def tournament_schedule_flow(self, tournament: Tournament):
+        """  """
+        in_tournament_schedule = True
+        while in_tournament_schedule:
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournament_schedule(tournament.name)
+
+            user_input = self.input_handler.get_menu_input(
+                'Sláðu inn b til að fara til baka: ',
+                {'b'}
+            )
+
+            if user_input == 'b':
+                in_tournament_schedule = False
+
+    def tournament_scoreboard_flow(self, tournament: Tournament):
+        """  """
+        in_tournament_scoreboard = True
+        while in_tournament_scoreboard:
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournament_scoreboard(tournament.name)
+
+            user_input = self.input_handler.get_menu_input(
+                'Sláðu inn b til að fara til baka: ',
+                {'b'}
+            )
+
+            if user_input == 'b':
+                in_tournament_scoreboard = False
+
+    def tournament_teams_flow(self, tournament: Tournament):
         """  """
         pass
+        #matches = self.match_logic.get_matches_for_tournament(tournament.tournament_id)
+        #team_ids: set[int] = set()
+        #for match in matches:
+            #team_ids.add(match.a_team_id)
+            #team_ids.add(match.b_team_id)
+        
+        #teams = self.team_logic.get_teams_by_ids(team_ids)
 
-    def tournament_scoreboard_flow(self):
-        """  """
-        pass
+        #self.input_handler.clear_screen()
+        #self.tournament_menu.display_tournament_teams(tournament.name, teams)
 
-    def tournament_teams_flow(self):
-        """  """
-        pass
+        #input('Ýttu á enter til að fara tilbaka.')
+
+
 
     def tournament_team_players_flow(self):
         """  """

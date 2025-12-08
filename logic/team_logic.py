@@ -1,11 +1,13 @@
+from data.data_api import DataApi
 from models.model_team import Team
+from models.model_match import Match
 from models.exceptions import ValidationError
 
 
 class TeamLogic:
     """handles the logic for teams"""
-    def __init__(self, data_api):
-        self._data = data_api
+    def __init__(self, data_api: DataApi):
+        self._data_api = data_api
 
 
     def create_team(self, name: str, captain_handle: str, player_handles: list):
