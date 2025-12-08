@@ -1,16 +1,16 @@
-from typing import List
-from data.tournament_data import TournamentData
 from models.model_tournament import Tournament
+from data.data_api import DataApi
+
 
 class TournamentLogic:
     """Logic layer for tournaments."""
-    def __init__(self, tournament_data: TournamentData | None = None):
+    def __init__(self, data_api: DataApi):
         """ """
-        self._tournament_data = tournament_data or TournamentData()
+        self._data_api = data_api
     
     def get_all_tournaments(self) -> list[Tournament]:
         """ """
-        return self._tournament_data.read_all()
+        return self._data_api.read_all_tournaments()
 
     def get_tournament_name_list(self) -> list[str]:
         """ """
@@ -21,7 +21,7 @@ class TournamentLogic:
         """ """
         tournaments = self.get_all_tournaments()
         if index < 0 or index >= len(tournaments):
-            raise IndexError('Tournament index out of range.')
+            raise IndexError('...')
         return tournaments[index]
     
 

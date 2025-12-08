@@ -12,56 +12,63 @@ class TournamentMenuUI:
         if not tournament_names:
             print('Engin mót skráð í kerfið.\n')
         else:
-            for index, name in enumerate(tournament_names, start=1):
-                print(f'{index}. {name}')
-            print()
-        print('\n' + '*' * self.WIDTH + '\n')
-        #user_input = input('Sláðu inn númer móts: ')
+            for number, name in enumerate(tournament_names, start=1):
+                print(f'{number}. {name}')
+        print('\nb: Til baka\n')
+        print('*' * self.WIDTH + '\n')
 
 
-    def display_tournament_menu(self):
+    def display_tournament_menu(self, tournament_name: str):
         """Display menu options for the selected tournament."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print('XXXX'.center(self.WIDTH) + '\n')   # XXXX á að vera heiti á móti
+        print(tournament_name.center(self.WIDTH) + '\n') 
         print(' 1. Dagskrá')
         print(' 2. Stöðutafla')
         print(' 3. Keppnislið' + '\n')
+        print('b: Til baka\n')
         print('*' * self.WIDTH + '\n')
         #user_input = input('Sláðu inn númer aðgerðar: ')
 
 
 
-    def display_tournament_schedule(self):
+    def display_tournament_schedule(self, tournament_name: str):
         """Display tournament schedule."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
+        print(tournament_name.center(self.WIDTH)) 
         print('Dagskrá'.center(self.WIDTH) + '\n')
         # Hér mun dagskrá mótsins vera
+        print('\n' + '*' * self.WIDTH + '\n')
 
 
-    def display_tournament_scoreboard(self):
+    def display_tournament_scoreboard(self, tournament_name: str):
         """Display tournament scoreboard."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
+        print(tournament_name.center(self.WIDTH)) 
         print('Stöðutafla'.center(self.WIDTH) + '\n')
         # Hér mun stöðutafla mótsins vera
+        print('\n' + '*' * self.WIDTH + '\n')
 
 
-    def display_tournament_teams(self):
+    def display_tournament_teams(self, tournament_name: str):
         """Display tournament teams."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
+        print(tournament_name.center(self.WIDTH)) 
         print('Keppnislið'.center(self.WIDTH) + '\n')
         # Hér mun listi yfir keppnislið mótsins vera
-        print('1. Team#1')   # dæmi
-        print('2. Team#2')
-        print('3. Team#3' + '\n')
-        print('*' * self.WIDTH + '\n')
+        if not teams:
+            print('Engin lið skráð á þetta mót.\n')
+        else:
+            for number, team in enumerate(teams, start=1):
+                print(f'{number}. {team.name}')
+        print('\n' + '*' * self.WIDTH + '\n')
         #ser_input = input('Sláðu inn númer liðs: ')
 
 
