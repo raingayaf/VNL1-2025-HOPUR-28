@@ -7,7 +7,7 @@ from models.modelPlayer import Player
 from data.matches_data import MatchesData
 from data.TournamentData import TournamentData
 from data.Team_data import TeamData
-from data.Player_data import playerData
+from data.Player_data import PlayerData
 
 
 class DataApi:
@@ -22,7 +22,7 @@ class DataApi:
 
         #Connects players repo to csv. file
         players_path = os.path.join(base_path, "players.csv")
-        self._players_repo = playerData(players_path)
+        self._players_repo = PlayerData(players_path)
 
         #Connects tournaments repo to csv. file
         tournaments_path = os.path.join(base_path, "tournaments.csv")

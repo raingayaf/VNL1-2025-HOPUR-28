@@ -2,6 +2,7 @@ from data.data_api import DataApi
 from logic.team_logic import TeamLL
 from datetime import date
 from logic.match_logic import MatchLogic
+from logic.player_logic import PlayerLogic
 #Allt hérna inni er tengt UML nöfnunum, þannig það er mjög líklegt að breytinga þurfi
 class LLApi:
     """
@@ -18,6 +19,29 @@ class LLApi:
     def get_team_details(self, team_id):
         return self.team_logic.get_team_details(team_id)
     
+
+    def create_player(
+        self,
+        name: str,
+        date_of_birth: str,
+        address: str,
+        phone: str,
+        email: str,
+        link: str,
+        handle: str,
+        team_name: str,
+    ):
+        return self.create_player(
+        name,
+        date_of_birth,
+        address,
+        phone,
+        email,
+        link,
+        handle,
+        team_name,
+    )
+        
 
 
     def create_match(
