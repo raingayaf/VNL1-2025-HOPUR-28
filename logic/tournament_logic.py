@@ -10,7 +10,7 @@ class TournamentLogic:
     
     def get_all_tournaments(self) -> list[Tournament]:
         """ """
-        return self._tournament_data.ReadTournamentData()
+        return self._tournament_data.read_all()
 
     def get_tournament_name_list(self) -> list[str]:
         """ """

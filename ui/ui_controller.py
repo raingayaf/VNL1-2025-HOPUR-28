@@ -16,7 +16,7 @@ class UIController:
         self.captain_menu = CaptainMenuUI()
         self.organizer_menu = OrganizerMenuUI()
         self.input_handler = InputHandler()
-        self.tournament_logic = TournamentLogic(TournamentData(TOURNAMENT_CSV_PATH))
+        self.tournament_logic = TournamentLogic(TournamentData())
     
     def run(self):
         """  """
