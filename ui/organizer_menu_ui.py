@@ -12,7 +12,7 @@ class OrganizerMenuUI:
         print(' 2. Útfæra mótsdagskrá')
         print(' 3. Upplýsingar um lið' + '\n')
         print('*' * self.WIDTH + '\n')
-        user_input = input('sláðu inn númer aðgerðar:')
+        #user_input = input('Sláðu inn númer aðgerðar: ')
 
 
     def display_tournament_options(self): 
@@ -25,7 +25,7 @@ class OrganizerMenuUI:
         print('2.Komandi mót')
         print('3.lokin mót')
         print('*' * self.WIDTH + '\n')
-        user_input = input('sláðu inn númer aðgerðar:')
+        #user_input = input('sláðu inn númer aðgerðar:')
 
 
     def display_competing_teams(self):
@@ -38,7 +38,7 @@ class OrganizerMenuUI:
         print('2.mót 2')
         print('3.mót 3')
         print('*' * self.WIDTH + '\n')
-        user_input = input('sláðu inn númer móts:')
+        #user_input = input('sláðu inn númer móts:')
 
 
     def display_competition_results(self):
@@ -49,7 +49,7 @@ class OrganizerMenuUI:
         print('mót 1'.center(self.WIDTH))
         print('1.færa inn úrslit')
         print('*' * self.WIDTH + '\n')
-        user_input = input('sláðu inn númer aðgerðar:')
+        #user_input = input('sláðu inn númer aðgerðar:')
 
 
     def display_tournament_creation(self):
@@ -58,14 +58,14 @@ class OrganizerMenuUI:
         print('E-SPROTS'.center(self.WIDTH))
         print('*' * self.WIDTH + '\n')
         print('Skrá mót'.center(self.WIDTH))
-        organizer_input = input('Sláðu inn nafn móts:')
-        organizer_input = input('Sláðu inn upphafsdagsetningu:')
-        organizer_input = input('Sláðu inn endadagsetningu:')
-        organizer_input = input('Sláðu inn staðsetningu:')
-        organizer_input = input('Sláðu inn nafn tengiliðs:')
-        organizer_input = input('Sláðu inn símanúmer tengiliðs:')
+        #organizer_input = input('Sláðu inn nafn móts:')
+        #organizer_input = input('Sláðu inn upphafsdagsetningu:')
+        #organizer_input = input('Sláðu inn endadagsetningu:')
+        #organizer_input = input('Sláðu inn staðsetningu:')
+        #organizer_input = input('Sláðu inn nafn tengiliðs:')
+        #organizer_input = input('Sláðu inn símanúmer tengiliðs:')
         print('*' * self.WIDTH + '\n')
-        organizer_input = input('S: Vista upplýsingar:')
+        #organizer_input = input('S: Vista upplýsingar:')
     
 
     def display_results_input(self):
@@ -75,11 +75,11 @@ class OrganizerMenuUI:
         print('*' * self.WIDTH + '\n')
         print('Færa inn úsrslit'.center(self.WIDTH))
         print('mót 1'.center(self.WIDTH))
-        organizer_input = input('Sláðu inn netþjóns auðkenni leiks:')
-        organizer_input = input('Sláðu inn nafn sigurliðs:')
-        organizer_input = input('Sláðu inn nafn tapliðs:')
+        #organizer_input = input('Sláðu inn netþjóns auðkenni leiks:')
+        #organizer_input = input('Sláðu inn nafn sigurliðs:')
+        #organizer_input = input('Sláðu inn nafn tapliðs:')
         print('*' * self.WIDTH + '\n')
-        organizer_input = input('S: Vista upplýsingar:') 
+        #organizer_input = input('S: Vista upplýsingar:') 
 
 
     def display_team_information1(self):
@@ -96,7 +96,7 @@ class OrganizerMenuUI:
         print('6.Lið 6')
         print('7.Lið 7')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Sláðu inn númer liðs:')
+        #user_input = input('Sláðu inn númer liðs:')
 
 
     def display_team_information2(self):
@@ -111,7 +111,7 @@ class OrganizerMenuUI:
         print('3.Leikmaður 3')
         print('4.Leikmaður 4')
         print('*' * self.WIDTH + ' \n')
-        user_input = input('Sláðu inn númer leikmanns:')
+        #user_input = input('Sláðu inn númer leikmanns:')
 
 
     def display_team_information3(self):
@@ -129,7 +129,7 @@ class OrganizerMenuUI:
         print('Netfang: xxxx@xxxxx.is')
         print('Vefslóð: xxxxxxx')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Q: Til baka:')
+        #user_input = input('Q: Til baka:')
 
 
     def display_schedule(self):
@@ -138,10 +138,10 @@ class OrganizerMenuUI:
         print('E-SPORTS'.center(self.WIDTH))
         print('*' * self.WIDTH + '\n')
         print('Útfæra mótsdagskrá'.center(self.WIDTH))
-        organizer_input = input('Sláðu inn leik/leiki:')
-        organizer_input = input('Skrá keppnislið:')
-        print('*' * self.WIDTH + '\n')
-        organizer_input = input('S: Vista upplýsingar:')
+        #organizer_input = input('Sláðu inn leik/leiki:')
+        #organizer_input = input('Skrá keppnislið:')
+        #print('*' * self.WIDTH + '\n')
+        #organizer_input = input('S: Vista upplýsingar:')
 
 
     def display_tournament_creation_done(self):
@@ -152,7 +152,7 @@ class OrganizerMenuUI:
         print('Skrá mót'.center(self.WIDTH))
         print('SKRÁNING TÓKST')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Q: Til baka:')
+        #user_input = input('Q: Til baka:')
 
 
     def display_results_input_done(self):
@@ -163,7 +163,7 @@ class OrganizerMenuUI:
         print('Færa inn úrslit'.center(self.WIDTH))
         print('ÚRSLIT SKRÁð')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Q: Til baka:')
+        #user_input = input('Q: Til baka:')
 
 
     def display_schedule_done(self):
@@ -173,7 +173,7 @@ class OrganizerMenuUI:
         print('Útfæra dagskrá'.center(self.WIDTH))
         print('ÚTFÆRSLA TÓKST')
         print('*' * self.WIDTH + '\n')
-        user_input = input('Q: Til baka:')
+        #user_input = input('Q: Til baka:')
 
 
 # ------------------------------------
@@ -192,7 +192,7 @@ if __name__ == "__main__":
     # o_menu.display_team_information1()
     # o_menu.display_team_information2()
     # o_menu.display_team_information3()
-    # o_menu.display_schedule_done()
+    # o_menu.display_schedule()
     # o_menu.display_tournament_creation_done()
     # o_menu.display_results_input_done()
     # o_menu.display_schedule_done()
