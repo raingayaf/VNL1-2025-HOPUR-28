@@ -63,12 +63,12 @@ class TournamentMenuUI:
         print(tournament_name.center(self.WIDTH)) 
         print('Keppnislið'.center(self.WIDTH) + '\n')
         # Hér mun listi yfir keppnislið mótsins vera
-        if not teams:
-            print('Engin lið skráð á þetta mót.\n')
-        else:
-            for number, team in enumerate(teams, start=1):
-                print(f'{number}. {team.name}')
-        print('\n' + '*' * self.WIDTH + '\n')
+        #if not teams:
+            #print('Engin lið skráð á þetta mót.\n')
+        #else:
+            #for number, team in enumerate(teams, start=1):
+                #print(f'{number}. {team.name}')
+        #print('\n' + '*' * self.WIDTH + '\n')
         #ser_input = input('Sláðu inn númer liðs: ')
 
 
