@@ -1,5 +1,5 @@
 from models.exceptions import DataAccessError
-from models.modelTeam import Team
+from models.model_team import Team
 import csv
 import os
 

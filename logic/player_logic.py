@@ -1,4 +1,4 @@
-from models.modelPlayer import Player
+from models.model_player import Player
 from models.exceptions import ValidationError
 
 

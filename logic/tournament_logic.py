@@ -1,6 +1,6 @@
 from typing import List
-from data.TournamentData import TournamentData
-from models.modelTournament import Tournament
+from data.tournament_data import TournamentData
+from models.model_tournament import Tournament
 
 class TournamentLogic:
     """Logic layer for tournaments."""

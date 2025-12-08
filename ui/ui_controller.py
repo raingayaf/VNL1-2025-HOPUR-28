@@ -5,7 +5,7 @@ from ui.organizer_menu_ui import OrganizerMenuUI
 from ui.input_handler import InputHandler
 
 from logic.tournament_logic import TournamentLogic
-from data.TournamentData import TournamentData
+from data.tournament_data import TournamentData
 
 class UIController:
     """Handles all UI flow and navigation between menu screens."""
