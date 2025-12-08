@@ -22,7 +22,7 @@ from models.model_player import Player
 class UIController:
     """Manages navigation between UI screens based on user selection."""
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Initializes UI menus, input handling, data API and logic layers."""
         # UI menus
         self.main_menu = MainMenuUI()
@@ -42,7 +42,7 @@ class UIController:
         self.player_logic = PlayerLogic(self.data_api)
 
     #-----------------------------MAIN-MENU-------------------------------
-    def run_main_menu(self):
+    def run_main_menu(self) -> None:
         """Runs the main menu and routes the user based on their selection."""
         in_main_menu = True
         error_message = None
@@ -79,7 +79,7 @@ class UIController:
     #----------------------------GENERAL-USER-MENUS-------------------------
     def run_tournaments_menu(self) -> bool:
         """Runs the tournaments menu and routes the user based on their selection.
-        Returns false if no tournament exists.
+        Returns False if no tournament exists.
         """
         # Get all tournaments in system
         tournament_names = self.tournament_logic.get_tournament_name_list()
@@ -110,7 +110,7 @@ class UIController:
 
         return True
 
-    def run_tournament_options(self, tournament: Tournament):
+    def run_tournament_options(self, tournament: Tournament) -> None:
         """Runs the options menu for chosen tournament and routes the user based on their selection."""
         in_tournament_options = True
 
@@ -133,7 +133,7 @@ class UIController:
                 # Return to the previous menu
                 in_tournament_options = False    
 
-    def run_tournament_schedule(self, tournament: Tournament):
+    def run_tournament_schedule(self, tournament: Tournament) -> None:
         """Displays the tournament schedule until the user chooses to return to the previous menu."""
         in_tournament_schedule = True
 
@@ -148,7 +148,7 @@ class UIController:
                 # Return to the previous menu
                 in_tournament_schedule = False
 
-    def run_tournament_scoreboard(self, tournament: Tournament):
+    def run_tournament_scoreboard(self, tournament: Tournament) -> None:
         """Displays the tournament scoreboard until the user chooses to return to the previous menu."""
         in_tournament_scoreboard = True
 
@@ -163,7 +163,7 @@ class UIController:
                 # Return to the previous menu
                 in_tournament_scoreboard = False
 
-    def run_tournament_teams(self, tournament: Tournament):
+    def run_tournament_teams(self, tournament: Tournament) -> None:
         """Displays the teams in the chosen tournament and routes the user based on their selection."""
         in_tournament_teams = True
         # Show tournament teams and handle user selection
@@ -185,7 +185,7 @@ class UIController:
                 selected_team: Team = teams[index]
                 self.run_tournament_team_players(tournament, selected_team)
 
-    def run_tournament_team_players(self, tournament: Tournament, team: Team):
+    def run_tournament_team_players(self, tournament: Tournament, team: Team) -> None:
         """Displays the players in chosen team until user chooses to return to the previous menu."""
         in_team_players_menu = True
 
