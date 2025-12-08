@@ -4,7 +4,6 @@ from models.exceptions import ValidationError
 
 
 def test_create_match():
-    # ONE DataApi instance, using the default base path
     data = DataApi()            
     logic = MatchLogic(data)
 

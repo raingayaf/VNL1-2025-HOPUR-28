@@ -24,11 +24,14 @@ class PlayerLogic:
         if any(player.handle == handle for player in players):
             raise ValidationError("Leikmaður er nú þegar á skrá")
 
-        # Generate new player_id
-        existing_player_ids: list[int] = [player.player_id for player in players]
-        highest_id = max(existing_player_ids)  
-        new_id = highest_id + 1
+        # Creates new player_id
+        existing_player_nums = [int(player.player_id[1:]) for player in players]
+        highest_num = max(existing_player_nums)
 
+        new_id = f"P{highest_num + 1:03d}"
+
+
+        #Creates a new player object
         new_player = Player(
             player_id = new_id,
             name = name,
@@ -40,6 +43,7 @@ class PlayerLogic:
             handle = handle,
             team_name = team_name,
         )
+
 
         players.append(new_player)
         self._data.save_all_players(players)
