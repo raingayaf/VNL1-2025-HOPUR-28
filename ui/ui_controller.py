@@ -4,10 +4,13 @@ from ui.captain_menu_ui import CaptainMenuUI
 from ui.organizer_menu_ui import OrganizerMenuUI
 from ui.input_handler import InputHandler
 
+from data.data_api import DataApi
 from logic.tournament_logic import TournamentLogic
-from data.tournament_data import TournamentData
-from data.tournament_data import TOURNAMENT_CSV_PATH
+from logic.team_logic import TeamLogic
+from logic.player_logic import PlayerLogic
 from models.model_tournament import Tournament
+from models.model_team import Team
+from models.model_player import Player
 
 class UIController:
     """Handles all UI flow and navigation between screens."""
@@ -17,7 +20,12 @@ class UIController:
         self.captain_menu = CaptainMenuUI()
         self.organizer_menu = OrganizerMenuUI()
         self.input_handler = InputHandler()
-        self.tournament_logic = TournamentLogic(TournamentData())
+
+        self.data_api = DataApi()
+
+        self.tournament_logic = TournamentLogic(self.data_api)
+        self.team_logic = TeamLogic(self.data_api)
+        self.player_logic = PlayerLogic(self.data_api)
     
     def run(self):
         """  """
@@ -132,25 +140,35 @@ class UIController:
 
     def tournament_teams_flow(self, tournament: Tournament):
         """  """
-        pass
-        #matches = self.match_logic.get_matches_for_tournament(tournament.tournament_id)
-        #team_ids: set[int] = set()
-        #for match in matches:
-            #team_ids.add(match.a_team_id)
-            #team_ids.add(match.b_team_id)
-        
-        #teams = self.team_logic.get_teams_by_ids(team_ids)
+        in_tournament_teams = True
+        while in_tournament_teams:
+            teams = self.team_logic.get_teams_for_tournament(tournament.tournament_id)
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournament_teams(tournament.name, teams)
 
-        #self.input_handler.clear_screen()
-        #self.tournament_menu.display_tournament_teams(tournament.name, teams)
+            valid_input = {str(i) for i in range(1, len(teams) + 1)} | {'b'}
 
-        #input('Ýttu á enter til að fara tilbaka.')
+            user_input = self.input_handler.get_menu_input(
+                'Sláðu inn númer liðs eða til baka: ',
+                valid_input
+            )
+
+            if user_input == 'b':
+                in_tournament_teams = False
+            else:
+                index = int(user_input) - 1
+                selected_team: Team = teams[index]
+                self.tournament_team_players_flow(tournament, selected_team)
 
 
-
-    def tournament_team_players_flow(self):
+    def tournament_team_players_flow(self, tournament: Tournament, team: Team):
         """  """
-        pass
+        players: list[Player] = self.player_logic.get_players_for_team(team.team_name)
+
+        self.input_handler.clear_screen()
+        self.tournament_menu.display_team_players(tournament.name, team.team_name, players)
+        input('Ýttu á enter til að fara til baka: ')
+
 
 
     #------------------------CAPTAIN-MENU-FLOW------------------------------            
