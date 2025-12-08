@@ -23,8 +23,6 @@ class TeamData:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
                     try:
-                        # ⚠️ If your CSV header is "id" instead of "team_id",
-                        # change "team_id" to "id" here.
                         team_id: int = int(row["team_id"])
                         team_name: str = row.get("team_name", "")
                         captain_handle: str = row.get("captain_handle", "")
@@ -34,7 +32,6 @@ class TeamData:
                         team = Team(team_id, team_name, captain_handle, website, logo)
                         team_list.append(team)
                     except (KeyError, ValueError):
-                        # Skip bad rows silently (no prints in data layer)
                         continue
 
             return team_list
