@@ -25,7 +25,7 @@ class PlayerData:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
                     try:
-                        player_id: int = int(row["player_id"])
+                        player_id: str = str(row["player_id"])
                         name: str = row.get("name", "")
                         date_of_birth: str = row.get("date_of_birth", "")
                         address: str = row.get("address", "")

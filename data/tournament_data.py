@@ -3,7 +3,6 @@ import os
 from models.exceptions import DataAccessError
 from models.model_tournament import Tournament
 
-
 class TournamentData:
     """Repository class for reading and writing tournaments.csv"""
 

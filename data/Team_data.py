@@ -10,8 +10,12 @@ class TeamData:
     def __init__(self, file_path: str):
         # DataApi passes e.g. "data_base/teams.csv"
         self.file_path = file_path
-
+    
     def read_all(self) -> list[Team]:
+        """Wrapper."""
+        return self.read_all_teams()
+
+    def read_all_teams(self) -> list[Team]:
         """Read team CSV file and return list of Team objects."""
         team_list: list[Team] = []
 
@@ -23,8 +27,6 @@ class TeamData:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
                     try:
-                        # ⚠️ If your CSV header is "id" instead of "team_id",
-                        # change "team_id" to "id" here.
                         team_id: int = int(row["team_id"])
                         team_name: str = row.get("team_name", "")
                         captain_handle: str = row.get("captain_handle", "")
@@ -34,7 +36,6 @@ class TeamData:
                         team = Team(team_id, team_name, captain_handle, website, logo)
                         team_list.append(team)
                     except (KeyError, ValueError):
-                        # Skip bad rows silently (no prints in data layer)
                         continue
 
             return team_list

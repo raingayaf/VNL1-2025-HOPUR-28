@@ -1,5 +1,7 @@
 import os
 
+from ui import messages
+
 class InputHandler:
     """Get and validate user input for UI menus."""
     
@@ -10,13 +12,13 @@ class InputHandler:
         """Clear the terminal screen."""
         os.system('cls' if os.name == 'nt' else 'clear')
 
-    def get_menu_input(self, instruction: str, valid_input: set[str]) -> str:
+    def get_user_input(self, instruction: str, valid_input: set[str]) -> str:
         """ """
-        user_input = input(instruction).strip().lower()
-        if user_input in valid_input:
-            return user_input
-        print('\n' + 'ÓGILT VAL!'.center(self.WIDTH) + '\n') 
-        return None 
+        while True:
+            user_input = input(instruction).strip().lower()
+            if user_input in valid_input:
+                return user_input
+            print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n') 
     
     def get_non_empty_string(self, instruction: str) -> str:
         """ """
