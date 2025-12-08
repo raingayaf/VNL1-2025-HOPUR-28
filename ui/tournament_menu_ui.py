@@ -20,7 +20,6 @@ class TournamentMenuUI:
         print('\nb: Til baka\n')
         print('*' * self.WIDTH + '\n')
 
-
     def display_tournament_menu(self, tournament_name: str):
         """Display menu options for the selected tournament."""
         print('*' * self.WIDTH)
@@ -32,9 +31,6 @@ class TournamentMenuUI:
         print(' 3. Keppnislið' + '\n')
         print('b: Til baka\n')
         print('*' * self.WIDTH + '\n')
-        #user_input = input('Sláðu inn númer aðgerðar: ')
-
-
 
     def display_tournament_schedule(self, tournament_name: str):
         """Display tournament schedule."""
@@ -46,7 +42,6 @@ class TournamentMenuUI:
         # Hér mun dagskrá mótsins vera
         print('\n' + '*' * self.WIDTH + '\n')
 
-
     def display_tournament_scoreboard(self, tournament_name: str):
         """Display tournament scoreboard."""
         print('*' * self.WIDTH)
@@ -57,7 +52,6 @@ class TournamentMenuUI:
         # Hér mun stöðutafla mótsins vera
         print('\n' + '*' * self.WIDTH + '\n')
 
-
     def display_tournament_teams(self, tournament_name: str, teams: list[Team]):
         """Display tournament teams."""
         print('*' * self.WIDTH)
@@ -65,7 +59,6 @@ class TournamentMenuUI:
         print('*' * self.WIDTH + '\n')
         print(tournament_name.center(self.WIDTH)) 
         print('Keppnislið'.center(self.WIDTH) + '\n')
-        # Hér mun listi yfir keppnislið mótsins vera
         if not teams:
             print('Engin lið skráð á þetta mót.\n')
         else:
@@ -73,7 +66,6 @@ class TournamentMenuUI:
                 print(f'{number}. {team.team_name}')
         print('\nb: Til baka')
         print('\n' + '*' * self.WIDTH + '\n')
-
 
     def display_team_players(self, tournament_name: str, team_name: str, players: list[Player]):
         """Display players on a selected team who participate/d in the tournament."""

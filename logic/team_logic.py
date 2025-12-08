@@ -8,31 +8,34 @@ class TeamLogic:
     """Handles the logic for teams."""
 
     def __init__(self, data_api: DataApi):
+        """Initializes the logic class with a refrence to the data API."""
         self._data_api = data_api
     
     def get_all_teams(self) -> list[Team]:
-        """Return all teams in the system."""
+        """Returns a list of all teams from the data layer."""
         return self._data_api.read_all_teams()
     
-    def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
-        """Return all matches from selected tournament."""
+    def get_matches_for_tournament(self, tournament_id: int) -> list[Match]:
+        """Returns all matches whose tournament ID matches the given tournament."""
         matches = self._data_api.read_all_matches()
-        return [m for m in matches if m.tournament_id == tournament_id]
+        return [match for match in matches if match.tournament_id == tournament_id]
     
     def get_teams_for_tournament(self, tournament_id: int) -> list[Team]:
-        """ """
-        matches = self.get_matches_for_tournaments(tournament_id)
-
+        """Returns all teams that participate in given tournament."""
+        # Retrieve all matches played in the tournament.
+        matches = self.get_matches_for_tournament(tournament_id)
+        # Build a set of every team that appears in any match in given tournament
         team_names: set[str] = set()
         for match in matches:
             team_names.add(match.team_a_name)
             team_names.add(match.team_b_name)
-
+        # Retrieve the list of all teams in the system.
         all_teams = self.get_all_teams()
+        # Compare team names from the matches with all teams in the system
+        # to find the teams participating in the tournament. 
         participating_teams = [
             team for team in all_teams if team.team_name in team_names
         ]
-
         return participating_teams
  
     def create_team(self, name: str, captain_handle: str, player_handles: list[str]) -> Team:

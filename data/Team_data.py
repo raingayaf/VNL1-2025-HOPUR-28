@@ -12,7 +12,7 @@ class TeamData:
         self.file_path = file_path
     
     def read_all(self) -> list[Team]:
-        """Wrapper."""
+        """Returns a list of all teams (wrapper for read_all_teams)."""
         return self.read_all_teams()
 
     def read_all_teams(self) -> list[Team]:
