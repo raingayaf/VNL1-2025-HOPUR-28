@@ -1,25 +1,29 @@
 from data.data_api import DataApi
-from logic.team_logic import TeamLL
-from datetime import date
+from logic.team_logic import TeamLogic
 from logic.match_logic import MatchLogic
 from logic.player_logic import PlayerLogic
-#Allt hérna inni er tengt UML nöfnunum, þannig það er mjög líklegt að breytinga þurfi
+
+
 class LLApi:
     """
-    Connects UI to Logic later.
+    Connects UI to Logic layer.
     UI layer should only talk to this class, not directly to logic or data.
     """
-    def __init__(self, data_api):
-        self.data_api = data_api
-        self.match_logic = MatchLogic(data_api)
 
+    def __init__(self, data_api: DataApi):
+        self.data_api = data_api
+        self.team_logic = TeamLogic(data_api)       
+        self.match_logic = MatchLogic(data_api)
+        self.player_logic = PlayerLogic(data_api)
+
+    
     def create_team(self, name, captain_handle, player_handles):
         return self.team_logic.create_team(name, captain_handle, player_handles)
 
     def get_team_details(self, team_id):
         return self.team_logic.get_team_details(team_id)
-    
 
+    
     def create_player(
         self,
         name: str,
@@ -31,17 +35,17 @@ class LLApi:
         handle: str,
         team_name: str,
     ):
-        return self.create_player(
-        name,
-        date_of_birth,
-        address,
-        phone,
-        email,
-        link,
-        handle,
-        team_name,
-    )
-        
+        """UI calls this to create a player it forwards to PlayerLogic."""
+        return self.player_logic.create_player(
+            name,
+            date_of_birth,
+            address,
+            phone,
+            email,
+            link,
+            handle,
+            team_name,
+        )
 
 
     def create_match(
@@ -65,4 +69,3 @@ class LLApi:
             match_time,
             server_id,
         )
-
