@@ -3,7 +3,7 @@ from data.data_api import DataApi
 
 class TournamentLogic:
     """Logic for accessing and managing tournament data."""
-    def __init__(self, data_api: DataApi):
+    def __init__(self, data_api: DataApi) -> None:
         """Initializes the logic class with refrence to the data API."""
         self._data_api = data_api
     

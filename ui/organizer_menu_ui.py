@@ -1,7 +1,7 @@
 from logic.LLApi import LLApi
 class OrganizerMenuUI:
 
-    WIDTH = 60
+    WIDTH: int = 60
 
     def display_organizer_menu(self):
         """Display menu options to tournament organizer."""

@@ -1,9 +1,9 @@
 class MainMenuUI:
     """UI class for displaying the main menu of the E-SPORT system."""
     
-    WIDTH = 60
+    WIDTH: int = 60
 
-    def display_main_menu(self): 
+    def display_main_menu(self) -> None: 
         """Display main menu options to user."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          

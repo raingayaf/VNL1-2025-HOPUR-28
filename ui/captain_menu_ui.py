@@ -1,7 +1,7 @@
 class CaptainMenuUI:
     """UI class for displaying menu screens and options to team captains. """
     
-    WIDTH = 60
+    WIDTH: int = 60
 
     def display_captain_menu(self):
         """Display menu options to team captain."""
