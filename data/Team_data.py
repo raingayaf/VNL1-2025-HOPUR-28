@@ -1,4 +1,4 @@
-from models.excpetions import DataAccessError
+from models.exceptions import DataAccessError
 from models.modelTeam import Team
 import csv
 import os

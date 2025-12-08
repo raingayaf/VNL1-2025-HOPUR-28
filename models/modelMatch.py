@@ -5,7 +5,7 @@ class Match:
         self,
         match_id: int,
         tournament_id: int,
-        round: int,
+        round: str,
         match_number: int,
         team_a_name: str,
         team_b_name: str,

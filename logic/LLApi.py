@@ -10,7 +10,7 @@ class LLApi:
     """
     def __init__(self, data_api):
         self.data_api = data_api
-        self.match_logic = Matchlogic(data_api)
+        self.match_logic = MatchLogic(data_api)
 
     def create_team(self, name, captain_handle, player_handles):
         return self.team_logic.create_team(name, captain_handle, player_handles)
@@ -19,5 +19,26 @@ class LLApi:
         return self.team_logic.get_team_details(team_id)
     
 
-    def create_match(self, team_a_name, team_b_name, date_str):
-        return self._match_logic.create_match(team_a_name, team_b_name, date_str)
+
+    def create_match(
+        self,
+        tournament_id: int,
+        round_name: str,
+        match_number: int,
+        team_a_name: str,
+        team_b_name: str,
+        match_date: str,
+        match_time: str,
+        server_id: str,
+    ):
+        return self.match_logic.create_match(
+            tournament_id,
+            round_name,
+            match_number,
+            team_a_name,
+            team_b_name,
+            match_date,
+            match_time,
+            server_id,
+        )
+

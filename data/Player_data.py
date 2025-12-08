@@ -1,4 +1,4 @@
-from models.excpetions import DataAccessError
+from models.exceptions import DataAccessError
 from datetime import date
 from models.modelPlayer import Player
 import csv
