@@ -3,17 +3,14 @@ import os
 from models.exceptions import DataAccessError
 from models.model_tournament import Tournament
 
-TOURNAMENT_CSV_PATH = "data/data_base/tournaments.csv"
-
-
 class TournamentData:
     """Repository class for reading and writing tournaments.csv"""
 
-    def __init__(self, file_path: str = TOURNAMENT_CSV_PATH):
+    def __init__(self, file_path: str):
         # DataApi passes e.g. "data_base/tournaments.csv"
         self.file_path = file_path
 
-    def read_all_tournaments(self) -> list[Tournament]:
+    def read_all(self) -> list[Tournament]:
         """Read tournament CSV file and return a list of Tournament objects."""
         tournaments: list[Tournament] = []
 
