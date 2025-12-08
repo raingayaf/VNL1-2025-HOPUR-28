@@ -4,6 +4,9 @@ from ui.captain_menu_ui import CaptainMenuUI
 from ui.organizer_menu_ui import OrganizerMenuUI
 from ui.input_handler import InputHandler
 
+from logic.tournament_logic import TournamentLogic
+from data.TournamentData import TournamentData
+
 class UIController:
     """Handles all UI flow and navigation between menu screens."""
     def __init__(self):
@@ -12,6 +15,7 @@ class UIController:
         self.captain_menu = CaptainMenuUI()
         self.organizer_menu = OrganizerMenuUI()
         self.input_handler = InputHandler()
+        self.tournament_logic = TournamentLogic(TournamentData())
     
     def run(self):
         """  """
@@ -27,8 +31,7 @@ class UIController:
                 input('Ýttu á enter til að reyna aftur.')
                 continue
             if user_input == '1':
-                self.input_handler.clear_screen()
-                self.tournament_menu.display_tournaments()
+                self.tournaments_flow()
             elif user_input == '2':
                 self.input_handler.clear_screen()
                 self.captain_menu_flow()
@@ -41,11 +44,40 @@ class UIController:
     #-----------------------GENERAL-USER-MENU-FLOW-------------------------
     def tournaments_flow(self):
         """  """
-        pass
+        tournament_names = self.tournament_logic.get_tournament_name_list()
+        
+        if not tournament_names:
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournaments(tournament_names)
+            input('Engin mót í kerfi. Ýttu á enter til þess að fara til baka.')
+            return
+        
+        in_tournament_menu = True
+
+        while in_tournament_menu:
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournaments(tournament_names)
+            print('b: Til baka\n')
+
+
+            valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {'b'}
+
+            user_input = self.input_handler.get_menu_input(
+                'Sláðu inn númer móts eða til baka: ',
+                valid_input
+            )
+
+            if user_input == 'b':
+                in_tournament_menu = False
+            else:
+                index = int(user_input) - 1
+                selected_tournament = self.tournament_logic.get_tournament_by_index(index)
+                self.tournament_detail_flow(selected_tournament)
+
+
 
     def tournament_options_flow(self):
         """  """
-        pass
 
     def tournament_schedule_flow(self):
         """  """
