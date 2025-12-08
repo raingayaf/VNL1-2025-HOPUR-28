@@ -3,14 +3,19 @@ class TournamentMenuUI:
 
     WIDTH = 60
 
-    def display_tournaments(self):
+    def display_tournaments(self, tournament_names: list[str]):
         """Display all tournaments in the system to general users."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
         print('Mót'.center(self.WIDTH) + '\n')
-        print(' 1. XXXX' + '\n') # XXXX á að vera heiti á móti
-        print('*' * self.WIDTH + '\n')
+        if not tournament_names:
+            print('Engin mót skráð í kerfið.\n')
+        else:
+            for index, name in enumerate(tournament_names, start=1):
+                print(f'{index}. {name}')
+            print()
+        print('\n' + '*' * self.WIDTH + '\n')
         #user_input = input('Sláðu inn númer móts: ')
 
 
