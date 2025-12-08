@@ -10,6 +10,10 @@ class TeamData:
     def __init__(self, file_path: str):
         # DataApi passes e.g. "data_base/teams.csv"
         self.file_path = file_path
+    
+    def read_all(self) -> list[Team]:
+        """Wrapper."""
+        return self.read_all_teams()
 
     def read_all_teams(self) -> list[Team]:
         """Read team CSV file and return list of Team objects."""
