@@ -6,6 +6,7 @@ from ui.input_handler import InputHandler
 
 from logic.tournament_logic import TournamentLogic
 from data.tournament_data import TournamentData
+from data.tournament_data import TOURNAMENT_CSV_PATH
 
 class UIController:
     """Handles all UI flow and navigation between menu screens."""
@@ -15,7 +16,7 @@ class UIController:
         self.captain_menu = CaptainMenuUI()
         self.organizer_menu = OrganizerMenuUI()
         self.input_handler = InputHandler()
-        self.tournament_logic = TournamentLogic(TournamentData())
+        self.tournament_logic = TournamentLogic(TournamentData(TOURNAMENT_CSV_PATH))
     
     def run(self):
         """  """
