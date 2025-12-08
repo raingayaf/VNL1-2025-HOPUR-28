@@ -5,7 +5,7 @@ import csv
 import os
 
 
-class playerData:
+class PlayerData:
     """Repository class for reading and writing players.csv"""
 
     def __init__(self, file_path: str):
