@@ -3,12 +3,12 @@ from models.exceptions import ValidationError
 
 
 class TeamLogic:
-    """handles the logic for teams"""
+    """Handles the logic for teams."""
+
     def __init__(self, data_api):
         self._data = data_api
 
-
-    def create_team(self, name: str, captain_handle: str, player_handles: list):
+    def create_team(self, name: str, captain_handle: str, player_handles: list[str]) -> Team:
         """Creates a new team and validates rules such as player count and captain presence."""
 
         # Validate unique team name
@@ -20,43 +20,50 @@ class TeamLogic:
         if captain_handle not in player_handles:
             raise ValidationError("Captain must be included in the player list.")
 
-        # raise errror if team has less than 3 or more than 5 players
+        # Check team size
         if len(player_handles) < 3:
             raise ValidationError("Team must have at least 3 players.")
         if len(player_handles) > 5:
             raise ValidationError("Team cannot exceed 5 players.")
-        
-        # prevent players from belonging to multiple teams
-        for team in all_teams:
-            for member in team.player_handles:
-                if member in player_handles:
-                    raise ValidationError(f"Player '{member}' is already assigned to another team.c")
 
-        # Ensure each player exists
+        # Checks if player exists and is not in another team
         all_players = self._data.read_all_players()
+
         for handle in player_handles:
-            if not any(p.player_handle == handle for p in all_players):
+            player = next((p for p in all_players if p.handle == handle), None)
+            if player is None:
                 raise ValidationError(f"Player '{handle}' does not exist.")
 
-        # Determine new team ID
+
+            if player.team_name and player.team_name != name:
+                raise ValidationError(
+                    f"Player '{handle}' is already assigned to another team: '{player.team_name}'."
+                )
+
+        # Make new team ID
         existing_ids = [team.team_id for team in all_teams]
         new_id = max(existing_ids) + 1 if existing_ids else 1
 
-        # Create Team model
+        # Create team model
         new_team = Team(
-            team_id=new_id,
-            team_name=name,
-            captain_handle=captain_handle,
-            player_handles=player_handles
+            team_id = new_id,
+            team_name = name,
+            captain_handle = captain_handle,
+            website = "",   
+            logo = "",
         )
 
         all_teams.append(new_team)
         self._data.save_all_teams(all_teams)
 
+        for p in all_players:
+            if p.handle in player_handles:
+                p.team_name = name
+        self._data.save_all_players(all_players)
+
         return new_team
 
-
-    def get_team_details(self, team_id: int):
+    def get_team_details(self, team_id: int) -> Team:
         """Returns a Team object by ID."""
         teams = self._data.read_all_teams()
         for team in teams:
@@ -64,96 +71,87 @@ class TeamLogic:
                 return team
         raise ValidationError("Team not found.")
 
+    def _get_team_and_players(self, team_id: int):
+        """Helper: returns (team, [players_in_team])."""
+        teams = self._data.read_all_teams()
+        players = self._data.read_all_players()
+
+        team = next((t for t in teams if t.team_id == team_id), None)
+        if team is None:
+            raise ValidationError("Team not found.")
+
+        team_players = [p for p in players if p.team_name == team.team_name]
+        return team, teams, players, team_players
 
     def add_player(self, team_id: int, player_handle: str):
         """Adds a player to an existing team."""
 
-        teams = self._data.read_all_teams()
-        players = self._data.read_all_players()
+        team, all_teams, all_players, team_players = self._get_team_and_players(team_id)
 
-        # Validate player exists
-        if not any(p.player_handle == player_handle for p in players):
+        # Check if player exists
+        player = next((p for p in all_players if p.handle == player_handle), None)
+        if player is None:
             raise ValidationError(f"Player '{player_handle}' does not exist.")
 
-        # prevent player from joining multiple teams
-        for t in teams:
-            if player_handle in t.player_handles:
-                raise ValidationError(f"Player '{player_handle}' is already assigned to another team.")
-        
-        
-        # Find team
-        for team in teams:
-            if team.team_id == team_id:
+        # Prevent player from joining multiple teams
+        if player.team_name and player.team_name != team.team_name:
+            raise ValidationError(
+                f"Player '{player_handle}' is already assigned to another team: '{player.team_name}'."
+            )
 
-                # Prevent duplicates
-                if player_handle in team.player_handles:
-                    raise ValidationError("Player already in team.")
-                
-                if len(team.player_handles) >= 5:
-                    raise ValidationError("Team cannot exceed 5 players.")
+        # Prevent duplicates within this team
+        if any(p.handle == player_handle for p in team_players):
+            raise ValidationError("Player already in team.")
 
-                team.player_handles.append(player_handle)
-                self._data.save_all_teams(teams)
-                return team
+        # Enforce max size
+        if len(team_players) >= 5:
+            raise ValidationError("Team cannot exceed 5 players.")
 
-        raise ValidationError("Team not found.")
-        
-
-
+        # Assign player to this team
+        player.team_name = team.team_name
+        self._data.save_all_players(all_players)
+        return team
 
     def remove_player(self, team_id: int, player_handle: str):
         """Removes a player from an existing team."""
-        teams = self._data.read_all_teams()
+        team, all_teams, all_players, team_players = self._get_team_and_players(team_id)
 
-        for team in teams:
-            if team.team_id == team_id:
+        # Find player in this team
+        player = next((p for p in team_players if p.handle == player_handle), None)
+        if player is None:
+            raise ValidationError("Player not in team.")
 
-                if player_handle not in team.player_handles:
-                    raise ValidationError("Player not in team.")
+        # Prevent the captain from being removed
+        if player_handle == team.captain_handle:
+            raise ValidationError("Cannot remove the captain of the team.")
 
-                # Prevent the captain from being removed
-                if player_handle == team.captain_handle:
-                    raise ValidationError("Cannot remove the captain of the team.")
-                
-                # enforce minimum team size
+        # Enforce minimum team size (after removal must still be >= 3)
+        if len(team_players) <= 3:
+            raise ValidationError("Team must have at least 3 players.")
 
-                if len(team.player_handles) <= 3:
-                    raise ValidationError()
+        # Remove from team by clearing team_name
+        player.team_name = ""
+        self._data.save_all_players(all_players)
+        return team
 
-                team.player_handles.remove(player_handle)
-                self._data.save_all_teams(teams)
-                return team
-
-        raise ValidationError("Team not found.")
-
-
-    def list_team_players(self, team_id: int) -> list:
+    def list_team_players(self, team_id: int):
         """Returns a list of Player models for a given team."""
-        team = self.get_team_details(team_id)
-        all_players = self._data.read_all_players()
-
-        return [p for p in all_players if p.player_handle in team.player_handles]
-
+        team, _, all_players, team_players = self._get_team_and_players(team_id)
+        return team_players
 
     def validate_team_size(self, team_id: int) -> bool:
         """Checks if the team satisfies the minimum and maximum size rules."""
-        team = self.get_team_details(team_id)
-        size = len(team.player_handles)
+        _, _, _, team_players = self._get_team_and_players(team_id)
+        size = len(team_players)
         return 3 <= size <= 5
-
 
     def change_captain(self, team_id: int, new_captain_handle: str):
         """Assigns a new captain, ensuring player is in team."""
-        teams = self._data.read_all_teams()
+        team, all_teams, all_players, team_players = self._get_team_and_players(team_id)
 
-        for team in teams:
-            if team.team_id == team_id:
+        if not any(p.handle == new_captain_handle for p in team_players):
+            raise ValidationError("New captain must be a team member.")
 
-                if new_captain_handle not in team.player_handles:
-                    raise ValidationError("New captain must be a team member.")
-
-                team.captain_handle = new_captain_handle
-                self._data.save_all_teams(teams)
-                return team
-
-        raise ValidationError("Team not found.")
+        team.captain_handle = new_captain_handle
+        self._data.save_all_teams(all_teams)
+        return team
