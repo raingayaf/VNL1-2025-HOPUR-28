@@ -1,47 +1,72 @@
+# UI imports
 from ui.main_menu_ui import MainMenuUI
 from ui.tournament_menu_ui import TournamentMenuUI
 from ui.captain_menu_ui import CaptainMenuUI
 from ui.organizer_menu_ui import OrganizerMenuUI
 from ui.input_handler import InputHandler
+from ui import messages
 
+# Data layer
 from data.data_api import DataApi
+
+# Logic layer
 from logic.tournament_logic import TournamentLogic
 from logic.team_logic import TeamLogic
 from logic.player_logic import PlayerLogic
+
+# Models
 from models.model_tournament import Tournament
 from models.model_team import Team
 from models.model_player import Player
 
 class UIController:
-    """Handles all UI flow and navigation between screens."""
+    """Manages navigation between UI screens based on user selection."""
+    
     def __init__(self):
+        """Initializes UI menus, input handling, data API and logic layers."""
+        # UI menus
         self.main_menu = MainMenuUI()
         self.tournament_menu = TournamentMenuUI()
         self.captain_menu = CaptainMenuUI()
         self.organizer_menu = OrganizerMenuUI()
+
+        # Input handling
         self.input_handler = InputHandler()
 
+        # Data layer
         self.data_api = DataApi()
 
+        # Logic layer
         self.tournament_logic = TournamentLogic(self.data_api)
         self.team_logic = TeamLogic(self.data_api)
         self.player_logic = PlayerLogic(self.data_api)
-    
-    def run(self):
-        """  """
-        running = True
-        while running:
+
+    #-----------------------------MAIN-MENU-------------------------------
+    def run_main_menu(self):
+        """Runs the main menu and routes the user based on their selection."""
+        in_main_menu = True
+        error_message = None
+
+        while in_main_menu:
             self.input_handler.clear_screen()
+            
+            # Show error message from previous iteration
+            if error_message is not None:
+                print('\n' + error_message.center(self.input_handler.WIDTH) + '\n')
+                error_message = None
+
+            # Show menu and handle user selection
             self.main_menu.display_main_menu()
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn númer aðgerðar: ',
                 {'1', '2', '3', 'q'}
             )
-            if user_input is None:
-                input('Ýttu á enter til að reyna aftur.')
-                continue
+            # Routes user to chosen submenu or closes program
             if user_input == '1':
-                self.tournaments_flow()
+                has_tournaments = self.run_tournaments_menu()
+                if not has_tournaments:
+                    # Generates error message that is shown before next iteration
+                    error_message = messages.NO_TOURNAMENTS
             elif user_input == '2':
                 self.input_handler.clear_screen()
                 self.captain_menu_flow()
@@ -49,137 +74,141 @@ class UIController:
                 self.input_handler.clear_screen()
                 self.organizer_menu.display_organizer_menu()
             elif user_input == 'q':
-                running = False
+                in_main_menu = False
 
-    #-----------------------GENERAL-USER-MENU-FLOW-------------------------
-    def tournaments_flow(self):
-        """  """
+    #----------------------------GENERAL-USER-MENUS-------------------------
+    def run_tournaments_menu(self) -> bool:
+        """Runs the tournaments menu and routes the user based on their selection.
+        Returns false if no tournament exists.
+        """
+        # Get all tournaments in system
         tournament_names = self.tournament_logic.get_tournament_name_list()
-        
+        # If none, user goes back to main menu and error message is shown
         if not tournament_names:
-            self.input_handler.clear_screen()
-            self.tournament_menu.display_tournaments(tournament_names)
-            input('Engin mót í kerfi. Ýttu á enter til þess að fara til baka.')
-            return
+            return False
         
         in_tournament_menu = True
 
+        # Show menu with tournaments and handle user selection
         while in_tournament_menu:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournaments(tournament_names)
-
+            # Valid options, each tournament number and b to go back
             valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {'b'}
-
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn númer móts eða til baka: ',
                 valid_input
             )
-
             if user_input == 'b':
+                # Return to main menu
                 in_tournament_menu = False
             else:
+                # Open options for selected tournament
                 index = int(user_input) - 1
                 selected_tournament = self.tournament_logic.get_tournament_by_index(index)
-                self.tournament_options_flow(selected_tournament)
+                self.run_tournament_options(selected_tournament)
 
+        return True
 
-
-    def tournament_options_flow(self, tournament: Tournament):
-        """  """
+    def run_tournament_options(self, tournament: Tournament):
+        """Runs the options menu for chosen tournament and routes the user based on their selection."""
         in_tournament_options = True
+
+        # Show tournament options and handle user selection
         while in_tournament_options:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_menu(tournament.name)
-
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn númer aðgerðar eða til baka: ',
                 {'1', '2', '3', 'b'}
             )
-
+            # Routes user to chosen submenu 
             if user_input == '1':
-                self.tournament_schedule_flow(tournament)
-
+                self.run_tournament_schedule(tournament)
             elif user_input == '2':
-                self.tournament_scoreboard_flow(tournament)
-
+                self.run_tournament_scoreboard(tournament)
             elif user_input == '3':
-                self.tournament_teams_flow(tournament)
-
+                self.run_tournament_teams(tournament)
             elif user_input == 'b':
+                # Return to the previous menu
                 in_tournament_options = False    
 
-    def tournament_schedule_flow(self, tournament: Tournament):
-        """  """
+    def run_tournament_schedule(self, tournament: Tournament):
+        """Displays the tournament schedule until the user chooses to return to the previous menu."""
         in_tournament_schedule = True
+
         while in_tournament_schedule:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_schedule(tournament.name)
-
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn b til að fara til baka: ',
                 {'b'}
             )
-
             if user_input == 'b':
+                # Return to the previous menu
                 in_tournament_schedule = False
 
-    def tournament_scoreboard_flow(self, tournament: Tournament):
-        """  """
+    def run_tournament_scoreboard(self, tournament: Tournament):
+        """Displays the tournament scoreboard until the user chooses to return to the previous menu."""
         in_tournament_scoreboard = True
+
         while in_tournament_scoreboard:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_scoreboard(tournament.name)
-
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn b til að fara til baka: ',
                 {'b'}
             )
-
             if user_input == 'b':
+                # Return to the previous menu
                 in_tournament_scoreboard = False
 
-    def tournament_teams_flow(self, tournament: Tournament):
-        """  """
+    def run_tournament_teams(self, tournament: Tournament):
+        """Displays the teams in the chosen tournament and routes the user based on their selection."""
         in_tournament_teams = True
+        # Show tournament teams and handle user selection
         while in_tournament_teams:
             teams = self.team_logic.get_teams_for_tournament(tournament.tournament_id)
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_teams(tournament.name, teams)
-
             valid_input = {str(i) for i in range(1, len(teams) + 1)} | {'b'}
-
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn númer liðs eða til baka: ',
                 valid_input
             )
-
             if user_input == 'b':
+                # Return to the previous menu
                 in_tournament_teams = False
             else:
+                # Open the player list for the selected team
                 index = int(user_input) - 1
                 selected_team: Team = teams[index]
-                self.tournament_team_players_flow(tournament, selected_team)
+                self.run_tournament_team_players(tournament, selected_team)
 
+    def run_tournament_team_players(self, tournament: Tournament, team: Team):
+        """Displays the players in chosen team until user chooses to return to the previous menu."""
+        in_team_players_menu = True
 
-    def tournament_team_players_flow(self, tournament: Tournament, team: Team):
-        """  """
-        players: list[Player] = self.player_logic.get_players_for_team(team.team_name)
-
-        self.input_handler.clear_screen()
-        self.tournament_menu.display_team_players(tournament.name, team.team_name, players)
-        input('Ýttu á enter til að fara til baka: ')
-
-
+        while in_team_players_menu:
+            players: list[Player] = self.player_logic.get_players_for_team(team.team_name)
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_team_players(tournament.name, team.team_name, players)
+            user_input = self.input_handler.get_user_input(
+                'Sláðu inn b til að fara tilbaka: ',
+                {'b'}
+            )
+            if user_input == 'b':
+                # Return to the previous menu
+                in_team_players_menu = False
 
     #------------------------CAPTAIN-MENU-FLOW------------------------------            
-
     def captain_menu_flow(self):
         """  """
         in_captain_menu = True
         while in_captain_menu:
             self.input_handler.clear_screen()
             self.captain_menu.display_captain_menu()
-            captain_input = self.input_handler.get_menu_input(
+            captain_input = self.input_handler.get_user_input(
                 'Sláðu inn númer aðgerðar: ',
                 {'1', '2', 'b'}
             )
@@ -258,7 +287,7 @@ class UIController:
             self.captain_menu.display_team_information_menu(team_name)
             # TODO: Falleg tafla yfir leikmenn liðs
 
-            user_input = self.input_handler.get_menu_input(
+            user_input = self.input_handler.get_user_input(
                 'Sláðu inn númer aðgerðar: ',
                 {'1', 'h'}
             )
