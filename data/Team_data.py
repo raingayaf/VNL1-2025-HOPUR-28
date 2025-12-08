@@ -11,7 +11,7 @@ class TeamData:
         # DataApi passes e.g. "data_base/teams.csv"
         self.file_path = file_path
 
-    def read_all_teams(self) -> list[Team]:
+    def read_all(self) -> list[Team]:
         """Read team CSV file and return list of Team objects."""
         team_list: list[Team] = []
 
