@@ -11,7 +11,7 @@ class Schedule:
         self._data = data_api
 
     def generate_matchups(self, team_names: str) -> list[tuple[str, str]]:
-        """Create matchup where no team competes against the same team twice"""
+        """Create matchup where no team competes against the same team twice(including against itself)"""
         data_list = self._data.read_all_teams()
         team_names = [row["team_name"] for row in data_list]
 
