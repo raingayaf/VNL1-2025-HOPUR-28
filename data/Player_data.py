@@ -1,6 +1,6 @@
 from models.exceptions import DataAccessError
 from datetime import date
-from models.modelPlayer import Player
+from models.model_player import Player
 import csv
 import os
 

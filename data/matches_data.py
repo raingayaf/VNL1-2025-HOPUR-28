@@ -1,5 +1,5 @@
 import csv
-from models.modelMatch import Match
+from models.model_match import Match
 
 
 class MatchesData:

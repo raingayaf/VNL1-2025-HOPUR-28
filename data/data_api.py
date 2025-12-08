@@ -1,8 +1,8 @@
 import os
-from models.modelMatch import Match
-from models.modelTournament import Tournament
-from models.modelTeam import Team
-from models.modelPlayer import Player
+from models.model_match import Match
+from models.model_tournament import Tournament
+from models.model_team import Team
+from models.model_player import Player
 
 from data.matches_data import MatchesData
 from data.tournament_data import TournamentData

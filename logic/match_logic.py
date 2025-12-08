@@ -1,5 +1,5 @@
 
-from models.modelMatch import Match
+from models.model_match import Match
 from models.exceptions import ValidationError
 
 

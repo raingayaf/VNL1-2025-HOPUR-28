@@ -1,4 +1,4 @@
-from models.modelTeam import Team
+from models.model_team import Team
 from models.exceptions import ValidationError
 
 
