@@ -252,3 +252,18 @@ Forritun
 Klárun skýrslunni (sett á ís)
 Gera tilbúið fyrir prufukeyrslu
 Staða hópmeðlima: Þorsteinn hefur yfirsýn á API og data, Kalli Sr vinnur á data layer, Kalli Jr vinnur í logic layer, Herdís og Katrín vinna í UI
+
+Færsla 11
+Dagsetning: 8/12/25
+Tími: 13:00 
+Viðstaddir: Herdís, Karl Jr., Karl Sr., Katrín Líf og Þorsteinn.
+Staða verkefnis:
+Some functionality on main
+Data and logic and ui are very close to completion
+To-do listi: 
+Forritun
+Klárun skýrslunni (sett á ís)
+Klára Git handbókinni
+Gera tilbúið fyrir prufukeyrslu     
+Staða hópmeðlima: 
+Kalli Sr er að vinna með schedule data.
