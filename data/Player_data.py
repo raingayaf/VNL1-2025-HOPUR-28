@@ -4,31 +4,38 @@ from models.modelPlayer import Player
 import csv
 import os
 
-PLAYER_CSV_PATH = "data/data_base/players.csv"
-
 
 class playerData:
-    def read_player_data(self) -> list[Player]:
-        """Read player CSV file and return a list with player info"""
-        try:
-            PlayerData: list[Player] = []
-            if not os.path.exists(PLAYER_CSV_PATH):
-                return PlayerData
+    """Repository class for reading and writing players.csv"""
 
-            with open(PLAYER_CSV_PATH, mode="r", encoding="utf-8", newline="") as file:
+    def __init__(self, file_path: str):
+        # DataApi passes in e.g. "data_base/players.csv"
+        self.file_path = file_path
+
+    def read_all(self) -> list[Player]:
+        """Read player CSV file and return a list of Player objects."""
+        try:
+            players: list[Player] = []
+
+            if not os.path.exists(self.file_path):
+                # No file yet = no players
+                return players
+
+            with open(self.file_path, mode="r", encoding="utf-8", newline="") as file:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
                     try:
-                        player_id: int = int(row["id"])
-                        name: str = row.get("name")
-                        date_of_birth: date = row.get("date_of_birth")
-                        address: str = row.get("address")
-                        phone: str = row.get("phone")
-                        email: str = row.get("email")
-                        link: str = row.get("link")
-                        handle: str = row.get("handle")
-                        team_name: str = row.get("team_name")
-                        Players: Player = Player(
+                        player_id: int = int(row["player_id"])
+                        name: str = row.get("name", "")
+                        date_of_birth: str = row.get("date_of_birth", "")
+                        address: str = row.get("address", "")
+                        phone: str = row.get("phone", "")
+                        email: str = row.get("email", "")
+                        link: str = row.get("link", "")
+                        handle: str = row.get("handle", "")
+                        team_name: str = row.get("team_name", "")
+
+                        player = Player(
                             player_id,
                             name,
                             date_of_birth,
@@ -39,17 +46,20 @@ class playerData:
                             handle,
                             team_name,
                         )
-                        PlayerData.append(Players)
-                    except (KeyError, ValueError) as KVerror:
-                        print("fake print fall")
-                        # TODO: kalla í print í UI fall sem segir error(KVerror)
-            return PlayerData
-        except OSError as exc:
-            raise DataAccessError(f"ekki tókst að lesa skrá {PLAYER_CSV_PATH}: {exc}")
-            # TODO: mögulega gera print skipun í UI til að framkalla þessi skilaboð.
+                        players.append(player)
+                    except (KeyError, ValueError):
+                        # Here you'd normally log or propagate, but don't print in data layer
+                        # For now we just skip bad rows
+                        continue
 
-    def update_player_info(self, PlayerData: list[Player]) -> None:
-        with open(PLAYER_CSV_PATH, mode="w", encoding="utf-8", newline="") as file:
+            return players
+
+        except OSError as exc:
+            raise DataAccessError(f"ekki tókst að lesa skrá {self.file_path}: {exc}")
+
+    def write_all(self, players: list[Player]) -> None:
+        """Overwrite players.csv with the given list of Player objects."""
+        with open(self.file_path, mode="w", encoding="utf-8", newline="") as file:
             fieldnames = [
                 "player_id",
                 "name",
@@ -65,7 +75,7 @@ class playerData:
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
 
-            for player in PlayerData:
+            for player in players:
                 writer.writerow(
                     {
                         "player_id": player.player_id,

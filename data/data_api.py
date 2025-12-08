@@ -12,7 +12,7 @@ from data.Player_data import playerData
 
 class DataApi:
     """Api for the logic layer to be able to fetch from data layer"""
-    def __init__(self, base_path: str = "data_base"):
+    def __init__(self, base_path: str = "data/data_base"):
         """Creates a correct file path for the .csv file and makes repo 
     objects for reading and writing into them"""
 
