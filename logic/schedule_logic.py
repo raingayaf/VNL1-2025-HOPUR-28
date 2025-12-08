@@ -3,7 +3,7 @@ from data.tournament_data import TournamentData
 from data.Team_data import TeamData
 
 GAME_TIMES = ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"]
-MAX_GAMES_PER_DAY = 3
+MAX_GAMES_PER_DAY = 7
 
 
 class Schedule:
