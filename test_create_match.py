@@ -4,8 +4,8 @@ from models.exceptions import ValidationError
 
 
 def test_create_match():
-    # ✅ ONE DataApi instance, using the default base path
-    data = DataApi()               # <--- important: no "data_base" here
+    # ONE DataApi instance, using the default base path
+    data = DataApi()            
     logic = MatchLogic(data)
 
     print("Teams visible to MatchLogic:")
