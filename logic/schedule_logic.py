@@ -10,7 +10,7 @@ class Schedule:
     def __init__(self, data_api):
         self._data = data_api
 
-    def generate_matchups(self, team_names: str) -> list[tuple[str, str]]:
+    def generate_matchups(self, team_names: list[str]) -> list[tuple[str, str]]:
         """Create matchup where no team competes against the same team twice(including against itself)"""
         # gets names of every team in tournament
 
@@ -22,56 +22,35 @@ class Schedule:
                 matchups.append(
                     (team_names[i], team_names[j])
                 )  # makes sure every matchup is -
-                # correct i.e no team competes against the same team twice
-
+            # correct i.e no team competes against the same team twice
+        random.shuffle(matchups)
         return matchups
 
     def assign_times(self, matchups):
         """Assign matchups at random times throughout a single day"""
         schedule = []
-        day = 1  # virtual day 1
+        day = 1
         games_today = 0
 
-        previous_day_pairs = (
-            set()
-        )  # store match pairs from previous day prevent repeat matchups
-
-        for team_a, team_b in matchups:  # if today has maximum games, move to next day
+        for team_a, team_b in matchups:
             if games_today == MAX_GAMES_PER_DAY:
                 day += 1
                 games_today = 0
 
-                # get all matchups played on the previous day
-                previous_day_pairs = {
-                    (m["team_a"], m["team_b"]) for m in schedule if m["day"] == day - 1
-                }
-            # prevent same matchup on back to back days
-            if (team_a, team_b) in previous_day_pairs or (
-                team_b,
-                team_a,
-            ) in previous_day_pairs:
+            time_slot = random.choice(GAME_TIMES)
 
-                matchups.append(
-                    (team_a, team_b)
-                )  # make this matchup later in the list and try -
-                continue  # again another day.
-
-            time_slot = random.choice(GAME_TIMES)  # random choice for matchups
-
-            schedule.append(
-                {
-                    "day": day,
-                    "team_a": team_a,
-                    "team_b": team_b,
-                    "time": time_slot,
-                }
-            )
+            schedule.append({
+                "day": day,
+                "team_a": team_a,
+                "team_b": team_b,
+                "time": time_slot,
+            })
 
             games_today += 1
 
         return schedule
 
-    def generate_schedule(self, tournament, teams):
+    def generate_schedule(self, teams):
 
         team_names = [team.team_name for team in teams]
 
