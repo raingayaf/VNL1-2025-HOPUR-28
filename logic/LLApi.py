@@ -101,20 +101,20 @@ class LLApi:
 
     def get_all_teams(self):
         return self.data_api.read_all_teams()
+    
 
-    def create_tournament(
-        self,
-        name: str,
-        venue: str,
-        start_date: str,
-        end_date: str,
-        contact_name: str,
-        contact_email: str,
-        contact_phone: str,
-        max_servers: int,
-    ):
 
-        return self.create_tournament(
+    def create_tournament(self, 
+                name: str, 
+                venue: str, 
+                start_date: str, 
+                end_date: str, 
+                contact_name: str, 
+                contact_email: str, 
+                contact_phone: str,
+                max_servers: int):
+        
+        return self.tournament_logic.create_tournament(
             name,
             venue,
             start_date,

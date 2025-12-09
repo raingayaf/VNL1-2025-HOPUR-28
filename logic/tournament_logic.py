@@ -54,4 +54,4 @@ class TournamentLogic:
         tournaments.append(new_tournament)
         self._data_api.save_all_tournaments(tournaments)
 
-        return new_tournament 
+        return new_tournament
