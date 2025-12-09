@@ -1,5 +1,3 @@
-from data.Team_data import TeamData
-from data.tournament_data import TournamentData
 from logic.LLApi import LLApi
 from logic.schedule_logic import Schedule
 
@@ -52,8 +50,8 @@ if __name__ == "__main__":
 
     d_menu = ScheduleUI(data_api)
 
-    tournaments = data_api.read_all_tournaments()
-    teams = data_api.read_all_teams()
+    tournaments = data_api.get_all_tournaments()
+    teams = data_api.get_team_details()
 
     tournament = tournaments[0]
 
