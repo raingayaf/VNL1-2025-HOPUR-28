@@ -1,16 +1,17 @@
 from data.data_api import DataApi
 from models.model_team import Team
 from models.model_match import Match
+from models.model_player import Player
 from models.exceptions import ValidationError
 
-
 class TeamLogic:
-    """Handles team logic functions for things such as creating a team."""
+    """Handles team related logic."""
 
-    def __init__(self, data_api: DataApi):
+    def __init__(self, data_api: DataApi) -> None:
         """Initializes the logic class with a refrence to the data API."""
         self._data_api = data_api
 
+    #------------------METHODS-THAT-GET-DATA------------------------
     def get_all_teams(self) -> list[Team]:
         """Returns a list of all teams from the data layer."""
         return self._data_api.read_all_teams()
@@ -20,10 +21,18 @@ class TeamLogic:
         teams = self._data_api.read_all_teams()
         return any(team.team_name == team_name for team in teams)
 
+    def get_team_details(self, team_id: int) -> Team:
+        """Returns a Team object by ID."""
+        teams = self._data_api.read_all_teams()
+        for team in teams:
+            if team.team_id == team_id:
+                return team
+        raise ValidationError("Team not found.")
+
     def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
         """Return all matches from selected tournament."""
         matches = self._data_api.read_all_matches()
-        #iterates over every match belonging to a given tournament id and creates list
+        # Iterate over every match belonging to a given tournament ID and creates a list
         return [match for match in matches if match.tournament_id == tournament_id]
 
     def get_teams_for_tournament(self, tournament_id: int) -> list[Team]:
@@ -43,7 +52,46 @@ class TeamLogic:
             team for team in all_teams if team.team_name in team_names
         ]
         return participating_teams
+    
+    def list_team_players(self, team_id: int):
+        """Returns a list of Player models for a given team."""
+        teams = self._data_api.read_all_teams()
+        players = self._data_api.read_all_players()
 
+        wanted_team = None
+
+        for team in teams:
+            if team.team_id == team_id:
+                wanted_team = team
+
+        if wanted_team is None:
+            raise ValidationError("Lið með auðkenni {team_id} fannst ekki.")
+
+        team_players = []
+        for player in players:
+            if player.team_name == wanted_team.team_name:
+                team_players.append(player)
+
+        return team_players
+
+    def validate_team_size(self, team_id: int) -> bool:
+        """Checks if the team satisfies the minimum and maximum size rules."""
+
+        teams = self._data_api.read_all_teams()
+        players = self._data_api.read_all_players()
+
+        validate_team = None
+        for team in teams:
+            if team.team_id == team_id:
+                validate_team = team
+
+        count = 0
+        for player in players:
+            if player.team_name == validate_team.team_name:
+                count += 1
+        return 3 <= count <= 5
+
+    #------------------METHODS-THAT-CHANGE-DATA----------------------
     def create_team(self, name: str, captain_handle: str, player_handles: list[str]) -> Team:
         """Creates a new team and validates rules such as player count and captain presence."""
 
@@ -97,37 +145,6 @@ class TeamLogic:
         self._data_api.save_all_players(all_players)
 
         return new_team
-
-    def get_team_details(self, team_id: int) -> Team:
-        """Returns a Team object by ID."""
-        teams = self._data_api.read_all_teams()
-        for team in teams:
-            if team.team_id == team_id:
-                return team
-        raise ValidationError("Team not found.")
-
-    def _get_team_and_players(self, team_id: int):
-        """Finds a team by it's Id and all it's players"""
-
-        #Loads all teams and players
-        teams = self._data_api.read_all_teams()
-        players = self._data_api.read_all_players()
-
-        #Finds the team matchit team_id
-        team = None
-        for t in teams:
-            if t.team_id == team_id:
-                team = t
-
-        if team is None:
-            raise ValidationError("Lið er ekki til")
-        #Collects all players belonging to team
-        team_players = []
-        for player in players:
-            if player.team_name == team.team_name:
-                team_players.append(player)
-
-        return team, players, team_players
 
     def add_player(self, team_id: int, player_handle: str):
         """Adds a player to an existing team."""
@@ -183,46 +200,6 @@ class TeamLogic:
 
         self._data_api.save_all_players(all_players)
 
-
-    def list_team_players(self, team_id: int):
-        """Returns a list of Player models for a given team."""
-        teams = self._data_api.read_all_teams()
-        players = self._data_api.read_all_players()
-
-        wanted_team = None
-
-        for team in teams:
-            if team.team_id == team_id:
-                wanted_team = team
-
-        if wanted_team is None:
-            raise ValidationError("Lið með auðkenni {team_id} fannst ekki.")
-
-        team_players = []
-        for player in players:
-            if player.team_name == wanted_team.team_name:
-                team_players.append(player)
-
-        return team_players
-
-
-    def validate_team_size(self, team_id: int) -> bool:
-        """Checks if the team satisfies the minimum and maximum size rules."""
-
-        teams = self._data_api.read_all_teams()
-        players = self._data_api.read_all_players()
-
-        validate_team = None
-        for team in teams:
-            if team.team_id == team_id:
-                validate_team = team
-
-        count = 0
-        for player in players:
-            if player.team_name == validate_team.team_name:
-                count += 1
-        return 3 <= count <= 5
-
     def change_captain(self, team_id: int, new_captain_handle: str):
         """Assigns a new captain, ensuring player is in team."""
         team, all_teams, team_players = self._get_team_and_players(team_id)
@@ -239,3 +216,40 @@ class TeamLogic:
         self._data_api.save_all_teams(all_teams)
 
         return team
+
+    #------------------INTERNAL-HELPER-METHODS----------------------
+
+    def _get_team_and_players(self, team_id: int):
+        """Finds a team by it's Id and all it's players"""
+
+        #Loads all teams and players
+        teams = self._data_api.read_all_teams()
+        players = self._data_api.read_all_players()
+
+        #Finds the team matchit team_id
+        team = None
+        for t in teams:
+            if t.team_id == team_id:
+                team = t
+
+        if team is None:
+            raise ValidationError("Lið er ekki til")
+        #Collects all players belonging to team
+        team_players = []
+        for player in players:
+            if player.team_name == team.team_name:
+                team_players.append(player)
+
+        return team, players, team_players
+
+    
+
+    
+
+
+    
+
+
+    
+
+    
