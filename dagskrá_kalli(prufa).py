@@ -20,7 +20,7 @@ class ScheduleUI:
         print("E-SPORTS".center(self.WIDTH))
         print("*" * self.WIDTH + "\n")
         print(f"{tournament.name}".center(self.WIDTH))
-        print("Mótsdagskrá".center(self.WIDTH) + "\n")
+        print("Dagskrá".center(self.WIDTH) + "\n")
         print(
             f"Venue: {tournament.venue}\nStart: {tournament.start_date}\nEnd: {tournament.end_date}".center(
                 self.WIDTH
@@ -28,27 +28,22 @@ class ScheduleUI:
         )
         day_matches = [m for m in schedule if m["day"] == day_to_show]
         print(f"Dagur {day_to_show}".center(self.WIDTH))
-
+        print()
         for match in day_matches:
             time = match["time"]
             team_a = match["team_a"]
             team_b = match["team_b"]
             line = f"{time}  |  {team_a} vs {team_b}"
             print(line)
-
-        print("*" * self.WIDTH)
-        input("B: Til baka: ")
+        print("\n"+"*" * self.WIDTH)
+        input("b: Til baka: ")
 
 
 if __name__ == "__main__":
     data_api = LLApi()
-
     d_menu = ScheduleUI(data_api)
-
     tournaments = data_api.get_all_tournaments()
     teams = data_api.get_all_teams()
-
     tournament = tournaments[0]
-
     d_menu.displey_schedule_menu(tournament, teams)
     d_menu.displey_schedule_menu(tournament, teams, day_to_show=1)
