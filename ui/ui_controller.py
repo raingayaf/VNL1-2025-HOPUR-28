@@ -58,11 +58,10 @@ class UIController:
                     # Generates error message that is shown before next iteration
                     error_message = messages.NO_TOURNAMENTS
             elif user_input == '2':
-                self.input_handler.clear_screen()
-                self.captain_menu_flow()
+                self.run_captain_menu()
             elif user_input == '3':
                 self.input_handler.clear_screen()
-                self.organizer_menu.display_organizer_menu()
+                self.orginizer_menu_flow()
             elif user_input == 'q':
                 in_main_menu = False
 
@@ -192,25 +191,25 @@ class UIController:
                 in_team_players_menu = False
 
     #------------------------CAPTAIN-MENU-FLOW------------------------------            
-    def captain_menu_flow(self):
-        """  """
+    def run_captain_menu(self):
+        """Runs the captain menu and routes the user based on their selection."""
         in_captain_menu = True
         while in_captain_menu:
             self.input_handler.clear_screen()
             self.captain_menu.display_captain_menu()
             captain_input = self.input_handler.get_user_input(
-                'Sláðu inn númer aðgerðar: ',
+                messages.ACTION_OR_BACK_PROMPT,
                 {'1', '2', 'b'}
             )
             if captain_input == '1':
-                self.team_registration_flow()
+                self.team_registration()
             elif captain_input == '2':
-                self.captain_verification_flow()
+                self.run_captain_verification()
             elif captain_input == 'b':
                 in_captain_menu = False
     
-    def team_registration_flow(self):
-        """  """
+    def team_registration(self):
+        """Run the team registratiom for a team captain."""
         self.input_handler.clear_screen()
         self.captain_menu.display_team_registration_menu()
         #team_id?
@@ -220,9 +219,9 @@ class UIController:
         #team_website?
         #team_logo?
         # TODO: Senda í logic/data layer
-        self.player_registration_flow(team_name, number_of_players)
+        self.run_player_registration(team_name, number_of_players)
     
-    def player_registration_flow(self, team_name: str, number_of_players: int):
+    def run_player_registration(self, team_name: str, number_of_players: int):
         """  """
         players = []
 
@@ -253,7 +252,7 @@ class UIController:
     # TODO: senda (team_name, players) í logic/data layer
 
 
-    def captain_verification_flow(self):
+    def run_captain_verification(self):
         """  """
         self.input_handler.clear_screen()
         self.captain_menu.display_captain_verification_menu()
@@ -265,10 +264,10 @@ class UIController:
         # dæmi!
         players = ['Leikmaður 1', 'Leikmaður 2', 'Leikmaður 3']
 
-        self.team_information_flow(team_name, players)
+        self.run_team_information(team_name, players)
 
 
-    def team_information_flow(self, team_name: str, players: list[str]):
+    def run_team_information(self, team_name: str, players: list[str]):
         """  """
         in_team_info = True
 
@@ -283,18 +282,18 @@ class UIController:
             )
 
             if user_input == '1':
-                self.select_player_flow(team_name, players)
+                self.run_player_indformation_selection(team_name, players)
             
             elif user_input == 'b':
                 in_team_info = False
 
 
-    def select_player_flow(self, team_name: str, players: list[str]):
+    def run_player_indformation_selection(self, team_name: str, players: list[str]):
         """  """
         pass
 
 
-    def player_information_flow(self):
+    def run_player_information(self):
         """  """
         pass
 
@@ -313,16 +312,35 @@ class UIController:
                 {'1', '2', '3', 'b'})
             
             if user_input == '1':
-                self.organizer_menu.display_tournament_creation()
-                tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
-                tournament_start_date = self.input_handler.get_non_empty_string("Sláðu inn upphafsdagsetningu:")
-                tournament_end_date = self.input_handler.get_non_empty_string("Sláðu inn endadagsetningu:")
-                tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
-                tournament_contact_name = self.input_handler.get_non_empty_string("Sláðu inn nafn tengiliðs:")
-                tournament_contact_email = self.input_handler.get_non_empty_string("Sláðu inn netfang tengiliðs: ")
-                tournament_contact_phone = self.input_handler.get_non_empty_string("Sláðu inn símanúmer tengiliðs:")
+                    self.tournament_creation_flow()
+            elif user_input == '2':
+                pass
+            elif user_input == '3':
+                pass
+            elif user_input == 'b':
+                in_orginizer_menu = False
                 
-                max_servers = 3
+    def tournament_creation_flow(self):
+        tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
+        tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
+        tournament_start_date = self.input_handler.get_non_empty_string("Sláðu inn upphafsdagsetningu:")
+        tournament_end_date = self.input_handler.get_non_empty_string("Sláðu inn endadagsetningu:")
+        tournament_contact_name = self.input_handler.get_non_empty_string("Sláðu inn nafn tengiliðs:")
+        tournament_contact_email = self.input_handler.get_non_empty_string("Sláðu inn netfang tengiliðs: ")
+        tournament_contact_phone = self.input_handler.get_non_empty_string("Sláðu inn símanúmer tengiliðs:")
+        
+        max_servers = 3
 
-            try:
-                new_tournament = 
+        new_tournament = self.logic_api.create_tournament(
+            name = tournament_name,
+            venue = tournament_venue,
+            start_date = tournament_start_date,
+            end_date = tournament_end_date,
+            contact_name = tournament_contact_name,
+            contact_email = tournament_contact_email,
+            contact_phone = tournament_contact_phone,
+            max_servers = max_servers
+    
+        )
+
+    
