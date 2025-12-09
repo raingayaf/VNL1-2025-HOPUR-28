@@ -99,17 +99,20 @@ class LLApi:
         """UI calls this to get all players on team."""
         return self.player_logic.get_players_for_team(team_name)
     
+    def get_all_teams(self):
+        return self.data_api.read_all_teams()
     
 
 
     def create_tournament(self, 
-                name: str, venue: str, 
+                name: str, 
+                venue: str, 
                 start_date: str, 
                 end_date: str, 
                 contact_name: str, 
                 contact_email: str, 
                 contact_phone: str,
-                max_servers: int);
+                max_servers: int),
         
         return self.create_tournament(
             name,

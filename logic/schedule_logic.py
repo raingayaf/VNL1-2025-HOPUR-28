@@ -12,8 +12,6 @@ class Schedule:
 
     def generate_matchups(self, team_names: str) -> list[tuple[str, str]]:
         """Create matchup where no team competes against the same team twice(including against itself)"""
-        data_list = self._data.read_all_teams()
-        team_names = [row["team_name"] for row in data_list]
         # gets names of every team in tournament
 
         matchups = []
@@ -74,13 +72,11 @@ class Schedule:
         return schedule
 
     def generate_schedule(self, tournament, teams):
-        # Extract just the names from team objects
+
         team_names = [team.team_name for team in teams]
 
-        # Step 1: generate matchups (unique + random)
         matchups = self.generate_matchups(team_names)
 
-        # Step 2: assign days + times (your Option B logic)
         schedule = self.assign_times(matchups)
 
         return schedule

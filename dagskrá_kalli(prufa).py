@@ -9,7 +9,7 @@ class ScheduleUI:
     def __init__(self, data_api):
         self._schedule_logic = Schedule(data_api)
 
-    def displey_schedule_menu(self, tournament: str, teams: list[str]):
+    def displey_schedule_menu(self, tournament, teams):
         """Display schedule to anyone"""
 
         schedule = self._schedule_logic.generate_schedule(tournament, teams)
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     d_menu = ScheduleUI(data_api)
 
     tournaments = data_api.get_all_tournaments()
-    teams = data_api.get_team_details()
+    teams = data_api.
 
     tournament = tournaments[0]
 
