@@ -2,7 +2,11 @@ from data.data_api import DataApi
 from logic.team_logic import TeamLogic
 from logic.match_logic import MatchLogic
 from logic.player_logic import PlayerLogic
-
+from logic.tournament_logic import TournamentLogic
+from models.model_tournament import Tournament
+from models.model_player import Player
+from models.model_team import Team
+from models.model_match import Match
 
 class LLApi:
     """
@@ -10,11 +14,13 @@ class LLApi:
     UI layer should only talk to this class, not directly to logic or data.
     """
 
-    def __init__(self):
-        self.data_api = DataApi()
-        self.team_logic = TeamLogic(self.data_api)
-        self.match_logic = MatchLogic(self.data_api)
-        self.player_logic = PlayerLogic(self.data_api)
+    def __init__(self) -> None:
+        data_api = DataApi()
+        self.data_api = data_api
+        self.team_logic = TeamLogic(data_api)
+        self.match_logic = MatchLogic(data_api)
+        self.player_logic = PlayerLogic(data_api)
+        self.tournament_logic = TournamentLogic(data_api)
 
     def create_team(self, name: str, captain_handle: str, player_handles: str):
 
@@ -71,3 +77,25 @@ class LLApi:
     def get_all_tournaments(self):
         """UI calls this to get a list of all tournaments."""
         return self.data_api.read_all_tournaments()
+    
+    def get_tournament_name_list(self) -> list[str]:
+        """UI calls this to get a list of tournament names."""
+        return self.tournament_logic.get_tournament_name_list()
+    
+    def get_all_tournaments(self) -> list[Tournament]:
+        """UI calls this to get all tournaments."""
+        return self.tournament_logic.get_all_tournaments()
+    
+    def get_tournament_by_index(self, index: int) -> Tournament:
+        """UI calls this to get a single tournament by its index."""
+        return self.tournament_logic.get_tournament_by_index(index)
+    
+    def get_teams_for_tournament(self, tournament_id: int) -> list[Team]:
+        """UI calls this to get all teams participating in a tournament."""
+        return self.team_logic.get_teams_for_tournament(tournament_id)
+    
+    def get_players_for_team(self, team_name: str) -> list[Player]:
+        """UI calls this to get all players on team."""
+        return self.player_logic.get_players_for_team(team_name)
+    
+    
