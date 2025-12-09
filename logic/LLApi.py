@@ -2,6 +2,7 @@ from data.data_api import DataApi
 from logic.team_logic import TeamLogic
 from logic.match_logic import MatchLogic
 from logic.player_logic import PlayerLogic
+from logic.tournament_logic import TournamentLogic
 
 
 class LLApi:
@@ -17,7 +18,7 @@ class LLApi:
         self.player_logic = PlayerLogic(data_api)
 
     
-    def create_team(self, 
+    def create_team(self,
                     name: str, 
                     captain_handle: str, 
                     player_handles: str):
@@ -82,3 +83,23 @@ class LLApi:
     def get_all_tournaments(self):
         """UI calls this to get a list of all tournaments."""
         return self.data_api.read_all_tournaments()
+
+
+    def create_tournament(self, 
+                name: str, venue: str, 
+                start_date: str, 
+                end_date: str, 
+                contact_name: str, 
+                contact_email: str, 
+                contact_phone: str,
+                max_servers: int);
+        
+        return self.create_tournament(
+            name,
+            start_date,
+            end_date,
+            contact_name,
+            contact_email,
+            contact_phone,
+            max_servers
+        )

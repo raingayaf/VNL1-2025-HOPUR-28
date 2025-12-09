@@ -78,11 +78,7 @@ class TournamentData:
                     {
                         # Here we assume your Tournament model stores this as .id_value
                         # or .tournament_id — adjust as needed:
-                        "tournament_id": (
-                            tournament.id_value
-                            if hasattr(tournament, "id_value")
-                            else tournament.tournament_id
-                        ),
+                        "tournament_id": tournament.tournament_id,                            
                         "name": tournament.name,
                         "venue": tournament.venue,
                         "start_date": tournament.start_date,
