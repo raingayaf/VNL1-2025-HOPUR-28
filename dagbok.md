@@ -270,15 +270,16 @@ Kalli Sr er að vinna með schedule data.
 
 Færsla 12
 Dagsetning: 9/12/25
-Tími: 13:00 
+Tími: 14:00
 Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn.
 Staða verkefnis:
-code rewritten
-
+Smá fundur var haldinn til að taka stöðu
+data og models layer eru talinn að vera tilbúinn
+Prufukeyrslur á mismunandi hafa verið framkvæmðar
 To-do listi: 
 Forritun
 Klárun skýrslunni (sett á ís)
-Klára Git handbókinni
-Gera tilbúið fyrir prufukeyrslu     
+Klára Git handbókinni  
 Staða hópmeðlima: 
-Kalli Jr er að vinna í Git handbók 2.0
+Kalli Jr er að vinna í Git handbók 2.0, ætlar til að klára í kvöld svo að hann getur hjálpað til með kóðan
+Kalli Sr
