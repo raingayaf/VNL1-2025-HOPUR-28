@@ -267,3 +267,18 @@ Klára Git handbókinni
 Gera tilbúið fyrir prufukeyrslu     
 Staða hópmeðlima: 
 Kalli Sr er að vinna með schedule data.
+
+Færsla 12
+Dagsetning: 9/12/25
+Tími: 13:00 
+Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn.
+Staða verkefnis:
+code rewritten
+
+To-do listi: 
+Forritun
+Klárun skýrslunni (sett á ís)
+Klára Git handbókinni
+Gera tilbúið fyrir prufukeyrslu     
+Staða hópmeðlima: 
+Kalli Jr er að vinna í Git handbók 2.0
