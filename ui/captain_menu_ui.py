@@ -15,35 +15,24 @@ class CaptainMenuUI:
         print('*' * self.WIDTH + '\n')
 
     def display_team_registration_menu(self):
-        """Display team registration menu and obtain team name, captain handle and number of players."""
+        """Display team registration menu to captain."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print('Skrá lið'.center(self.WIDTH) + '\n')
-        #team_id?
-        #team_name = input('Skráðu heiti liðsins: ')
-        #team_captain_handle = input('Skráðu leikmanna nafn fyrirliðans: ')
-        #number_of_players = int(input('skráðu fjölda leikmanna: '))
-        #team_website?
-        #team_logo?
+        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q' til að hætta í skráningarferli.".center(self.WIDTH) + '\n')
+        print('Skrá lið'.center(self.WIDTH))
 
     def display_player_registration_menu(self, team_name: str, player_index: int):
-        """Display player registration menu and obtain information for each team player."""
+        """Display player registration menu."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
+        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print(team_name.center(self.WIDTH))
         subhead = f'Skrá upplýsingar um leikmann {player_index}'
         print(subhead.center(self.WIDTH) + '\n')
-        #player_id --> Það er player_id í database...
-        #player_name = input('Skráðu fullt nafn: ')
-        #player_date_of_birth = input('Skráðu fæðingardag og ár: ')
-        #player_address = input('Skráðu heimilisfang: ')
-        #player_phone = input('Skráðu símanúmer: ')
-        #player_email = input('Skráðu netfang: ')
-        #player_link = input('Skráðu vefslóð: ')
-        #player_handle = input('Skráðu leikmanna nafn: ')
-        #player_team_name --> Það er team_name í database...
 
     def display_captain_verification_menu(self):
         """Display team captain verification menu."""

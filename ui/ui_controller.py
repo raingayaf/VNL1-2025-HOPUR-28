@@ -13,6 +13,7 @@ from logic.LLApi import LLApi
 from models.model_tournament import Tournament
 from models.model_team import Team
 from models.model_player import Player
+from models.exceptions import ValidationError
 
 class UIController:
     """Manages navigation between UI screens based on user selection."""
@@ -202,55 +203,276 @@ class UIController:
                 {'1', '2', 'b'}
             )
             if captain_input == '1':
-                self.team_registration()
+                self.run_team_registration()
             elif captain_input == '2':
                 self.run_captain_verification()
             elif captain_input == 'b':
                 in_captain_menu = False
     
-    def team_registration(self):
+    def run_team_registration(self) -> None:
         """Run the team registratiom for a team captain."""
-        self.input_handler.clear_screen()
-        self.captain_menu.display_team_registration_menu()
-        #team_id?
-        team_name = self.input_handler.get_non_empty_string('Skráðu heiti liðsins: ')
-        captain_handle = self.input_handler.get_non_empty_string('Skráðu leikmanna nafn fyrirliðans: ')
-        number_of_players = self.input_handler.get_int('Skráðu fjölda leikmanna: ', 3, 5)
-        #team_website?
-        #team_logo?
-        # TODO: Senda í logic/data layer
-        self.run_player_registration(team_name, number_of_players)
-    
-    def run_player_registration(self, team_name: str, number_of_players: int):
-        """  """
-        players = []
+        in_team_registration = True
+        step = 1
 
-        for i in range(1, number_of_players + 1):
+        team_name = ''
+        captain_handle = ''
+        number_of_players = 0
+        team_website = ''
+        team_logo = ''
+        player_handles: list[str] = [] 
+
+        while in_team_registration:
             self.input_handler.clear_screen()
-            self.captain_menu.display_player_registration_menu(team_name, i)
+            self.captain_menu.display_team_registration_menu()
 
-            #player_id --> Það er player_id í database...
-            player_name = self.input_handler.get_non_empty_string('Skráðu fullt nafn: ')
-            player_date_of_birth = self.input_handler.get_non_empty_string('Skráðu fæðingardag og ár: ')
-            player_address = self.input_handler.get_non_empty_string('Skráðu heimilisfang: ')
-            player_phone = self.input_handler.get_non_empty_string('Skráðu símanúmer: ')
-            player_email = self.input_handler.get_non_empty_string('Skráðu netfang: ')
-            player_link = self.input_handler.get_non_empty_string('Skráðu vefslóð: ')
-            player_handle = self.input_handler.get_non_empty_string('Skráðu leikmanna nafn: ')
-            #player_team_name --> Það er team_name í database...
-        
-        player_data = {
-            'name': player_name,
-            'date_of_birth': player_date_of_birth,
-            'address': player_address,
-            'phone': player_phone,
-            'email': player_email,
-            'link': player_link,
-            'handle': player_handle
-        }
-        players.append(player_data)    
-    # TODO: senda (team_name, players) í logic/data layer
+            # Show all already entered values as context
+            if team_name:
+                print(f'Skráðu heiti liðsins: {team_name}')
+            if captain_handle:
+                print(f'Skráðu leikmanna nafn fyrirliðans: {captain_handle}')
+            if number_of_players:
+                print(f'Skráðu fjölda leikmanna (3-5): {number_of_players}')
+            if team_website or team_logo:
+                print('Valkvæðar upplýsingar um lið:')
+                print(f'Vefslóð liðsins: {team_website or ''}')
+                print(f'Vefslóð liðsins: {team_logo or ''}')
 
+            # Step 1 - Team name
+            if step == 1:
+                user_input = self.input_handler.get_input_with_nav('Skráðu heiti liðsins: ')
+                if user_input == 'QUIT':
+                    in_team_registration = False
+                    continue
+                if user_input == 'BACK':
+                    in_team_registration = False
+                    continue
+                if self.logic_api.team_name_exists(user_input):
+                    print(f"Liðið '{user_input}' er nú þegar á skrá.")
+                    input('Ýttu á ENTER til að reyna aftur.')
+                    continue
+                team_name = user_input
+                step = 2
+                continue
+
+            # Step 2 - Captain handle
+            if step == 2:
+                user_input = self.input_handler.get_input_with_nav('Skráðu leikmanna nafn fyrirliðans: ')
+                if user_input == 'QUIT':
+                    in_team_registration = False
+                    continue
+                if user_input == 'BACK':
+                    team_name = ''
+                    step = 1
+                    continue
+                if self.logic_api.handle_exists(user_input):
+                    print(f"Leikmanna nafnið '{user_input}' er nú þegar á skrá.")
+                    input('Ýttu á ENTER til að halda áfram.')
+                    continue
+                captain_handle = user_input
+                step = 3
+                continue
+
+            # Step 3 - Number of players
+            if step == 3:
+                user_input = self.input_handler.get_input_with_nav('Skráðu fjölda leikmanna (3-5): ')
+                if user_input == 'QUIT':
+                    in_team_registration = False
+                    continue
+                if user_input == 'BACK':
+                    captain_handle = ''
+                    step = 2
+                    continue
+                if not user_input.isdigit():
+                    print('Sláðu inn númer 3 til 5.')
+                    continue
+                number = int(user_input)
+                if number < 3 or number > 5:
+                    print('Lið má bara hafa 3-5 leikmenn.')
+                    continue
+                number_of_players = number
+                step = 4
+                continue
+
+            # Step 4 - Optional website and logo
+            if step == 4:
+                print('Valkvæðar upplýsingar um lið (sleppir með því að ýta á ENTER).')
+                team_website = input('Vefslóð liðsins: ').strip()
+                team_logo = input('Logo liðsins: ').strip()
+
+                step = 5
+                continue
+
+            # Step 5 - Player registration
+            if step == 5:
+                player_handles = self.run_player_registration(team_name, number_of_players)
+
+                if player_handles == 'QUIT':
+                    in_team_registration = False
+                    continue
+                if captain_handle not in player_handles:
+                    print('Fyrirliði þarf að vera einn af leikmönnunum.')
+                    input('Ýttu á ENTER til að halda áfram.')
+                    step = 2
+                    continue
+                step = 6
+                continue
+
+            # Step 6 - Create team
+            if step == 6:
+                try:
+                    self.logic_api.create_team(
+                        name = team_name, 
+                        captain_handle = captain_handle,
+                        player_handles = player_handles,
+                        website = team_website,
+                        logo = team_logo,
+                        )
+                    print(f"Liðið '{team_name}' hefur verið skráð!")
+                except ValidationError as e:
+                    print(f'Villa við skráningu liðs: {e}')
+                input('Ýttu á ENTER til að halda áfram.')
+                in_team_registration = False
+                continue
+    
+    def run_player_registration(self, team_name: str, number_of_players: int) -> list[str]:
+        """  """
+        in_player_registration = True
+        current_player = 1
+        player_handles: list[str] = []
+
+        while in_player_registration:
+            if current_player > number_of_players:
+                break
+
+            self.input_handler.clear_screen()
+            self.captain_menu.display_player_registration_menu(team_name, current_player)
+
+            player_name = ''
+            player_date_of_birth = ''
+            player_address = ''
+            player_phone = ''
+            player_email = ''
+            player_link = ''
+            player_handle = ''
+
+            step = 1
+
+            while step <= 7 and in_player_registration:
+                # Step 1 - Name
+                if step == 1:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu fullt nafn: ')
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        if current_player == 1:
+                            return 'QUIT'
+                        current_player -= 1
+                        if player_handles:
+                            player_handles.pop()
+                        break
+                    player_name = user_input
+                    step = 2
+                    continue
+
+                # Step 2 - Date of birth
+                if step == 2:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu fæðingardag og ár: ')
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        step = 1
+                        continue
+                    player_date_of_birth = user_input
+                    step = 3
+                    continue
+
+                # Step 3 - Address
+                if step == 3:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu heimilisfang: ')
+
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        step = 2
+                        continue
+                    player_address = user_input
+                    step = 4
+                    continue
+
+                # Step 4 - Phone
+                if step == 4:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu símanúmer: ')
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        step = 3
+                        continue
+                    player_phone = user_input
+                    step = 5
+                    continue
+
+                # Step 5 - Email
+                if step == 5:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu netfang: ')
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        step = 4
+                        continue
+                    player_email = user_input
+                    step = 6
+                    continue
+
+                # Step 6 - Link
+                if step == 6:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu vefslóð: ', allow_empty = True)
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        step = 5
+                        continue
+                    player_link = user_input
+                    step = 7
+                    continue
+
+                # Step 7 - Handle
+                if step == 7:
+                    user_input = self.input_handler.get_input_with_nav('Skráðu leikmanna nafn: ')
+                    if user_input == 'QUIT':
+                        return 'QUIT'
+                    if user_input == 'BACK':
+                        step = 6
+                        continue
+                    player_handle = user_input
+
+                    if self.logic_api.handle_exists(player_handle):
+                        print('Þetta leikmanna nafn er nú þegar í notkun.')
+                        input('Ýttu á ENTER til að reyna aftur.')
+                        continue
+            
+                #player_team_name --> Það er team_name í database...
+
+                    try:
+                        self.logic_api.create_player(
+                            name = player_name,
+                            date_of_birth = player_date_of_birth,
+                            address = player_address,
+                            phone = player_phone,
+                            email = player_email,
+                            link = player_link,
+                            handle = player_handle,
+                            team_name = '', # team is assigned when team is created
+                        )
+                    
+                    except ValidationError as e:
+                        print(f'Villa við skráningu leikmanns: {e}')
+                        self.input_handler.wait_for_enter()
+                        continue
+
+                    player_handles.append(player_handle)
+                    current_player += 1
+                    break
+        return player_handles
 
     def run_captain_verification(self):
         """  """
