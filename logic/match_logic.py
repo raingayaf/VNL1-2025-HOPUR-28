@@ -1,31 +1,30 @@
-
 from models.model_match import Match
 from models.exceptions import ValidationError
-
+from data.data_api import DataApi
 
 class MatchLogic:
-    def __init__(self, data_api):
-        self._data = data_api
-
-
+    """Handles all match related logic."""
+    def __init__(self, data_api: DataApi) -> None:
+        self._data_api = data_api
 
     def create_match(self,
         tournament_id: int,
-        round: str,
+        round_name: str,
         match_number: int,
         team_a_name: str,
         team_b_name: str,
         match_date: str,
         match_time: str,
-        server_id: str,):
-        """Creates a new match between two teams"""
+        server_id: str,
+        ) -> Match:
+        """Creates a new match between two teams."""
 
-        #Checks if user chooses same team twice
+        # Checks if user chooses same team twice
         if team_a_name == team_b_name:
-            raise ValidationError("Ekki er hægt að velja sama liðið tvisvar")
+            raise ValidationError("Ekki er hægt að velja sama liðið tvisvar.")
 
-        #Checks all teams and raises errors if team doesn't exist
-        all_teams = self._data.read_all_teams()
+        # Checks all teams and raises errors if team doesn't exist
+        all_teams = self._data_api.read_all_teams()
         team_a_exists = any(team.team_name == team_a_name for team in all_teams)
         team_b_exists = any(team.team_name == team_b_name for team in all_teams)
 
@@ -34,11 +33,10 @@ class MatchLogic:
         if not team_b_exists:
             raise ValidationError(f"Liðið '{team_b_name}' er ekki á skrá.")
         
+        # Loads existing matches
+        all_matches = self._data_api.read_all_matches()
 
-        #Loads existing matches
-        all_matches = self._data.read_all_matches()
-
-        #Checks the highest existing Id to assign new Id to new match
+        # Checks the highest existing Id to assign new Id to new match
         existing_ids = []
         for match in all_matches:
             existing_ids.append(match.match_id)
@@ -49,7 +47,7 @@ class MatchLogic:
         new_match = Match(
             match_id = new_id,
             tournament_id = tournament_id,
-            round = round,
+            round = round_name,
             match_number = match_number,
             team_a_name = team_a_name,
             team_b_name = team_b_name,
@@ -60,10 +58,10 @@ class MatchLogic:
             score_b = 0,
             winner_team_name = "",
             completed = False,
-
         )
-        matches = self._data.read_all_matches()
+
+        matches = self._data_api.read_all_matches()
         matches.append(new_match)
-        self._data.save_all_matches(matches)
+        self._data_api.save_all_matches(matches)
 
         return new_match
