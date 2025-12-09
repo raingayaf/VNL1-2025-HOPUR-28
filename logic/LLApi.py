@@ -112,10 +112,11 @@ class LLApi:
                 contact_name: str, 
                 contact_email: str, 
                 contact_phone: str,
-                max_servers: int),
+                max_servers: int):
         
-        return self.create_tournament(
+        return self.tournament_logic.create_tournament(
             name,
+            venue,
             start_date,
             end_date,
             contact_name,

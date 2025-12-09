@@ -62,7 +62,7 @@ class UIController:
                 self.captain_menu_flow()
             elif user_input == '3':
                 self.input_handler.clear_screen()
-                self.organizer_menu.display_organizer_menu()
+                self.orginizer_menu_flow()
             elif user_input == 'q':
                 in_main_menu = False
 
@@ -313,16 +313,35 @@ class UIController:
                 {'1', '2', '3', 'b'})
             
             if user_input == '1':
-                self.organizer_menu.display_tournament_creation()
-                tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
-                tournament_start_date = self.input_handler.get_non_empty_string("Sláðu inn upphafsdagsetningu:")
-                tournament_end_date = self.input_handler.get_non_empty_string("Sláðu inn endadagsetningu:")
-                tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
-                tournament_contact_name = self.input_handler.get_non_empty_string("Sláðu inn nafn tengiliðs:")
-                tournament_contact_email = self.input_handler.get_non_empty_string("Sláðu inn netfang tengiliðs: ")
-                tournament_contact_phone = self.input_handler.get_non_empty_string("Sláðu inn símanúmer tengiliðs:")
+                    self.tournament_creation_flow()
+            elif user_input == '2':
+                pass
+            elif user_input == '3':
+                pass
+            elif user_input == 'b':
+                in_orginizer_menu = False
                 
-                max_servers = 3
+    def tournament_creation_flow(self):
+        tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
+        tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
+        tournament_start_date = self.input_handler.get_non_empty_string("Sláðu inn upphafsdagsetningu:")
+        tournament_end_date = self.input_handler.get_non_empty_string("Sláðu inn endadagsetningu:")
+        tournament_contact_name = self.input_handler.get_non_empty_string("Sláðu inn nafn tengiliðs:")
+        tournament_contact_email = self.input_handler.get_non_empty_string("Sláðu inn netfang tengiliðs: ")
+        tournament_contact_phone = self.input_handler.get_non_empty_string("Sláðu inn símanúmer tengiliðs:")
+        
+        max_servers = 3
 
-            try:
-                new_tournament = 
+        new_tournament = self.logic_api.create_tournament(
+            name = tournament_name,
+            venue = tournament_venue,
+            start_date = tournament_start_date,
+            end_date = tournament_end_date,
+            contact_name = tournament_contact_name,
+            contact_email = tournament_contact_email,
+            contact_phone = tournament_contact_phone,
+            max_servers = max_servers
+    
+        )
+
+    
