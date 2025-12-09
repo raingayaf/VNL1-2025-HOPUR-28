@@ -72,3 +72,15 @@ class Schedule:
             games_today += 1
 
         return schedule
+
+    def generate_schedule(self, tournament, teams):
+        # Extract just the names from team objects
+        team_names = [team.team_name for team in teams]
+
+        # Step 1: generate matchups (unique + random)
+        matchups = self.generate_matchups(team_names)
+
+        # Step 2: assign days + times (your Option B logic)
+        schedule = self.assign_times(matchups)
+
+        return schedule
