@@ -299,3 +299,30 @@ class UIController:
         pass
 
 #-----------------------ORGANIZER-MENU-FLOW------------------------------
+
+    def orginizer_menu_flow(self):
+        """Operations for displaying orginizer menu"""
+        in_orginizer_menu = True
+
+        while in_orginizer_menu:
+            self.input_handler.clear_screen()
+            self.organizer_menu.display_organizer_menu()
+            
+            user_input = self.input_handler.get_user_input(
+                'Sláðu inn númer aðgerðar: ',
+                {'1', '2', '3', 'b'})
+            
+            if user_input == '1':
+                self.organizer_menu.display_tournament_creation()
+                tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
+                tournament_start_date = self.input_handler.get_non_empty_string("Sláðu inn upphafsdagsetningu:")
+                tournament_end_date = self.input_handler.get_non_empty_string("Sláðu inn endadagsetningu:")
+                tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
+                tournament_contact_name = self.input_handler.get_non_empty_string("Sláðu inn nafn tengiliðs:")
+                tournament_contact_email = self.input_handler.get_non_empty_string("Sláðu inn netfang tengiliðs: ")
+                tournament_contact_phone = self.input_handler.get_non_empty_string("Sláðu inn símanúmer tengiliðs:")
+                
+                max_servers = 3
+
+            try:
+                new_tournament = 

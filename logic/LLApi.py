@@ -8,6 +8,7 @@ from models.model_player import Player
 from models.model_team import Team
 from models.model_match import Match
 
+
 class LLApi:
     """
     Connects UI to Logic layer.
@@ -99,3 +100,23 @@ class LLApi:
         return self.player_logic.get_players_for_team(team_name)
     
     
+
+
+    def create_tournament(self, 
+                name: str, venue: str, 
+                start_date: str, 
+                end_date: str, 
+                contact_name: str, 
+                contact_email: str, 
+                contact_phone: str,
+                max_servers: int);
+        
+        return self.create_tournament(
+            name,
+            start_date,
+            end_date,
+            contact_name,
+            contact_email,
+            contact_phone,
+            max_servers
+        )
