@@ -49,6 +49,11 @@ class PlayerLogic:
         self._data.save_all_players(players)
 
         return new_player
+    
+    def handle_exists(self, handle: str) -> bool:
+        """Return True if player handle already exists."""
+        players = self._data.read_all_players()
+        return any(player.handle == handle for player in players)
 
     def get_players_for_team(self, team_name: str) -> list[Player]:
         """Retrives all players whose team name matches the given team."""
