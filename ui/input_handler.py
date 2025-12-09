@@ -17,7 +17,20 @@ class InputHandler:
             user_input = input(prompt).strip().lower()
             if user_input in valid_input:
                 return user_input
-            print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n') 
+            print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
+
+    def get_input_with_nav(self, prompt: str, allow_empty: bool = False):
+        """ """
+        while True:
+            user_input = input(prompt).strip()
+            if user_input.lower() == 'b':
+                return 'BACK'
+            if user_input.lower() == 'q':
+                return 'QUIT'
+            if not allow_empty and user_input == '':
+                print('Þú verður að slá inn gildi.')
+                continue
+            return user_input
     
     def get_non_empty_string(self, prompt: str) -> str:
         """Prompts the user until a non-empty string is entered."""
@@ -42,3 +55,7 @@ class InputHandler:
                 print('\n' + messages.INT_ABOVE_MAX.format(max_value=max_value).center(self.WIDTH) + '\n')
                 continue
             return value
+        
+    def wait_for_enter(self, prompt: str = 'Ýttu á ENTER til að halda áfram.') -> None:
+        """Pauses program until user presses ENTER."""
+        input(prompt)

@@ -63,9 +63,17 @@ class LLApi:
         name: str,
         captain_handle: str,
         player_handles: list[str],
+        website: str = '',
+        logo: str = '',
     ) -> Team:
         """UI calls this to create a team."""
-        return self._team_logic.create_team(name, captain_handle, player_handles)
+        return self._team_logic.create_team(
+            name, 
+            captain_handle, 
+            player_handles,
+            website,
+            logo,
+        )
     
     def team_name_exists(self, team_name: str) -> bool:
         """ """
