@@ -7,12 +7,7 @@ from ui.input_handler import InputHandler
 from ui import messages
 
 # Data layer
-from data.data_api import DataApi
-
-# Logic layer
-from logic.tournament_logic import TournamentLogic
-from logic.team_logic import TeamLogic
-from logic.player_logic import PlayerLogic
+from logic.LLApi import LLApi
 
 # Models
 from models.model_tournament import Tournament
@@ -33,13 +28,8 @@ class UIController:
         # Input handling
         self.input_handler = InputHandler()
 
-        # Data layer
-        self.data_api = DataApi()
-
         # Logic layer
-        self.tournament_logic = TournamentLogic(self.data_api)
-        self.team_logic = TeamLogic(self.data_api)
-        self.player_logic = PlayerLogic(self.data_api)
+        self.logic_api = LLApi()
 
     #-----------------------------MAIN-MENU-------------------------------
     def run_main_menu(self) -> None:
@@ -82,7 +72,7 @@ class UIController:
         Returns False if no tournament exists.
         """
         # Get all tournaments in system
-        tournament_names = self.tournament_logic.get_tournament_name_list()
+        tournament_names = self.logic_api.get_tournament_name_list()
         # If none, user goes back to main menu and error message is shown
         if not tournament_names:
             return False
@@ -105,7 +95,7 @@ class UIController:
             else:
                 # Open options for selected tournament
                 index = int(user_input) - 1
-                selected_tournament = self.tournament_logic.get_tournament_by_index(index)
+                selected_tournament = self.logic_api.get_tournament_by_index(index)
                 self.run_tournament_options(selected_tournament)
 
         return True
@@ -168,7 +158,7 @@ class UIController:
         in_tournament_teams = True
         # Show tournament teams and handle user selection
         while in_tournament_teams:
-            teams = self.team_logic.get_teams_for_tournament(tournament.tournament_id)
+            teams = self.logic_api.get_teams_for_tournament(tournament.tournament_id)
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_teams(tournament.name, teams)
             valid_input = {str(i) for i in range(1, len(teams) + 1)} | {'b'}
@@ -190,7 +180,7 @@ class UIController:
         in_team_players_menu = True
 
         while in_team_players_menu:
-            players: list[Player] = self.player_logic.get_players_for_team(team.team_name)
+            players: list[Player] = self.logic_api.get_players_for_team(team.team_name)
             self.input_handler.clear_screen()
             self.tournament_menu.display_team_players(tournament.name, team.team_name, players)
             user_input = self.input_handler.get_user_input(

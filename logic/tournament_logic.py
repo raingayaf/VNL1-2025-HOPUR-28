@@ -8,7 +8,6 @@ class TournamentLogic:
         self._data_api = data_api
     
     def get_all_tournaments(self) -> list[Tournament]:
-        """Gets a list of all tournaments"""
         """Retrieves a list of all tournaments from the data layer."""
         return self._data_api.read_all_tournaments()
 
