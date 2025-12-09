@@ -51,7 +51,7 @@ class PlayerLogic:
         return new_player
 
     def get_players_for_team(self, team_name: str) -> list[Player]:
-        """ """
+        """Retrives all players whose team name matches the given team."""
         players = self._data.read_all_players()
-        return [p for p in players if p.team_name == team_name]
+        return [player for player in players if player.team_name == team_name]
     

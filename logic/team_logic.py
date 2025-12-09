@@ -8,10 +8,11 @@ class TeamLogic:
     """Handles team logic functions for things such as creating a team."""
 
     def __init__(self, data_api: DataApi):
+        """Initializes the logic class with a refrence to the data API."""
         self._data_api = data_api
 
     def get_all_teams(self) -> list[Team]:
-        """Return all teams in the system."""
+        """Returns a list of all teams from the data layer."""
         return self._data_api.read_all_teams()
 
     def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
