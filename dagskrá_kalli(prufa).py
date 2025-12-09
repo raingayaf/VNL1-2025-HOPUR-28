@@ -51,7 +51,7 @@ if __name__ == "__main__":
     d_menu = ScheduleUI(data_api)
 
     tournaments = data_api.get_all_tournaments()
-    teams = data_api.
+    teams = data_api.get_all_teams()
 
     tournament = tournaments[0]
 

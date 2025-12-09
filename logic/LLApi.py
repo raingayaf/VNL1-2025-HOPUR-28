@@ -78,48 +78,49 @@ class LLApi:
     def get_all_tournaments(self):
         """UI calls this to get a list of all tournaments."""
         return self.data_api.read_all_tournaments()
-    
+
     def get_tournament_name_list(self) -> list[str]:
         """UI calls this to get a list of tournament names."""
         return self.tournament_logic.get_tournament_name_list()
-    
+
     def get_all_tournaments(self) -> list[Tournament]:
         """UI calls this to get all tournaments."""
         return self.tournament_logic.get_all_tournaments()
-    
+
     def get_tournament_by_index(self, index: int) -> Tournament:
         """UI calls this to get a single tournament by its index."""
         return self.tournament_logic.get_tournament_by_index(index)
-    
+
     def get_teams_for_tournament(self, tournament_id: int) -> list[Team]:
         """UI calls this to get all teams participating in a tournament."""
         return self.team_logic.get_teams_for_tournament(tournament_id)
-    
+
     def get_players_for_team(self, team_name: str) -> list[Player]:
         """UI calls this to get all players on team."""
         return self.player_logic.get_players_for_team(team_name)
-    
+
     def get_all_teams(self):
         return self.data_api.read_all_teams()
-    
 
+    def create_tournament(
+        self,
+        name: str,
+        venue: str,
+        start_date: str,
+        end_date: str,
+        contact_name: str,
+        contact_email: str,
+        contact_phone: str,
+        max_servers: int,
+    ):
 
-    def create_tournament(self, 
-                name: str, 
-                venue: str, 
-                start_date: str, 
-                end_date: str, 
-                contact_name: str, 
-                contact_email: str, 
-                contact_phone: str,
-                max_servers: int),
-        
         return self.create_tournament(
             name,
+            venue,
             start_date,
             end_date,
             contact_name,
             contact_email,
             contact_phone,
-            max_servers
+            max_servers,
         )
