@@ -11,29 +11,19 @@ class LLApi:
     UI layer should only talk to this class, not directly to logic or data.
     """
 
-    def __init__(self, data_api: DataApi):
-        self.data_api = data_api
-        self.team_logic = TeamLogic(data_api)       
-        self.match_logic = MatchLogic(data_api)
-        self.player_logic = PlayerLogic(data_api)
+    def __init__(self):
+        self.data_api = DataApi()
+        self.team_logic = TeamLogic(self.data_api)
+        self.match_logic = MatchLogic(self.data_api)
+        self.player_logic = PlayerLogic(self.data_api)
 
-    
-    def create_team(self,
-                    name: str, 
-                    captain_handle: str, 
-                    player_handles: str):
-        
-        return self.team_logic.create_team(
-            name, 
-            captain_handle, 
-            player_handles)
-    
+    def create_team(self, name: str, captain_handle: str, player_handles: str):
 
+        return self.team_logic.create_team(name, captain_handle, player_handles)
 
     def get_team_details(self, team_id: int):
         return self.team_logic.get_team_details(team_id)
 
-    
     def create_player(
         self,
         name: str,
@@ -56,7 +46,6 @@ class LLApi:
             handle,
             team_name,
         )
-
 
     def create_match(
         self,
