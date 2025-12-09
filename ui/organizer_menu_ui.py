@@ -1,4 +1,4 @@
-from logic.LLApi import LLApi
+
 class OrganizerMenuUI:
 
     WIDTH = 60
@@ -165,23 +165,23 @@ class OrganizerMenuUI:
         user_input = input("Q: Til baka:")
 
 
-# ------------------------------------
-#        TIL AÐ PRUFU KEYRA
-# ------------------------------------
+#------------------------------------
+#       TIL AÐ PRUFU KEYRA
+#------------------------------------
 
-if __name__ == "__main__":
-    o_menu = OrganizerMenuUI()
+# if __name__ == "__main__":
+#     o_menu = OrganizerMenuUI()
 
-    # o_menu.display_organizer_menu()
-    # o_menu.display_tournament_options()
-    # o_menu.display_competing_teams()
-    # o_menu.display_competition_results()
-    # o_menu.display_tournament_creation()
-    # o_menu.display_results_input()
-    # o_menu.display_team_information1()
-    # o_menu.display_team_information2()
-    # o_menu.display_team_information3()
-    # o_menu.display_schedule_done()
-    # o_menu.display_tournament_creation_done()
-    # o_menu.display_results_input_done()
-    # o_menu.display_schedule_done()
+#     o_menu.display_organizer_menu()
+#     o_menu.display_tournament_options()
+#     o_menu.display_competing_teams()
+#     o_menu.display_competition_results()
+#     o_menu.display_tournament_creation()
+#     o_menu.display_results_input()
+#     o_menu.display_team_information1()
+#     o_menu.display_team_information2()
+#     o_menu.display_team_information3()
+#     o_menu.display_schedule_done()
+#     o_menu.display_tournament_creation_done()
+#     o_menu.display_results_input_done()
+#     o_menu.display_schedule_done()

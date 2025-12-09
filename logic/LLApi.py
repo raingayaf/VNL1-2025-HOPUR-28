@@ -18,9 +18,9 @@ class LLApi:
 
     
     def create_team(self, 
-                    name, 
-                    captain_handle, 
-                    player_handles):
+                    name: str, 
+                    captain_handle: str, 
+                    player_handles: str):
         
         return self.team_logic.create_team(
             name, 
@@ -29,7 +29,7 @@ class LLApi:
     
 
 
-    def get_team_details(self, team_id):
+    def get_team_details(self, team_id: int):
         return self.team_logic.get_team_details(team_id)
 
     
@@ -78,3 +78,7 @@ class LLApi:
             match_time,
             server_id,
         )
+
+    def get_all_tournaments(self):
+        """UI calls this to get a list of all tournaments."""
+        return self.data_api.read_all_tournaments()

@@ -9,7 +9,7 @@ class TournamentLogic:
         self._data_api = data_api
     
     def get_all_tournaments(self) -> list[Tournament]:
-        """ """
+        """Gets a list of all tournaments"""
         return self._data_api.read_all_tournaments()
 
     def get_tournament_name_list(self) -> list[str]:
