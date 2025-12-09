@@ -9,22 +9,19 @@ class PlayerData:
     """Repository class for reading and writing players.csv"""
 
     def __init__(self, file_path: str):
-        # DataApi passes in e.g. "data_base/players.csv"
         self.file_path = file_path
 
     def read_all(self) -> list[Player]:
         """Read player CSV file and return a list of Player objects."""
         try:
             players: list[Player] = []
-
-            if not os.path.exists(self.file_path):
-                # No file yet = no players
+            if not os.path.exists(self.file_path):           
                 return players
 
             with open(self.file_path, mode="r", encoding="utf-8", newline="") as file:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
-                    try:
+                    try: # Find each coresponding object in correct order from CSV file.
                         player_id: str = str(row["player_id"])
                         name: str = row.get("name", "")
                         date_of_birth: str = row.get("date_of_birth", "")
@@ -35,7 +32,7 @@ class PlayerData:
                         handle: str = row.get("handle", "")
                         team_name: str = row.get("team_name", "")
 
-                        player = Player(
+                        player = Player( # Give each object a variable
                             player_id,
                             name,
                             date_of_birth,
@@ -47,11 +44,8 @@ class PlayerData:
                             team_name,
                         )
                         players.append(player)
-                    except (KeyError, ValueError):
-                        # Here you'd normally log or propagate, but don't print in data layer
-                        # For now we just skip bad rows
+                    except (KeyError, ValueError):                      
                         continue
-
             return players
 
         except OSError as exc:
@@ -70,7 +64,7 @@ class PlayerData:
                 "link",
                 "handle",
                 "team_name",
-            ]
+            ] # Open CSV file with correct fieldname to change.
 
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
@@ -88,4 +82,4 @@ class PlayerData:
                         "handle": player.handle,
                         "team_name": player.team_name,
                     }
-                )
+                ) # Overwrite according to given header.

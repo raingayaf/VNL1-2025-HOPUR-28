@@ -7,7 +7,6 @@ class TournamentData:
     """Repository class for reading and writing tournaments.csv"""
 
     def __init__(self, file_path: str):
-        # DataApi passes e.g. "data_base/tournaments.csv"
         self.file_path = file_path
 
     def read_all(self) -> list[Tournament]:
@@ -21,8 +20,7 @@ class TournamentData:
             with open(self.file_path, "r", encoding="utf-8", newline="") as file:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
-                    try:
-                        # CSV column is "tournament_id"
+                    try: # Find each coresponding object in correct order from CSV file.
                         tournament_id: int = int(row["tournament_id"])
                         name: str = row.get("name", "")
                         venue: str = row.get("venue", "")
@@ -44,12 +42,10 @@ class TournamentData:
                             contact_email,
                             contact_phone,
                             max_servers,
-                        )
+                        ) # Give each object a variable
                         tournaments.append(tournament)
                     except (KeyError, ValueError):
-                        # Skip invalid rows silently (no prints in data layer)
                         continue
-
             return tournaments
 
         except OSError as exc:
@@ -68,7 +64,7 @@ class TournamentData:
                 "contact_email",
                 "contact_phone",
                 "max_servers",
-            ]
+            ] # Open CSV file with correct fieldname to change.
 
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
@@ -76,8 +72,6 @@ class TournamentData:
             for tournament in tournaments:
                 writer.writerow(
                     {
-                        # Here we assume your Tournament model stores this as .id_value
-                        # or .tournament_id — adjust as needed:
                         "tournament_id": tournament.tournament_id,                            
                         "name": tournament.name,
                         "venue": tournament.venue,
@@ -88,4 +82,4 @@ class TournamentData:
                         "contact_phone": tournament.contact_phone,
                         "max_servers": tournament.max_servers,
                     }
-                )
+                ) # Overwrite according to given header.

@@ -8,7 +8,6 @@ class TeamData:
     """Repository class for reading and writing teams.csv"""
 
     def __init__(self, file_path: str):
-        # DataApi passes e.g. "data_base/teams.csv"
         self.file_path = file_path
     
     def read_all(self) -> list[Team]:
@@ -26,13 +25,13 @@ class TeamData:
             with open(self.file_path, mode="r", encoding="utf-8", newline="") as file:
                 reader: csv.DictReader = csv.DictReader(file)
                 for row in reader:
-                    try:
+                    try: # Find each coresponding object in correct order from CSV file.
                         team_id: int = int(row["team_id"])
                         team_name: str = row.get("team_name", "")
                         captain_handle: str = row.get("captain_handle", "")
                         website: str = row.get("website", "")
                         logo: str = row.get("logo", "")
-
+                        # Give each object a variable
                         team = Team(team_id, team_name, captain_handle, website, logo)
                         team_list.append(team)
                     except (KeyError, ValueError):
@@ -52,7 +51,7 @@ class TeamData:
                 "captain_handle",
                 "website",
                 "logo",
-            ]
+            ] # Open CSV file with correct fieldname to change.
 
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writeheader()
@@ -66,4 +65,5 @@ class TeamData:
                         "website": team.website,
                         "logo": team.logo,
                     }
-                )
+                ) # Overwrite according to given header.
+
