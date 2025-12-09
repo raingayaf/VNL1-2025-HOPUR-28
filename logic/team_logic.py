@@ -14,6 +14,11 @@ class TeamLogic:
     def get_all_teams(self) -> list[Team]:
         """Returns a list of all teams from the data layer."""
         return self._data_api.read_all_teams()
+    
+    def team_name_exists(self, team_name: str) -> bool:
+        """Return True if a team name already exists."""
+        teams = self._data_api.read_all_teams()
+        return any(team.team_name == team_name for team in teams)
 
     def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
         """Return all matches from selected tournament."""
