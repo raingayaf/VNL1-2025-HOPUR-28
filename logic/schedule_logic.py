@@ -1,7 +1,7 @@
 import random
 
 GAME_TIMES = ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"]
-MAX_GAMES_PER_DAY = 7
+MAX_GAMES_PER_DAY = len(GAME_TIMES)
 
 
 class Schedule:
@@ -37,7 +37,7 @@ class Schedule:
                 day += 1
                 games_today = 0
 
-            time_slot = random.choice(GAME_TIMES)
+            time_slot = GAME_TIMES[games_today]
 
             schedule.append({
                 "day": day,

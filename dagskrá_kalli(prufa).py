@@ -19,9 +19,10 @@ class ScheduleUI:
         print("*" * self.WIDTH)
         print("E-SPORTS".center(self.WIDTH))
         print("*" * self.WIDTH + "\n")
+        print(f"{tournament.name}".center(self.WIDTH))
         print("Mótsdagskrá".center(self.WIDTH) + "\n")
         print(
-            f"Venue: {tournament.venue}\nStart: {tournament.start_date}\nEnd: {tournament.end_date}\nName: {tournament.name}".center(
+            f"Venue: {tournament.venue}\nStart: {tournament.start_date}\nEnd: {tournament.end_date}".center(
                 self.WIDTH
             )
         )
@@ -36,7 +37,7 @@ class ScheduleUI:
             print(line)
 
         print("*" * self.WIDTH)
-        input("Q: Til baka: ")
+        input("B: Til baka: ")
 
 
 if __name__ == "__main__":
