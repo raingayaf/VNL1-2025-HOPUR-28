@@ -204,19 +204,20 @@ class UIController:
         """Run the team registration for a team captain."""
         in_team_registration = True
         step = 1
+        players_on_team: list[str] = []
+        registered_team_players: list[dict[str, str]] = []
 
         team_name = ""
         captain_handle = ""
         number_of_players = 0
         team_website = ""
         team_logo = ""
-        player_handles: list[str] = []
-
+        
         while in_team_registration:
             self.input_handler.clear_screen()
             self.captain_menu.display_team_registration_menu()
 
-            # Shows entered input when user goes back
+            # Shows previous entered input when user goes back
             if team_name:
                 print(f"Skráðu heiti liðsins: {team_name}")
             if captain_handle:
@@ -263,7 +264,7 @@ class UIController:
             # Step 2 - Captain handle
             if step == 2:
                 user_input = self.input_handler.get_input_with_nav(
-                    "Skráðu leikmanna nafn fyrirliðans: "
+                    "Skráðu leikmanna nafn fyrirliðans(handle): "
                 )
                 if user_input == "QUIT":
                     in_team_registration = False
@@ -370,58 +371,58 @@ class UIController:
 
             # Step 6 - Player registration
             if step == 6:
-                player_handles = self.run_player_registration(
+                players_on_team = self.run_player_registration(
                     team_name, number_of_players
                 )
 
-                if player_handles == "QUIT":
+                if players_on_team == "QUIT":
                     in_team_registration = False
                     continue
-                if player_handles == "BACK":
+                if players_on_team == "BACK":
                     team_logo = ""
                     step = 5
                     continue
+
+                player_handles = [player["handle"] for player in players_on_team]
+
                 if captain_handle not in player_handles:
                     print("Fyrirliði þarf að vera einn af leikmönnunum.")
                     input("Ýttu á ENTER til að halda áfram.")
                     step = 2
                     continue
+                registered_team_players = players_on_team
                 step = 7
                 continue
 
             # Step 7 - Create team
             if step == 7:
                 try:
-                    self.logic_api.create_team(
+                    self.logic_api.create_team_with_players(
                         name=team_name,
                         captain_handle=captain_handle,
-                        player_handles=player_handles,
+                        registered_team_players=players_on_team,
                         website=team_website,
                         logo=team_logo,
                     )
                     print(f"Liðið '{team_name}' hefur verið skráð!")
-                except ValidationError as e:
-                    print(f"Villa við skráningu liðs: {e}")
-                input("Ýttu á ENTER til að halda áfram.")
-                in_team_registration = False
-                continue
+                    input("Ýttu á ENTER til að fara aftur á heimasvæðið.")
+                    in_team_registration = False
+                    continue
+                except ValidationError:
+                    print(f"Óvænt villa við skráningu liðs!")
+                    input("Ýttu á ENTER til að reyna aftur.")
+                    in_team_registration = False
+                    continue
 
-    def run_player_registration(
-        self, team_name: str, number_of_players: int
-    ) -> list[str]:
-        """ """
+    def run_player_registration(self, team_name: str, number_of_players: int):
+        """Runs registration on each player in team (collects data)."""
         in_player_registration = True
         current_player = 1
-        player_handles: list[str] = []
+        players_on_team: list[dict[str, str]] = []
 
         while in_player_registration:
             if current_player > number_of_players:
                 break
-
-            self.input_handler.clear_screen()
-            self.captain_menu.display_player_registration_menu(
-                team_name, current_player
-            )
 
             player_name = ""
             player_date_of_birth = ""
@@ -431,9 +432,41 @@ class UIController:
             player_link = ""
             player_handle = ""
 
-            step = 1
+            # If information already collected
+            if current_player <= len(players_on_team):
+                existing = players_on_team[current_player - 1]
+                player_name = existing["name"]
+                player_date_of_birth = existing["date_of_birth"]
+                player_address = existing["address"]
+                player_phone = existing["phone"]
+                player_email = existing["email"]
+                player_link = existing["link"]
+                player_handle = ""
+                step = 7
+            else:
+                step = 1
 
             while step <= 7 and in_player_registration:
+                
+                self.input_handler.clear_screen()
+                self.captain_menu.display_player_registration_menu(team_name, current_player)
+
+                # Shows previous entered input when user goes back
+                if player_name:
+                    print(f"Skráðu fullt nafn: {player_name}")
+                if player_date_of_birth:
+                    print(f"Skráðu fæðingardag og ár: {player_date_of_birth}")
+                if player_address:
+                    print(f"Skráðu heimilisfang: {player_address}")
+                if player_phone:
+                    print(f"Skráðu símanúmer: {player_phone}")
+                if player_email:
+                    print(f"Skráðu netfang: {player_email}")
+                if player_link:
+                    print(f"Skráðu vefslóð: {player_link}")
+                if player_handle:
+                    print(f"Skráðu leikmanna nafn: {player_handle}")
+
                 # Step 1 - Name
                 if step == 1:
                     user_input = self.input_handler.get_input_with_nav(
@@ -445,9 +478,7 @@ class UIController:
                         if current_player == 1:
                             return "BACK"
                         current_player -= 1
-                        if player_handles:
-                            player_handles.pop()
-                        break
+                        break # Goes back to previous player
                     player_name = user_input
                     step = 2
                     continue
@@ -460,6 +491,7 @@ class UIController:
                     if user_input == "QUIT":
                         return "QUIT"
                     if user_input == "BACK":
+                        player_name = ""
                         step = 1
                         continue
                     player_date_of_birth = user_input
@@ -475,6 +507,7 @@ class UIController:
                     if user_input == "QUIT":
                         return "QUIT"
                     if user_input == "BACK":
+                        player_date_of_birth = ""
                         step = 2
                         continue
                     player_address = user_input
@@ -489,6 +522,7 @@ class UIController:
                     if user_input == "QUIT":
                         return "QUIT"
                     if user_input == "BACK":
+                        player_address = ""
                         step = 3
                         continue
                     player_phone = user_input
@@ -503,6 +537,7 @@ class UIController:
                     if user_input == "QUIT":
                         return "QUIT"
                     if user_input == "BACK":
+                        player_phone = ""
                         step = 4
                         continue
                     player_email = user_input
@@ -517,6 +552,7 @@ class UIController:
                     if user_input == "QUIT":
                         return "QUIT"
                     if user_input == "BACK":
+                        player_email = ""
                         step = 5
                         continue
                     player_link = user_input
@@ -531,38 +567,42 @@ class UIController:
                     if user_input == "QUIT":
                         return "QUIT"
                     if user_input == "BACK":
+                        player_link = ""
                         step = 6
+                        continue
+                    if self.logic_api.handle_exists(user_input):
+                        handle_exists_message = (
+                            f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
+                        )
+                        print("\n" + handle_exists_message.center(self.input_handler.WIDTH))
+                        print(
+                            "Vinsamlegast veldu leikmanna nafn (handle) sem er ekki í notkun.".center(
+                                self.input_handler.WIDTH
+                            )
+                        )
+                        input(
+                            "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
+                        )
                         continue
                     player_handle = user_input
 
-                    if self.logic_api.handle_exists(player_handle):
-                        print("Þetta leikmanna nafn er nú þegar í notkun.")
-                        input("Ýttu á ENTER til að reyna aftur.")
-                        continue
+                    player_data = {
+                        "name": player_name,
+                        "date_of_birth": player_date_of_birth,
+                        "address": player_address,
+                        "phone": player_phone,
+                        "email": player_email,
+                        "link": player_link,
+                        "handle": player_handle
+                    }
+                    if current_player <= len(players_on_team):
+                        players_on_team[current_player - 1] = player_data
+                    else: 
+                        players_on_team.append(player_data)
 
-                    # player_team_name --> Það er team_name í database...
-
-                    try:
-                        self.logic_api.create_player(
-                            name=player_name,
-                            date_of_birth=player_date_of_birth,
-                            address=player_address,
-                            phone=player_phone,
-                            email=player_email,
-                            link=player_link,
-                            handle=player_handle,
-                            team_name="",  # team is assigned when team is created
-                        )
-
-                    except ValidationError as e:
-                        print(f"Villa við skráningu leikmanns: {e}")
-                        self.input_handler.wait_for_enter()
-                        continue
-
-                    player_handles.append(player_handle)
                     current_player += 1
                     break
-        return player_handles
+        return players_on_team
 
     def run_captain_verification(self):
         """ """

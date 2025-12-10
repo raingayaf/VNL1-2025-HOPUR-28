@@ -82,6 +82,35 @@ class LLApi:
             logo,
         )
     
+    def create_team_with_players(self,
+        name: str,
+        captain_handle: str,
+        registered_team_players: list[dict[str, str]],
+        website: str = "",
+        logo: str = "",
+    ):
+        """ """
+        for pdata in registered_team_players:
+            self._player_logic.create_player(
+            name = pdata["name"],
+            date_of_birth = pdata["date_of_birth"],
+            address = pdata["address"],
+            phone = pdata["phone"],
+            email = pdata["email"],
+            link = pdata["link"],
+            handle = pdata["handle"],
+            team_name = name,
+            )                         
+        
+        players_handles = [p["handle"] for p in registered_team_players]
+        return self._team_logic.create_team(
+            name = name,
+            captain_handle = captain_handle,
+            player_handles = players_handles,
+            website = website,
+            logo = logo,
+        )
+
     def team_name_exists(self, team_name: str) -> bool:
         """ """
         return self._team_logic.team_name_exists(team_name)
