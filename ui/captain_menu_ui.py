@@ -20,7 +20,7 @@ class CaptainMenuUI:
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
         print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
-        print("'q' til að hætta í skráningarferli.".center(self.WIDTH) + '\n')
+        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print('Skrá lið'.center(self.WIDTH))
 
     def display_player_registration_menu(self, team_name: str, player_index: int):
