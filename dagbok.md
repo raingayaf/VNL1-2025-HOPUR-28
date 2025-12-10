@@ -287,3 +287,22 @@ Klára Git handbókinni
 Staða hópmeðlima: 
 Kalli Jr er að vinna í Git handbók 2.0, ætlar til að klára í kvöld svo að hann getur hjálpað til með kóðan
 Kalli Sr vinnur í schedules 
+
+Færsla 13
+Dagsetning: 10/12/25
+Tími: 10:00
+Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn.
+Staða verkefnis:
+allar a kröfur eru næstum því tilbúnar
+To-do listi:
+user testing og tasks 
+Fínpússa skýrslunni
+Kóðinn
+Klára A-Kröfur
+Klára git handbók
+Staða hópmeðlima:
+katrín að vinna rosalega í alternative flow
+þorri að vinna í organizers
+kalli sr að vinna í schedule
+kalli jr náði ekki að klára git bókinni en hún er alveg næstum því tilbúin
+herdís vinnur í skýrslunni
