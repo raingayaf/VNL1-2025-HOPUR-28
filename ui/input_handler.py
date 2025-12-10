@@ -14,7 +14,12 @@ class InputHandler:
     def get_user_input(self, prompt: str, valid_input: set[str]) -> str:
         """Prompts the user until a valid input is entered."""
         while True:
-            user_input = input(prompt).strip().lower()
+            try:
+                user_input = input(prompt).strip().lower()
+            except KeyboardInterrupt:
+                print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
+                continue
+
             if user_input in valid_input:
                 return user_input
             print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
