@@ -45,5 +45,4 @@ if __name__ == "__main__":
     tournaments = data_api.get_all_tournaments()
     teams = data_api.get_all_teams()
     tournament = tournaments[0]
-    d_menu.displey_schedule_menu(tournament, teams)
     d_menu.displey_schedule_menu(tournament, teams, day_to_show=1)
