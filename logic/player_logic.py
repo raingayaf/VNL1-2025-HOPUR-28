@@ -21,6 +21,11 @@ class PlayerLogic:
         players = self._data_api.read_all_players()
         return [player for player in players if player.team_name == team_name]
 
+    def get_list_of_all_players(self, all_players: list):
+        """Gets a list of all players on file"""
+        all_players = self._data_api.read_all_players()
+        return all_players
+
     #------------------METHODS-THAT-CHANGE-DATA----------------------
     def create_player(self,
         name: str,

@@ -6,6 +6,7 @@ from ui.organizer_menu_ui import OrganizerMenuUI
 from ui.input_handler import InputHandler
 from ui import messages
 
+
 # Data layer
 from logic.LLApi import LLApi
 
@@ -533,18 +534,57 @@ class UIController:
             organizer_input = self.input_handler.get_user_input(
                 messages.ACTION_OR_BACK_PROMPT,
                 
-                {'1', '2', '3', 'b'})
+                {'1', '2', '3', '4', 'b'})
             
+            #Register tournament 
             if organizer_input == '1':
-                    self.tournament_creation_flow()
+                self.tournament_creation_flow()
+            #Schedule tournament
             elif organizer_input == '2':
                 pass
+
             elif organizer_input == '3':
                 pass
+            #See all available players and info
+            elif organizer_input == '4':
+                self.run_all_players_view()
             elif organizer_input == 'b':
 
                 in_orginizer_menu = False
+
                 
+    def run_all_players_view(self):
+        """Show all players in system. Reuses display_team_players code without the team filters """
+        in_players_menu = True
+
+        while in_players_menu:
+            all_players: list[Player] = self.logic_api.get_all_players()
+
+            self.input_handler.clear_screen()
+
+            self.tournament_menu.display_team_players(
+                tournament_name = "Skráðir leikmenn",
+                team_name = "",
+                players = all_players
+            )
+
+            valid_inputs = {str(i) for i in range(1, len(all_players) + 1)} | {'b'}
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn númer leikmanns til að skoða nánar eða 'b' til að fara til baka: ",
+                valid_inputs,
+            )
+
+            if user_input == 'b':
+                in_players_menu = False
+            else:
+                #Goes into a function for viewing single player info
+                index = int(user_input) - 1
+                selected_player = all_players[index]
+                self.run_single_player_information(selected_player)
+            
+
+
+            #Creates new tournament
     def tournament_creation_flow(self):
         tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
         tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
@@ -567,5 +607,41 @@ class UIController:
             max_servers = max_servers
     
         )
+        
 
-    
+        self.organizer_menu.display_tournament_creation_done()
+
+        
+
+    def run_single_player_information(self, player: Player) -> None:
+        """Shows information about a single player."""
+        in_player_info = True
+
+        while in_player_info:
+            self.input_handler.clear_screen()
+            width = self.input_handler.WIDTH
+
+            print('*' * width)
+            print('E-SPORTS'.center(width))
+            print('*' * width + '\n')
+
+            print("Upplýsingar um leikmann".center(width) + '\n')
+            # Shows handle as main title
+            print(player.handle.center(width) + '\n')
+
+            print(f"Nafn: {player.name}")
+            print(f"Fæðingardagur: {player.date_of_birth}")
+            print(f"Heimilisfang: {player.address}")
+            print(f"Sími: {player.phone}")
+            print(f"Netfang: {player.email}")
+            
+
+            print('\n' + '*' * width + '\n')
+            #G
+            user_input = self.input_handler.get_user_input(
+                messages.BACK_PROMPT,   
+                {'b'}
+            )
+
+            if user_input == 'b':
+                in_player_info = False
