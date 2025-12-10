@@ -17,9 +17,10 @@ from models.model_team import Team
 from models.model_player import Player
 from models.exceptions import ValidationError
 
+
 class UIController:
     """Manages navigation between UI screens based on user selection."""
-    
+
     def __init__(self) -> None:
         """Initializes UI menus, input handling, data API and logic layers."""
         # Logic layer
@@ -34,8 +35,7 @@ class UIController:
         # Input handling
         self.input_handler = InputHandler()
 
-
-    #-----------------------------MAIN-MENU-------------------------------
+    # -----------------------------MAIN-MENU-------------------------------
     def run_main_menu(self) -> None:
         """Runs the main menu and routes the user based on their selection."""
         in_main_menu = True
@@ -43,33 +43,32 @@ class UIController:
 
         while in_main_menu:
             self.input_handler.clear_screen()
-            
+
             # Show error message from previous iteration
             if error_message is not None:
-                print('\n' + error_message.center(self.input_handler.WIDTH) + '\n')
+                print("\n" + error_message.center(self.input_handler.WIDTH) + "\n")
                 error_message = None
 
             # Show menu and handle user selection
             self.main_menu.display_main_menu()
             user_input = self.input_handler.get_user_input(
-                messages.MENU_PROMPT,
-                {'1', '2', '3', 'q'}
+                messages.MENU_PROMPT, {"1", "2", "3", "q"}
             )
             # Routes user to chosen submenu or closes program
-            if user_input == '1':
+            if user_input == "1":
                 has_tournaments = self.run_tournaments_menu()
                 if not has_tournaments:
                     # Generates error message that is shown before next iteration
                     error_message = messages.NO_TOURNAMENTS
-            elif user_input == '2':
+            elif user_input == "2":
                 self.run_captain_menu()
-            elif user_input == '3':
+            elif user_input == "3":
                 self.input_handler.clear_screen()
                 self.orginizer_menu_flow()
-            elif user_input == 'q':
+            elif user_input == "q":
                 in_main_menu = False
 
-    #----------------------------GENERAL-USER-MENUS-------------------------
+    # ----------------------------GENERAL-USER-MENUS-------------------------
     def run_tournaments_menu(self) -> bool:
         """Runs the tournaments menu and routes the user based on their selection.
         Returns False if no tournament exists.
@@ -79,7 +78,7 @@ class UIController:
         # If none, user goes back to main menu and error message is shown
         if not tournament_names:
             return False
-        
+
         in_tournament_menu = True
 
         # Show menu with tournaments and handle user selection
@@ -87,12 +86,11 @@ class UIController:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournaments(tournament_names)
             # Valid options, each tournament number and b to go back
-            valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {'b'}
+            valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
-                messages.TOURNAMENT_SELECTION_PROMPT,
-                valid_input
+                messages.TOURNAMENT_SELECTION_PROMPT, valid_input
             )
-            if user_input == 'b':
+            if user_input == "b":
                 # Return to main menu
                 in_tournament_menu = False
             else:
@@ -112,19 +110,18 @@ class UIController:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_menu(tournament.name)
             user_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT,
-                {'1', '2', '3', 'b'}
+                messages.ACTION_OR_BACK_PROMPT, {"1", "2", "3", "b"}
             )
-            # Routes user to chosen submenu 
-            if user_input == '1':
+            # Routes user to chosen submenu
+            if user_input == "1":
                 self.run_tournament_schedule(tournament)
-            elif user_input == '2':
+            elif user_input == "2":
                 self.run_tournament_scoreboard(tournament)
-            elif user_input == '3':
+            elif user_input == "3":
                 self.run_tournament_teams(tournament)
-            elif user_input == 'b':
+            elif user_input == "b":
                 # Return to the previous menu
-                in_tournament_options = False    
+                in_tournament_options = False
 
     def run_tournament_schedule(self, tournament: Tournament) -> None:
         """Displays the tournament schedule until the user chooses to return to the previous menu."""
@@ -133,11 +130,8 @@ class UIController:
         while in_tournament_schedule:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_schedule(tournament.name)
-            user_input = self.input_handler.get_user_input(
-                messages.BACK_PROMPT,
-                {'b'}
-            )
-            if user_input == 'b':
+            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
+            if user_input == "b":
                 # Return to the previous menu
                 in_tournament_schedule = False
 
@@ -148,11 +142,8 @@ class UIController:
         while in_tournament_scoreboard:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_scoreboard(tournament.name)
-            user_input = self.input_handler.get_user_input(
-                messages.BACK_PROMPT,
-                {'b'}
-            )
-            if user_input == 'b':
+            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
+            if user_input == "b":
                 # Return to the previous menu
                 in_tournament_scoreboard = False
 
@@ -164,12 +155,11 @@ class UIController:
             teams = self.logic_api.get_teams_for_tournament(tournament.tournament_id)
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_teams(tournament.name, teams)
-            valid_input = {str(i) for i in range(1, len(teams) + 1)} | {'b'}
+            valid_input = {str(i) for i in range(1, len(teams) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
-                messages.TEAM_SELECTION_PROMPT,
-                valid_input
+                messages.TEAM_SELECTION_PROMPT, valid_input
             )
-            if user_input == 'b':
+            if user_input == "b":
                 # Return to the previous menu
                 in_tournament_teams = False
             else:
@@ -185,16 +175,15 @@ class UIController:
         while in_team_players_menu:
             players: list[Player] = self.logic_api.get_players_for_team(team.team_name)
             self.input_handler.clear_screen()
-            self.tournament_menu.display_team_players(tournament.name, team.team_name, players)
-            user_input = self.input_handler.get_user_input(
-                messages.BACK_PROMPT,
-                {'b'}
+            self.tournament_menu.display_team_players(
+                tournament.name, team.team_name, players
             )
-            if user_input == 'b':
+            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
+            if user_input == "b":
                 # Return to the previous menu
                 in_team_players_menu = False
 
-    #------------------------CAPTAIN-MENU-FLOW------------------------------            
+    # ------------------------CAPTAIN-MENU-FLOW------------------------------
     def run_captain_menu(self):
         """Runs the captain menu and routes the user based on their selection."""
         in_captain_menu = True
@@ -202,27 +191,26 @@ class UIController:
             self.input_handler.clear_screen()
             self.captain_menu.display_captain_menu()
             captain_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT,
-                {'1', '2', 'b'}
+                messages.ACTION_OR_BACK_PROMPT, {"1", "2", "b"}
             )
-            if captain_input == '1':
+            if captain_input == "1":
                 self.run_team_registration()
-            elif captain_input == '2':
+            elif captain_input == "2":
                 self.run_captain_verification()
-            elif captain_input == 'b':
+            elif captain_input == "b":
                 in_captain_menu = False
-    
+
     def run_team_registration(self) -> None:
         """Run the team registration for a team captain."""
         in_team_registration = True
         step = 1
 
-        team_name = ''
-        captain_handle = ''
+        team_name = ""
+        captain_handle = ""
         number_of_players = 0
-        team_website = ''
-        team_logo = ''
-        player_handles: list[str] = [] 
+        team_website = ""
+        team_logo = ""
+        player_handles: list[str] = []
 
         while in_team_registration:
             self.input_handler.clear_screen()
@@ -230,32 +218,43 @@ class UIController:
 
             # Shows entered input when user goes back
             if team_name:
-                print(f'Skráðu heiti liðsins: {team_name}')
+                print(f"Skráðu heiti liðsins: {team_name}")
             if captain_handle:
-                print(f'Skráðu leikmanna nafn fyrirliðans: {captain_handle}')
+                print(f"Skráðu leikmanna nafn fyrirliðans: {captain_handle}")
             if number_of_players:
-                print(f'Skráðu fjölda leikmanna (3-5): {number_of_players}')
+                print(f"Skráðu fjölda leikmanna (3-5): {number_of_players}")
             if team_website or step == 5:
-                print('\n' + 'Valkvæðar upplýsingar um lið.'.center(self.input_handler.WIDTH))
-                print('Ýtir á ENTER til að sleppa.'.center(self.input_handler.WIDTH))
-                print(f'Vefslóð liðsins: {team_website or ''}')
+                print(
+                    "\n"
+                    + "Valkvæðar upplýsingar um lið.".center(self.input_handler.WIDTH)
+                )
+                print("Ýtir á ENTER til að sleppa.".center(self.input_handler.WIDTH))
+                print(f"Vefslóð liðsins: {team_website or ''}")
             if team_logo or step == 6:
-                print(f'Logo liðsins: {team_logo or ''}')
+                print(f"Logo liðsins: {team_logo or ''}")
 
             # Step 1 - Team name
             if step == 1:
-                user_input = self.input_handler.get_input_with_nav('Skráðu heiti liðsins: ')
-                if user_input == 'QUIT':
+                user_input = self.input_handler.get_input_with_nav(
+                    "Skráðu heiti liðsins: "
+                )
+                if user_input == "QUIT":
                     in_team_registration = False
                     continue
-                if user_input == 'BACK':
+                if user_input == "BACK":
                     in_team_registration = False
                     continue
                 if self.logic_api.team_name_exists(user_input):
                     team_exists_message = f"Liðið '{user_input}' er nú þegar á skrá!"
-                    print('\n' + team_exists_message.center(self.input_handler.WIDTH))
-                    print('Vinsamlegast veldu nafn sem er ekki í notkun.'.center(self.input_handler.WIDTH))
-                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
+                    print("\n" + team_exists_message.center(self.input_handler.WIDTH))
+                    print(
+                        "Vinsamlegast veldu nafn sem er ekki í notkun.".center(
+                            self.input_handler.WIDTH
+                        )
+                    )
+                    input(
+                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
+                    )
                     continue
                 team_name = user_input
                 step = 2
@@ -263,19 +262,29 @@ class UIController:
 
             # Step 2 - Captain handle
             if step == 2:
-                user_input = self.input_handler.get_input_with_nav('Skráðu leikmanna nafn fyrirliðans: ')
-                if user_input == 'QUIT':
+                user_input = self.input_handler.get_input_with_nav(
+                    "Skráðu leikmanna nafn fyrirliðans: "
+                )
+                if user_input == "QUIT":
                     in_team_registration = False
                     continue
-                if user_input == 'BACK':
-                    team_name = ''
+                if user_input == "BACK":
+                    team_name = ""
                     step = 1
                     continue
                 if self.logic_api.handle_exists(user_input):
-                    handle_exists_message = f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
-                    print('\n' + handle_exists_message.center(self.input_handler.WIDTH))
-                    print('Vinsamlegast veldu leikmanna nafn (handle) sem er ekki í notkun.'.center(self.input_handler.WIDTH))
-                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
+                    handle_exists_message = (
+                        f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
+                    )
+                    print("\n" + handle_exists_message.center(self.input_handler.WIDTH))
+                    print(
+                        "Vinsamlegast veldu leikmanna nafn (handle) sem er ekki í notkun.".center(
+                            self.input_handler.WIDTH
+                        )
+                    )
+                    input(
+                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
+                    )
                     continue
                 captain_handle = user_input
                 step = 3
@@ -283,28 +292,40 @@ class UIController:
 
             # Step 3 - Number of players
             if step == 3:
-                user_input = self.input_handler.get_input_with_nav('Skráðu fjölda leikmanna (3-5): ')
-                if user_input == 'QUIT':
+                user_input = self.input_handler.get_input_with_nav(
+                    "Skráðu fjölda leikmanna (3-5): "
+                )
+                if user_input == "QUIT":
                     in_team_registration = False
                     continue
-                if user_input == 'BACK':
-                    captain_handle = ''
+                if user_input == "BACK":
+                    captain_handle = ""
                     step = 2
                     continue
                 if not user_input.isdigit():
-                    print('\nÓgilur innsláttur! Vinsamlegast sláðu inn heiltölu frá 3-5.'.center(self.input_handler.WIDTH))
-                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
+                    print(
+                        "\nÓgilur innsláttur! Vinsamlegast sláðu inn heiltölu frá 3-5.".center(
+                            self.input_handler.WIDTH
+                        )
+                    )
+                    input(
+                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
+                    )
                     continue
                 number = int(user_input)
-                if number < 3: 
-                    num_below = f'Fjöldinn má ekki vera minni en 3!'
-                    print('\n' + num_below.center(self.input_handler.WIDTH))
-                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
+                if number < 3:
+                    num_below = f"Fjöldinn má ekki vera minni en 3!"
+                    print("\n" + num_below.center(self.input_handler.WIDTH))
+                    input(
+                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
+                    )
                     continue
                 if number > 5:
-                    num_above= f'Fjöldinn má ekki vera meiri en 5!'
-                    print('\n' + num_above.center(self.input_handler.WIDTH))
-                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
+                    num_above = f"Fjöldinn má ekki vera meiri en 5!"
+                    print("\n" + num_above.center(self.input_handler.WIDTH))
+                    input(
+                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
+                    )
                     continue
                 number_of_players = number
                 step = 4
@@ -312,13 +333,18 @@ class UIController:
 
             # Step 4 - Optional website
             if step == 4:
-                print('\n' + 'Valkvæðar upplýsingar um lið.'.center(self.input_handler.WIDTH))
-                print('Ýtir á ENTER til að sleppa.'.center(self.input_handler.WIDTH))
-                user_input = self.input_handler.get_input_with_nav('Vefslóð liðsins: ', allow_empty = True)
-                if user_input == 'QUIT':
+                print(
+                    "\n"
+                    + "Valkvæðar upplýsingar um lið.".center(self.input_handler.WIDTH)
+                )
+                print("Ýtir á ENTER til að sleppa.".center(self.input_handler.WIDTH))
+                user_input = self.input_handler.get_input_with_nav(
+                    "Vefslóð liðsins: ", allow_empty=True
+                )
+                if user_input == "QUIT":
                     in_team_registration = False
                     continue
-                if user_input == 'BACK':
+                if user_input == "BACK":
                     number_of_players = 0
                     step = 3
                     continue
@@ -328,12 +354,14 @@ class UIController:
 
             # Step 5 - Optional logo
             if step == 5:
-                user_input = self.input_handler.get_input_with_nav('Logo liðsins: ', allow_empty = True)
-                if user_input == 'QUIT':
+                user_input = self.input_handler.get_input_with_nav(
+                    "Logo liðsins: ", allow_empty=True
+                )
+                if user_input == "QUIT":
                     in_team_registration = False
                     continue
-                if user_input == 'BACK':
-                    team_website = ''
+                if user_input == "BACK":
+                    team_website = ""
                     step = 4
                     continue
                 team_logo = user_input
@@ -342,18 +370,20 @@ class UIController:
 
             # Step 6 - Player registration
             if step == 6:
-                player_handles = self.run_player_registration(team_name, number_of_players)
+                player_handles = self.run_player_registration(
+                    team_name, number_of_players
+                )
 
-                if player_handles == 'QUIT':
+                if player_handles == "QUIT":
                     in_team_registration = False
                     continue
-                if player_handles == 'BACK':
-                    team_logo = ''
+                if player_handles == "BACK":
+                    team_logo = ""
                     step = 5
                     continue
                 if captain_handle not in player_handles:
-                    print('Fyrirliði þarf að vera einn af leikmönnunum.')
-                    input('Ýttu á ENTER til að halda áfram.')
+                    print("Fyrirliði þarf að vera einn af leikmönnunum.")
+                    input("Ýttu á ENTER til að halda áfram.")
                     step = 2
                     continue
                 step = 7
@@ -363,21 +393,23 @@ class UIController:
             if step == 7:
                 try:
                     self.logic_api.create_team(
-                        name = team_name, 
-                        captain_handle = captain_handle,
-                        player_handles = player_handles,
-                        website = team_website,
-                        logo = team_logo,
-                        )
+                        name=team_name,
+                        captain_handle=captain_handle,
+                        player_handles=player_handles,
+                        website=team_website,
+                        logo=team_logo,
+                    )
                     print(f"Liðið '{team_name}' hefur verið skráð!")
                 except ValidationError as e:
-                    print(f'Villa við skráningu liðs: {e}')
-                input('Ýttu á ENTER til að halda áfram.')
+                    print(f"Villa við skráningu liðs: {e}")
+                input("Ýttu á ENTER til að halda áfram.")
                 in_team_registration = False
                 continue
-    
-    def run_player_registration(self, team_name: str, number_of_players: int) -> list[str]:
-        """  """
+
+    def run_player_registration(
+        self, team_name: str, number_of_players: int
+    ) -> list[str]:
+        """ """
         in_player_registration = True
         current_player = 1
         player_handles: list[str] = []
@@ -387,27 +419,31 @@ class UIController:
                 break
 
             self.input_handler.clear_screen()
-            self.captain_menu.display_player_registration_menu(team_name, current_player)
+            self.captain_menu.display_player_registration_menu(
+                team_name, current_player
+            )
 
-            player_name = ''
-            player_date_of_birth = ''
-            player_address = ''
-            player_phone = ''
-            player_email = ''
-            player_link = ''
-            player_handle = ''
+            player_name = ""
+            player_date_of_birth = ""
+            player_address = ""
+            player_phone = ""
+            player_email = ""
+            player_link = ""
+            player_handle = ""
 
             step = 1
 
             while step <= 7 and in_player_registration:
                 # Step 1 - Name
                 if step == 1:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu fullt nafn: ')
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu fullt nafn: "
+                    )
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         if current_player == 1:
-                            return 'BACK'
+                            return "BACK"
                         current_player -= 1
                         if player_handles:
                             player_handles.pop()
@@ -418,10 +454,12 @@ class UIController:
 
                 # Step 2 - Date of birth
                 if step == 2:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu fæðingardag og ár: ')
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu fæðingardag og ár: "
+                    )
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         step = 1
                         continue
                     player_date_of_birth = user_input
@@ -430,11 +468,13 @@ class UIController:
 
                 # Step 3 - Address
                 if step == 3:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu heimilisfang: ')
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu heimilisfang: "
+                    )
 
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         step = 2
                         continue
                     player_address = user_input
@@ -443,10 +483,12 @@ class UIController:
 
                 # Step 4 - Phone
                 if step == 4:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu símanúmer: ')
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu símanúmer: "
+                    )
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         step = 3
                         continue
                     player_phone = user_input
@@ -455,10 +497,12 @@ class UIController:
 
                 # Step 5 - Email
                 if step == 5:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu netfang: ')
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu netfang: "
+                    )
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         step = 4
                         continue
                     player_email = user_input
@@ -467,10 +511,12 @@ class UIController:
 
                 # Step 6 - Link
                 if step == 6:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu vefslóð: ', allow_empty = True)
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu vefslóð: ", allow_empty=True
+                    )
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         step = 5
                         continue
                     player_link = user_input
@@ -479,35 +525,37 @@ class UIController:
 
                 # Step 7 - Handle
                 if step == 7:
-                    user_input = self.input_handler.get_input_with_nav('Skráðu leikmanna nafn: ')
-                    if user_input == 'QUIT':
-                        return 'QUIT'
-                    if user_input == 'BACK':
+                    user_input = self.input_handler.get_input_with_nav(
+                        "Skráðu leikmanna nafn: "
+                    )
+                    if user_input == "QUIT":
+                        return "QUIT"
+                    if user_input == "BACK":
                         step = 6
                         continue
                     player_handle = user_input
 
                     if self.logic_api.handle_exists(player_handle):
-                        print('Þetta leikmanna nafn er nú þegar í notkun.')
-                        input('Ýttu á ENTER til að reyna aftur.')
+                        print("Þetta leikmanna nafn er nú þegar í notkun.")
+                        input("Ýttu á ENTER til að reyna aftur.")
                         continue
-            
-                #player_team_name --> Það er team_name í database...
+
+                    # player_team_name --> Það er team_name í database...
 
                     try:
                         self.logic_api.create_player(
-                            name = player_name,
-                            date_of_birth = player_date_of_birth,
-                            address = player_address,
-                            phone = player_phone,
-                            email = player_email,
-                            link = player_link,
-                            handle = player_handle,
-                            team_name = '', # team is assigned when team is created
+                            name=player_name,
+                            date_of_birth=player_date_of_birth,
+                            address=player_address,
+                            phone=player_phone,
+                            email=player_email,
+                            link=player_link,
+                            handle=player_handle,
+                            team_name="",  # team is assigned when team is created
                         )
-                    
+
                     except ValidationError as e:
-                        print(f'Villa við skráningu leikmanns: {e}')
+                        print(f"Villa við skráningu leikmanns: {e}")
                         self.input_handler.wait_for_enter()
                         continue
 
@@ -517,22 +565,25 @@ class UIController:
         return player_handles
 
     def run_captain_verification(self):
-        """  """
+        """ """
         self.input_handler.clear_screen()
         self.captain_menu.display_captain_verification_menu()
 
-        team_name = self.input_handler.get_non_empty_string('Sláðu inn heiti á liðinu þínu: ')
-        captain_handle = self.input_handler.get_non_empty_string('Sláðu inn leikmanna nafn þitt: ')
+        team_name = self.input_handler.get_non_empty_string(
+            "Sláðu inn heiti á liðinu þínu: "
+        )
+        captain_handle = self.input_handler.get_non_empty_string(
+            "Sláðu inn leikmanna nafn þitt: "
+        )
         # TODO: kalla á logic/data layer til að staðfesta að fyrirliði tilheyri þessu liði
-        
+
         # dæmi!
-        players = ['Leikmaður 1', 'Leikmaður 2', 'Leikmaður 3']
+        players = ["Leikmaður 1", "Leikmaður 2", "Leikmaður 3"]
 
         self.run_team_information(team_name, players)
 
-
     def run_team_information(self, team_name: str, players: list[str]):
-        """  """
+        """ """
         in_team_info = True
 
         while in_team_info:
@@ -541,27 +592,24 @@ class UIController:
             # TODO: Falleg tafla yfir leikmenn liðs
 
             user_input = self.input_handler.get_user_input(
-                'Sláðu inn númer aðgerðar: ',
-                {'1', 'h'}
+                "Sláðu inn númer aðgerðar: ", {"1", "h"}
             )
 
-            if user_input == '1':
+            if user_input == "1":
                 self.run_player_indformation_selection(team_name, players)
-            
-            elif user_input == 'h':
+
+            elif user_input == "h":
                 in_team_info = False
 
-
     def run_player_indformation_selection(self, team_name: str, players: list[str]):
-        """  """
+        """ """
         pass
-
 
     def run_player_information(self):
-        """  """
+        """ """
         pass
 
-#-----------------------ORGANIZER-MENU-FLOW------------------------------
+    # -----------------------ORGANIZER-MENU-FLOW------------------------------
 
     def orginizer_menu_flow(self):
         """Operations for displaying orginizer menu"""
@@ -569,51 +617,46 @@ class UIController:
         while in_orginizer_menu:
             self.input_handler.clear_screen()
             self.organizer_menu.display_organizer_menu()
-            
 
             organizer_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT,
-                
-                {'1', '2', '3', '4', 'b'})
-            
-            #Register tournament 
-            if organizer_input == '1':
+                messages.ACTION_OR_BACK_PROMPT, {"1", "2", "3", "4", "b"}
+            )
+
+            # Register tournament
+            if organizer_input == "1":
                 self.tournament_creation_flow()
-            #Schedule tournament
-            elif organizer_input == '2':
+            # Schedule tournament
+            elif organizer_input == "2":
                 self.run_display_menu()
 
-            elif organizer_input == '3':
+            elif organizer_input == "3":
                 pass
-            #See all available players and info
-            elif organizer_input == '4':
+            # See all available players and info
+            elif organizer_input == "4":
                 self.run_all_players_view()
-            elif organizer_input == 'b':
+            elif organizer_input == "b":
 
                 in_orginizer_menu = False
-    
+
     def run_display_menu(self):
         in_display_menu = True
 
         while in_display_menu:
-                tournaments = self.logic_api.get_all_tournaments()
-                teams = self.logic_api.get_all_teams()
-                self.schedule_menu.displey_schedule_menu(tournaments[0], teams)
+            tournaments = self.logic_api.get_all_tournaments()
+            teams = self.logic_api.get_all_teams()
+            self.schedule_menu.displey_schedule_menu(tournaments[0], teams)
 
-                organizer_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT,
-                
-                {"b", "s"})
+            organizer_input = self.input_handler.get_user_input(
+                messages.ACTION_OR_BACK_PROMPT, {"b", "s"}
+            )
 
-                if organizer_input == "s":
-                    pass
-                elif organizer_input == "b":
-                    in_display_menu = False
+            if organizer_input == "s":
+                pass
+            elif organizer_input == "b":
+                in_display_menu = False
 
-
-                
     def run_all_players_view(self):
-        """Show all players in system. Reuses display_team_players code without the team filters """
+        """Show all players in system. Reuses display_team_players code without the team filters"""
         in_players_menu = True
 
         while in_players_menu:
@@ -622,55 +665,62 @@ class UIController:
             self.input_handler.clear_screen()
 
             self.tournament_menu.display_team_players(
-                tournament_name = "Skráðir leikmenn",
-                team_name = "",
-                players = all_players
+                tournament_name="Skráðir leikmenn", team_name="", players=all_players
             )
 
-            valid_inputs = {str(i) for i in range(1, len(all_players) + 1)} | {'b'}
+            valid_inputs = {str(i) for i in range(1, len(all_players) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
                 "Sláðu inn númer leikmanns til að skoða nánar eða 'b' til að fara til baka: ",
                 valid_inputs,
             )
 
-            if user_input == 'b':
+            if user_input == "b":
                 in_players_menu = False
             else:
-                #Goes into a function for viewing single player info
+                # Goes into a function for viewing single player info
                 index = int(user_input) - 1
                 selected_player = all_players[index]
                 self.run_single_player_information(selected_player)
-            
 
+            # Creates new tournament
 
-            #Creates new tournament
     def tournament_creation_flow(self):
-        tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
-        tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
-        tournament_start_date = self.input_handler.get_non_empty_string("Sláðu inn upphafsdagsetningu:")
-        tournament_end_date = self.input_handler.get_non_empty_string("Sláðu inn endadagsetningu:")
-        tournament_contact_name = self.input_handler.get_non_empty_string("Sláðu inn nafn tengiliðs:")
-        tournament_contact_email = self.input_handler.get_non_empty_string("Sláðu inn netfang tengiliðs: ")
-        tournament_contact_phone = self.input_handler.get_non_empty_string("Sláðu inn símanúmer tengiliðs:")
-        
+        tournament_name = self.input_handler.get_non_empty_string(
+            "Sláðu inn nafn móts:"
+        )
+        tournament_venue = self.input_handler.get_non_empty_string(
+            "Sláðu inn staðsetningu:"
+        )
+        tournament_start_date = self.input_handler.get_non_empty_string(
+            "Sláðu inn upphafsdagsetningu:"
+        )
+        tournament_end_date = self.input_handler.get_non_empty_string(
+            "Sláðu inn endadagsetningu:"
+        )
+        tournament_contact_name = self.input_handler.get_non_empty_string(
+            "Sláðu inn nafn tengiliðs:"
+        )
+        tournament_contact_email = self.input_handler.get_non_empty_string(
+            "Sláðu inn netfang tengiliðs: "
+        )
+        tournament_contact_phone = self.input_handler.get_non_empty_string(
+            "Sláðu inn símanúmer tengiliðs:"
+        )
+
         max_servers = 3
 
         new_tournament = self.logic_api.create_tournament(
-            name = tournament_name,
-            venue = tournament_venue,
-            start_date = tournament_start_date,
-            end_date = tournament_end_date,
-            contact_name = tournament_contact_name,
-            contact_email = tournament_contact_email,
-            contact_phone = tournament_contact_phone,
-            max_servers = max_servers
-    
+            name=tournament_name,
+            venue=tournament_venue,
+            start_date=tournament_start_date,
+            end_date=tournament_end_date,
+            contact_name=tournament_contact_name,
+            contact_email=tournament_contact_email,
+            contact_phone=tournament_contact_phone,
+            max_servers=max_servers,
         )
-        
 
         self.organizer_menu.display_tournament_creation_done()
-
-        
 
     def run_single_player_information(self, player: Player) -> None:
         """Shows information about a single player."""
@@ -680,27 +730,23 @@ class UIController:
             self.input_handler.clear_screen()
             width = self.input_handler.WIDTH
 
-            print('*' * width)
-            print('E-SPORTS'.center(width))
-            print('*' * width + '\n')
+            print("*" * width)
+            print("E-SPORTS".center(width))
+            print("*" * width + "\n")
 
-            print("Upplýsingar um leikmann".center(width) + '\n')
+            print("Upplýsingar um leikmann".center(width) + "\n")
             # Shows handle as main title
-            print(player.handle.center(width) + '\n')
+            print(player.handle.center(width) + "\n")
 
             print(f"Nafn: {player.name}")
             print(f"Fæðingardagur: {player.date_of_birth}")
             print(f"Heimilisfang: {player.address}")
             print(f"Sími: {player.phone}")
             print(f"Netfang: {player.email}")
-            
 
-            print('\n' + '*' * width + '\n')
-            #G
-            user_input = self.input_handler.get_user_input(
-                messages.BACK_PROMPT,   
-                {'b'}
-            )
+            print("\n" + "*" * width + "\n")
+            # G
+            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
 
-            if user_input == 'b':
+            if user_input == "b":
                 in_player_info = False
