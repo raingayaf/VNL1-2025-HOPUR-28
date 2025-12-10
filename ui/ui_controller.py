@@ -619,8 +619,17 @@ class UIController:
             self.organizer_menu.display_organizer_menu()
 
             organizer_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT, {"1", "2", "3", "4", "b"}
-            )
+                messages.ACTION_OR_BACK_PROMPT,
+                
+                {'1', '2', '3', '4', 'b'})
+            
+            #Register tournament 
+            if organizer_input == '1':
+                self.tournament_creation_flow()
+            #Schedule tournament
+            elif organizer_input == '2':
+                display_schedule
+                
 
             # Register tournament
             if organizer_input == "1":
