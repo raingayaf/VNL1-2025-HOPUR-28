@@ -623,13 +623,6 @@ class UIController:
                 
                 {'1', '2', '3', '4', 'b'})
             
-            #Register tournament 
-            if organizer_input == '1':
-                self.tournament_creation_flow()
-            #Schedule tournament
-            elif organizer_input == '2':
-                display_schedule
-                
 
             # Register tournament
             if organizer_input == "1":
