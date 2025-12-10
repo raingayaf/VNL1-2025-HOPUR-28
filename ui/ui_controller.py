@@ -569,9 +569,6 @@ class UIController:
         while in_orginizer_menu:
             self.input_handler.clear_screen()
             self.organizer_menu.display_organizer_menu()
-            tournaments = self.logic_api.get_all_tournaments()
-            teams = self.logic_api.get_all_teams()
-            display_schedule = self.schedule_menu.displey_schedule_menu(tournaments[0], teams)
             
 
             organizer_input = self.input_handler.get_user_input(
@@ -584,9 +581,7 @@ class UIController:
                 self.tournament_creation_flow()
             #Schedule tournament
             elif organizer_input == '2':
-                display_schedule
-                
-                
+                self.run_display_menu()
 
             elif organizer_input == '3':
                 pass
@@ -596,6 +591,25 @@ class UIController:
             elif organizer_input == 'b':
 
                 in_orginizer_menu = False
+    
+    def run_display_menu(self):
+        in_display_menu = True
+
+        while in_display_menu:
+                tournaments = self.logic_api.get_all_tournaments()
+                teams = self.logic_api.get_all_teams()
+                self.schedule_menu.displey_schedule_menu(tournaments[0], teams)
+
+                organizer_input = self.input_handler.get_user_input(
+                messages.ACTION_OR_BACK_PROMPT,
+                
+                {"b", "s"})
+
+                if organizer_input == "s":
+                    pass
+                elif organizer_input == "b":
+                    in_display_menu = False
+
 
                 
     def run_all_players_view(self):
