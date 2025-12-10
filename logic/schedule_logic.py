@@ -4,7 +4,7 @@ GAME_TIMES = ["08:00", "10:00", "12:00", "14:00", "16:00", "18:00", "20:00"]
 MAX_GAMES_PER_DAY = len(GAME_TIMES)
 
 
-class Schedule:
+class ScheduleLogic:
     """Generates matchups and assign's times for matchup's"""
 
     def __init__(self, data_api):
