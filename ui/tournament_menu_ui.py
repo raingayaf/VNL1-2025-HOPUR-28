@@ -87,10 +87,10 @@ class TournamentMenuUI:
 if __name__ == '__main__':
     t_menu = TournamentMenuUI()
 
-    #t_menu.display_tournaments()
-    #t_menu.display_tournament_menu()
-    #t_menu.display_tournament_schedule()
-    #t_menu.display_tournament_scoreboard()
-    #t_menu.display_tournament_teams()
-    #t_menu.display_team_players()
+    # t_menu.display_tournaments()
+    # t_menu.display_tournament_menu()
+    # t_menu.display_tournament_schedule()
+    # t_menu.display_tournament_scoreboard()
+    # t_menu.display_tournament_teams()
+    # t_menu.display_team_players()
     
