@@ -1,5 +1,7 @@
 from logic.LLApi import LLApi
-from logic.schedule_logic import Schedule
+
+
+# from ui.ui_controller import UIController
 
 # gera "next day" taka sem sýnir næsta dag á schedule
 
@@ -8,13 +10,13 @@ class ScheduleUI:
 
     WIDTH = 60
 
-    def __init__(self, data_api):
-        self._schedule_logic = Schedule(data_api)
+    def __init__(self, logic_api):
+        self._logic_api: LLApi = logic_api
 
     def displey_schedule_menu(self, tournament, teams, day_to_show=1):
         """Display schedule to anyone"""
 
-        schedule = self._schedule_logic.generate_schedule(teams)
+        schedule = self._logic_api.generate_schedule(teams)
 
         print("*" * self.WIDTH)
         print("E-SPORTS".center(self.WIDTH))
@@ -35,14 +37,7 @@ class ScheduleUI:
             team_b = match["team_b"]
             line = f"{time}  |  {team_a} vs {team_b}"
             print(line)
-        print("\n"+"*" * self.WIDTH)
+        print("\n" + "*" * self.WIDTH)
         input("b: Til baka: ")
 
 
-if __name__ == "__main__":
-    data_api = LLApi()
-    d_menu = ScheduleUI(data_api)
-    tournaments = data_api.get_all_tournaments()
-    teams = data_api.get_all_teams()
-    tournament = tournaments[0]
-    d_menu.displey_schedule_menu(tournament, teams, day_to_show=1)

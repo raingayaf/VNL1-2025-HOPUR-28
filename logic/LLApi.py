@@ -3,6 +3,7 @@ from logic.team_logic import TeamLogic
 from logic.match_logic import MatchLogic
 from logic.player_logic import PlayerLogic
 from logic.tournament_logic import TournamentLogic
+from logic.schedule_logic import ScheduleLogic
 
 from models.model_tournament import Tournament
 from models.model_player import Player
@@ -21,6 +22,7 @@ class LLApi:
         self._match_logic = MatchLogic(self._data_api)
         self._player_logic = PlayerLogic(self._data_api)
         self._tournament_logic = TournamentLogic(self._data_api)
+        self._schedule_logic = ScheduleLogic(self._data_api)
 
     #-------------------------TOURNAMENT-RELATED-METHODS-------------------------
     def create_tournament(self,
@@ -56,6 +58,11 @@ class LLApi:
     def get_tournament_by_index(self, index: int) -> Tournament:
         """UI calls this to get a single tournament by its index."""
         return self._tournament_logic.get_tournament_by_index(index)
+    def generate_schedule(self, teams):
+        team_names = [team.team_name for team in teams]
+        matchups = self._schedule_logic.generate_matchups(team_names)
+        schedule = self._schedule_logic.assign_times(matchups)
+        return schedule
     
     #-------------------------TEAM-RELATED-METHODS---------------------------
 
