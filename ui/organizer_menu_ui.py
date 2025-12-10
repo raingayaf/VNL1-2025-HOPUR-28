@@ -12,6 +12,8 @@ class OrganizerMenuUI:
         print(" 1. Skrá mót")
         print(" 2. Útfæra mótsdagskrá")
         print(" 3. Upplýsingar um lið" + "\n")
+        print(' b: Til baka' + '\n')
+
         print("*" * self.WIDTH + "\n")
         user_input = input("sláðu inn númer aðgerðar:")
 

@@ -529,17 +529,20 @@ class UIController:
             self.input_handler.clear_screen()
             self.organizer_menu.display_organizer_menu()
             
-            user_input = self.input_handler.get_user_input(
-                'Sláðu inn númer aðgerðar: ',
+
+            organizer_input = self.input_handler.get_user_input(
+                messages.ACTION_OR_BACK_PROMPT,
+                
                 {'1', '2', '3', 'b'})
             
-            if user_input == '1':
+            if organizer_input == '1':
                     self.tournament_creation_flow()
-            elif user_input == '2':
+            elif organizer_input == '2':
                 pass
-            elif user_input == '3':
+            elif organizer_input == '3':
                 pass
-            elif user_input == 'b':
+            elif organizer_input == 'b':
+
                 in_orginizer_menu = False
                 
     def tournament_creation_flow(self):
