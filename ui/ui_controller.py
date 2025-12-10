@@ -1,4 +1,5 @@
 # UI imports
+from ui.schedule_menu_ui import ScheduleUI
 from ui.main_menu_ui import MainMenuUI
 from ui.tournament_menu_ui import TournamentMenuUI
 from ui.captain_menu_ui import CaptainMenuUI
@@ -20,17 +21,18 @@ class UIController:
     
     def __init__(self) -> None:
         """Initializes UI menus, input handling, data API and logic layers."""
+        # Logic layer
+        self.logic_api: LLApi = LLApi()
         # UI menus
         self.main_menu = MainMenuUI()
         self.tournament_menu = TournamentMenuUI()
         self.captain_menu = CaptainMenuUI()
         self.organizer_menu = OrganizerMenuUI()
+        self.schedule_menu = ScheduleUI(self.logic_api)
 
         # Input handling
         self.input_handler = InputHandler()
 
-        # Logic layer
-        self.logic_api = LLApi()
 
     #-----------------------------MAIN-MENU-------------------------------
     def run_main_menu(self) -> None:
@@ -506,7 +508,7 @@ class UIController:
             if user_input == '1':
                 self.run_player_indformation_selection(team_name, players)
             
-            elif user_input == 'b':
+            elif user_input == 'h':
                 in_team_info = False
 
 
@@ -524,10 +526,12 @@ class UIController:
     def orginizer_menu_flow(self):
         """Operations for displaying orginizer menu"""
         in_orginizer_menu = True
-
         while in_orginizer_menu:
             self.input_handler.clear_screen()
             self.organizer_menu.display_organizer_menu()
+            tournaments = self.logic_api.get_all_tournaments()
+            teams = self.logic_api.get_all_teams()
+            display_schedule = self.schedule_menu.displey_schedule_menu(tournaments[0], teams)
             
 
             organizer_input = self.input_handler.get_user_input(
@@ -538,7 +542,8 @@ class UIController:
             if organizer_input == '1':
                     self.tournament_creation_flow()
             elif organizer_input == '2':
-                pass
+                display_schedule
+                
             elif organizer_input == '3':
                 pass
             elif organizer_input == 'b':
