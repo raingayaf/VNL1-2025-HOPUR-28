@@ -687,27 +687,20 @@ class UIController:
             # Creates new tournament
 
     def tournament_creation_flow(self):
-        tournament_name = self.input_handler.get_non_empty_string(
-            "Sláðu inn nafn móts:"
-        )
-        tournament_venue = self.input_handler.get_non_empty_string(
-            "Sláðu inn staðsetningu:"
-        )
-        tournament_start_date = self.input_handler.get_non_empty_string(
-            "Sláðu inn upphafsdagsetningu:"
-        )
-        tournament_end_date = self.input_handler.get_non_empty_string(
-            "Sláðu inn endadagsetningu:"
-        )
-        tournament_contact_name = self.input_handler.get_non_empty_string(
-            "Sláðu inn nafn tengiliðs:"
-        )
-        tournament_contact_email = self.input_handler.get_non_empty_string(
-            "Sláðu inn netfang tengiliðs: "
-        )
-        tournament_contact_phone = self.input_handler.get_non_empty_string(
-            "Sláðu inn símanúmer tengiliðs:"
-        )
+        tournament_name = self.input_handler.get_input_with_nav(
+        "Sláðu inn nafn móts:")
+        tournament_venue = self.input_handler.get_input_with_nav(
+        "Sláðu inn staðsetningu:")
+        tournament_start_date = self.input_handler.get_input_with_nav(
+        "Sláðu inn upphafsdagsetningu:")
+        tournament_end_date = self.input_handler.get_input_with_nav(
+        "Sláðu inn endadagsetningu:")
+        tournament_contact_name = self.input_handler.get_input_with_nav(
+        "Sláðu inn nafn tengiliðs:")
+        tournament_contact_email = self.input_handler.get_input_with_nav(
+        "Sláðu inn netfang tengiliðs: ")
+        tournament_contact_phone = self.input_handler.get_input_with_nav(
+        "Sláðu inn símanúmer tengiliðs:")
 
         max_servers = 3
 
