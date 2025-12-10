@@ -38,6 +38,6 @@ class ScheduleUI:
             line = f"{time}  |  {team_a} vs {team_b}"
             print(line)
         print("\n" + "*" * self.WIDTH)
-        input("b: Til baka: ")
+        print("b: Til baka, s: Vista dagskrá.")
 
 
