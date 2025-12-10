@@ -28,7 +28,8 @@ class InputHandler:
             if user_input.lower() == 'q':
                 return 'QUIT'
             if not allow_empty and user_input == '':
-                print('Þú verður að slá inn gildi.')
+                print('\n' + 'Þú verður að skrá þessar upplýsingar'.center(self.WIDTH))
+                print('til að geta haldið áfram í skráningarferlinu.'.center(self.WIDTH) + '\n')
                 continue
             return user_input
     

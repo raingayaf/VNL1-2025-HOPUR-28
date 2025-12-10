@@ -7,6 +7,7 @@ from ui.organizer_menu_ui import OrganizerMenuUI
 from ui.input_handler import InputHandler
 from ui import messages
 
+
 # Data layer
 from logic.LLApi import LLApi
 
@@ -212,7 +213,7 @@ class UIController:
                 in_captain_menu = False
     
     def run_team_registration(self) -> None:
-        """Run the team registratiom for a team captain."""
+        """Run the team registration for a team captain."""
         in_team_registration = True
         step = 1
 
@@ -227,17 +228,19 @@ class UIController:
             self.input_handler.clear_screen()
             self.captain_menu.display_team_registration_menu()
 
-            # Show all already entered values as context
+            # Shows entered input when user goes back
             if team_name:
                 print(f'Skráðu heiti liðsins: {team_name}')
             if captain_handle:
                 print(f'Skráðu leikmanna nafn fyrirliðans: {captain_handle}')
             if number_of_players:
                 print(f'Skráðu fjölda leikmanna (3-5): {number_of_players}')
-            if team_website or team_logo:
-                print('Valkvæðar upplýsingar um lið:')
+            if team_website or step == 5:
+                print('\n' + 'Valkvæðar upplýsingar um lið.'.center(self.input_handler.WIDTH))
+                print('Ýtir á ENTER til að sleppa.'.center(self.input_handler.WIDTH))
                 print(f'Vefslóð liðsins: {team_website or ''}')
-                print(f'Vefslóð liðsins: {team_logo or ''}')
+            if team_logo or step == 6:
+                print(f'Logo liðsins: {team_logo or ''}')
 
             # Step 1 - Team name
             if step == 1:
@@ -249,8 +252,10 @@ class UIController:
                     in_team_registration = False
                     continue
                 if self.logic_api.team_name_exists(user_input):
-                    print(f"Liðið '{user_input}' er nú þegar á skrá.")
-                    input('Ýttu á ENTER til að reyna aftur.')
+                    team_exists_message = f"Liðið '{user_input}' er nú þegar á skrá!"
+                    print('\n' + team_exists_message.center(self.input_handler.WIDTH))
+                    print('Vinsamlegast veldu nafn sem er ekki í notkun.'.center(self.input_handler.WIDTH))
+                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
                     continue
                 team_name = user_input
                 step = 2
@@ -267,8 +272,10 @@ class UIController:
                     step = 1
                     continue
                 if self.logic_api.handle_exists(user_input):
-                    print(f"Leikmanna nafnið '{user_input}' er nú þegar á skrá.")
-                    input('Ýttu á ENTER til að halda áfram.')
+                    handle_exists_message = f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
+                    print('\n' + handle_exists_message.center(self.input_handler.WIDTH))
+                    print('Vinsamlegast veldu leikmanna nafn (handle) sem er ekki í notkun.'.center(self.input_handler.WIDTH))
+                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
                     continue
                 captain_handle = user_input
                 step = 3
@@ -285,42 +292,75 @@ class UIController:
                     step = 2
                     continue
                 if not user_input.isdigit():
-                    print('Sláðu inn númer 3 til 5.')
+                    print('\nÓgilur innsláttur! Vinsamlegast sláðu inn heiltölu frá 3-5.'.center(self.input_handler.WIDTH))
+                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
                     continue
                 number = int(user_input)
-                if number < 3 or number > 5:
-                    print('Lið má bara hafa 3-5 leikmenn.')
+                if number < 3: 
+                    num_below = f'Fjöldinn má ekki vera minni en 3!'
+                    print('\n' + num_below.center(self.input_handler.WIDTH))
+                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
+                    continue
+                if number > 5:
+                    num_above= f'Fjöldinn má ekki vera meiri en 5!'
+                    print('\n' + num_above.center(self.input_handler.WIDTH))
+                    input('Ýttu á ENTER og reyndu aftur.'.center(self.input_handler.WIDTH))
                     continue
                 number_of_players = number
                 step = 4
                 continue
 
-            # Step 4 - Optional website and logo
+            # Step 4 - Optional website
             if step == 4:
-                print('Valkvæðar upplýsingar um lið (sleppir með því að ýta á ENTER).')
-                team_website = input('Vefslóð liðsins: ').strip()
-                team_logo = input('Logo liðsins: ').strip()
-
+                print('\n' + 'Valkvæðar upplýsingar um lið.'.center(self.input_handler.WIDTH))
+                print('Ýtir á ENTER til að sleppa.'.center(self.input_handler.WIDTH))
+                user_input = self.input_handler.get_input_with_nav('Vefslóð liðsins: ', allow_empty = True)
+                if user_input == 'QUIT':
+                    in_team_registration = False
+                    continue
+                if user_input == 'BACK':
+                    number_of_players = 0
+                    step = 3
+                    continue
+                team_website = user_input
                 step = 5
                 continue
 
-            # Step 5 - Player registration
+            # Step 5 - Optional logo
             if step == 5:
+                user_input = self.input_handler.get_input_with_nav('Logo liðsins: ', allow_empty = True)
+                if user_input == 'QUIT':
+                    in_team_registration = False
+                    continue
+                if user_input == 'BACK':
+                    team_website = ''
+                    step = 4
+                    continue
+                team_logo = user_input
+                step = 6
+                continue
+
+            # Step 6 - Player registration
+            if step == 6:
                 player_handles = self.run_player_registration(team_name, number_of_players)
 
                 if player_handles == 'QUIT':
                     in_team_registration = False
+                    continue
+                if player_handles == 'BACK':
+                    team_logo = ''
+                    step = 5
                     continue
                 if captain_handle not in player_handles:
                     print('Fyrirliði þarf að vera einn af leikmönnunum.')
                     input('Ýttu á ENTER til að halda áfram.')
                     step = 2
                     continue
-                step = 6
+                step = 7
                 continue
 
-            # Step 6 - Create team
-            if step == 6:
+            # Step 7 - Create team
+            if step == 7:
                 try:
                     self.logic_api.create_team(
                         name = team_name, 
@@ -367,7 +407,7 @@ class UIController:
                         return 'QUIT'
                     if user_input == 'BACK':
                         if current_player == 1:
-                            return 'QUIT'
+                            return 'BACK'
                         current_player -= 1
                         if player_handles:
                             player_handles.pop()
@@ -537,19 +577,59 @@ class UIController:
             organizer_input = self.input_handler.get_user_input(
                 messages.ACTION_OR_BACK_PROMPT,
                 
-                {'1', '2', '3', 'b'})
+                {'1', '2', '3', '4', 'b'})
             
+            #Register tournament 
             if organizer_input == '1':
-                    self.tournament_creation_flow()
+                self.tournament_creation_flow()
+            #Schedule tournament
             elif organizer_input == '2':
                 display_schedule
                 
+                
+
             elif organizer_input == '3':
                 pass
+            #See all available players and info
+            elif organizer_input == '4':
+                self.run_all_players_view()
             elif organizer_input == 'b':
 
                 in_orginizer_menu = False
+
                 
+    def run_all_players_view(self):
+        """Show all players in system. Reuses display_team_players code without the team filters """
+        in_players_menu = True
+
+        while in_players_menu:
+            all_players: list[Player] = self.logic_api.get_all_players()
+
+            self.input_handler.clear_screen()
+
+            self.tournament_menu.display_team_players(
+                tournament_name = "Skráðir leikmenn",
+                team_name = "",
+                players = all_players
+            )
+
+            valid_inputs = {str(i) for i in range(1, len(all_players) + 1)} | {'b'}
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn númer leikmanns til að skoða nánar eða 'b' til að fara til baka: ",
+                valid_inputs,
+            )
+
+            if user_input == 'b':
+                in_players_menu = False
+            else:
+                #Goes into a function for viewing single player info
+                index = int(user_input) - 1
+                selected_player = all_players[index]
+                self.run_single_player_information(selected_player)
+            
+
+
+            #Creates new tournament
     def tournament_creation_flow(self):
         tournament_name = self.input_handler.get_non_empty_string("Sláðu inn nafn móts:")
         tournament_venue = self.input_handler.get_non_empty_string("Sláðu inn staðsetningu:")
@@ -572,5 +652,41 @@ class UIController:
             max_servers = max_servers
     
         )
+        
 
-    
+        self.organizer_menu.display_tournament_creation_done()
+
+        
+
+    def run_single_player_information(self, player: Player) -> None:
+        """Shows information about a single player."""
+        in_player_info = True
+
+        while in_player_info:
+            self.input_handler.clear_screen()
+            width = self.input_handler.WIDTH
+
+            print('*' * width)
+            print('E-SPORTS'.center(width))
+            print('*' * width + '\n')
+
+            print("Upplýsingar um leikmann".center(width) + '\n')
+            # Shows handle as main title
+            print(player.handle.center(width) + '\n')
+
+            print(f"Nafn: {player.name}")
+            print(f"Fæðingardagur: {player.date_of_birth}")
+            print(f"Heimilisfang: {player.address}")
+            print(f"Sími: {player.phone}")
+            print(f"Netfang: {player.email}")
+            
+
+            print('\n' + '*' * width + '\n')
+            #G
+            user_input = self.input_handler.get_user_input(
+                messages.BACK_PROMPT,   
+                {'b'}
+            )
+
+            if user_input == 'b':
+                in_player_info = False

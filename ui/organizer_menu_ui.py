@@ -11,11 +11,12 @@ class OrganizerMenuUI:
         print("Velkominn mótshaldari".center(self.WIDTH) + "\n")
         print(" 1. Skrá mót")
         print(" 2. Útfæra mótsdagskrá")
-        print(" 3. Upplýsingar um lið" + "\n")
+        print(" 3. Upplýsingar um lið")
+        print(" 4. Leikmenn á skrá"+ "\n")
         print(' b: Til baka' + '\n')
 
         print("*" * self.WIDTH + "\n")
-        user_input = input("sláðu inn númer aðgerðar:")
+        # user_input = input("sláðu inn númer aðgerðar:")
 
     def display_tournament_options(self):
         """Display options for organizer to look at tournaments"""
@@ -167,6 +168,20 @@ class OrganizerMenuUI:
         user_input = input("Q: Til baka:")
 
 
+ #Prufa
+    # def display_all_players(self):
+    #     """Display all players in system for organizer menu"""
+    #     print('\n' * 2 + '*' * self.WIDTH)
+    #     print('E-SPORTS'.center(self.WIDTH))                                                          
+    #     print('*' * self.WIDTH + '\n')
+    #     # print(team_name.center(self.WIDTH))
+    #     print('Leikmenn á skrá'.center(self.WIDTH) + '\n')
+    #     print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
+    #     print('Aðgerðir:')
+    #     print('1. Breyta upplýsingum um einstaka leikmenn')
+    #     print('h: Fara aftur á heimasvæði' + '\n')
+    #     print('*' * self.WIDTH + '\n')
+        #user_input = input('Sláðu inn númer aðgerðar: ')
 #------------------------------------
 #       TIL AÐ PRUFU KEYRA
 #------------------------------------

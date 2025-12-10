@@ -130,6 +130,13 @@ class LLApi:
         """UI calls this to get all players on team."""
         return self._player_logic.get_players_for_team(team_name)
     
+    def get_all_players(self):
+        return self._data_api.read_all_players()
+    
+    def get_all_player_names(self) -> list[str]:
+        players = self.get_all_players()
+        return [player.name for player in players]
+
     #-------------------------MATCH-RELATED-METHODS---------------------------
 
     def create_match(self,
