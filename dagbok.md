@@ -309,7 +309,7 @@ herdís vinnur í skýrslunni
 
 Færsla 14
 Dagsetning: 11/12/25
-Tími: 
+Tími: 14:00
 Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn.
 Staða verkefnis:
 allar a kröfur eru næstum því tilbúnar
@@ -319,5 +319,5 @@ Kóðinn
 Klára A-Kröfur
 Klára git handbók
 vantar myndband
-
+ 
 Staða hópmeðlima:
