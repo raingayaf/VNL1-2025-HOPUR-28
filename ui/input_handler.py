@@ -32,13 +32,13 @@ class InputHandler:
             except (KeyboardInterrupt, EOFError):
                 print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
                 continue
-            if user_input.lower() == 'b':
+            if user_input.lower() == 'b~':
                 return 'BACK'
-            if user_input.lower() == 'q':
+            if user_input.lower() == 'q~':
                 return 'QUIT'
             if not allow_empty and user_input == '':
                 print('\n' + 'Þú verður að skrá þessar upplýsingar'.center(self.WIDTH))
-                print('til að geta haldið áfram í skráningarferlinu.'.center(self.WIDTH) + '\n')
+                print('til að geta haldið áfram.'.center(self.WIDTH) + '\n')
                 continue
             return user_input
     
@@ -73,6 +73,10 @@ class InputHandler:
         
     def wait_for_enter(self, prompt: str = 'Ýttu á ENTER til að halda áfram.') -> None:
         """Pauses program until user presses ENTER."""
+        input(prompt)
+
+    def try_again_enter(self, prompt: str = 'Ýttu á ENTER og reyndu aftur.') -> None:
+        """Tells user to press enter and try again."""
         input(prompt)
 
 

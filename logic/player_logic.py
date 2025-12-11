@@ -10,7 +10,6 @@ class PlayerLogic:
 
     #------------------METHODS-THAT-GET-DATA------------------------
     
-    # ER ÞETTA NOTAÐ?
     def handle_exists(self, handle: str) -> bool:
         """Return True if player handle already exists."""
         players = self._data_api.read_all_players()
