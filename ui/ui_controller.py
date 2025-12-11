@@ -725,26 +725,56 @@ class UIController:
                 self.run_single_player_information(selected_player)
 
             # Creates new tournament
-
     def tournament_creation_flow(self):
+        """Run the tournament registration flow for an organizer."""
+        self.input_handler.clear_screen()
+        self.organizer_menu.display_organizer_registration_menu()
+
+        # Name
         tournament_name = self.input_handler.get_input_with_nav(
-        "Sláðu inn nafn móts:")
+            "Sláðu inn nafn móts: ")
+        if tournament_name == "QUIT" or tournament_name == "BACK":
+            return
+
+        # Venue
         tournament_venue = self.input_handler.get_input_with_nav(
-        "Sláðu inn staðsetningu:")
+            "Sláðu inn staðsetningu: ")
+        if tournament_venue == "QUIT" or tournament_venue == "BACK":
+            return
+
+        # Start date
         tournament_start_date = self.input_handler.get_input_with_nav(
-        "Sláðu inn upphafsdagsetningu:")
+            "Sláðu inn upphafsdagsetningu: ")
+        if tournament_start_date == "QUIT" or tournament_start_date == "BACK":
+            return
+
+        # End date
         tournament_end_date = self.input_handler.get_input_with_nav(
-        "Sláðu inn endadagsetningu:")
+            "Sláðu inn endadagsetningu: ")
+        if tournament_end_date == "QUIT" or tournament_end_date == "BACK":
+            return
+
+        # Contact name
         tournament_contact_name = self.input_handler.get_input_with_nav(
-        "Sláðu inn nafn tengiliðs:")
+            "Sláðu inn nafn tengiliðs: ")
+        if tournament_contact_name == "QUIT" or tournament_contact_name == "BACK":
+            return
+
+        # Contact email
         tournament_contact_email = self.input_handler.get_input_with_nav(
-        "Sláðu inn netfang tengiliðs: ")
+            "Sláðu inn netfang tengiliðs: ")
+        if tournament_contact_email == "QUIT" or tournament_contact_email == "BACK":
+            return
+        
+        # Contact phone
         tournament_contact_phone = self.input_handler.get_input_with_nav(
-        "Sláðu inn símanúmer tengiliðs:")
+            "Sláðu inn símanúmer tengiliðs: ")
+        if tournament_contact_phone == "QUIT" or tournament_contact_phone == "BACK":
+            return
 
         max_servers = 3
 
-        new_tournament = self.logic_api.create_tournament(
+        self.logic_api.create_tournament(
             name=tournament_name,
             venue=tournament_venue,
             start_date=tournament_start_date,
@@ -756,6 +786,7 @@ class UIController:
         )
 
         self.organizer_menu.display_tournament_creation_done()
+        self.input_handler.wait_for_enter()
 
     def run_single_player_information(self, player: Player) -> None:
         """Shows information about a single player."""
