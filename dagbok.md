@@ -319,4 +319,5 @@ Kóðinn
 Klára A-Kröfur
 Klára git handbók
 vantar myndband
+
 Staða hópmeðlima:
