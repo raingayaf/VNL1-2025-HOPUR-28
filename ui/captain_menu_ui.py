@@ -54,7 +54,7 @@ class CaptainMenuUI:
         print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
         print('Aðgerðir:')
         print('1. Breyta upplýsingum um einstaka leikmenn')
-        print('h: Fara aftur á heimasvæði' + '\n')
+        print('b: Til baka' + '\n')
         print('*' * self.WIDTH + '\n')
         #user_input = input('Sláðu inn númer aðgerðar: ')
     

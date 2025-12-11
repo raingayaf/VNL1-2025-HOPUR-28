@@ -58,11 +58,16 @@ class LLApi:
     def get_tournament_by_index(self, index: int) -> Tournament:
         """UI calls this to get a single tournament by its index."""
         return self._tournament_logic.get_tournament_by_index(index)
+    
     def generate_schedule(self, teams):
-        team_names = [team.team_name for team in teams]
-        matchups = self._schedule_logic.generate_matchups(team_names)
-        schedule = self._schedule_logic.assign_times(matchups)
-        return schedule
+        return self._schedule_logic.generate_schedule(teams)
+    
+    def organizer_save_schedule(self, tournament, schedule):
+        return self._schedule_logic.organizer_save_schedule(tournament, schedule)
+
+    def get_saved_schedule(self, tournament):
+        return self._schedule_logic.find_saved_schedule(tournament)
+    
     
     #-------------------------TEAM-RELATED-METHODS---------------------------
 
