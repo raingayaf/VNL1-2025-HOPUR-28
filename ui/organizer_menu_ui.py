@@ -177,6 +177,8 @@ class OrganizerMenuUI:
         print('Skrá mót'.center(self.WIDTH))
 
 
+
+
  #Prufa
     # def display_all_players(self):
     #     """Display all players in system for organizer menu"""

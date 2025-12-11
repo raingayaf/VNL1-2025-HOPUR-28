@@ -672,7 +672,7 @@ class UIController:
                 self.run_display_menu()
 
             elif organizer_input == "3":
-                pass
+                self.run_all_teams_view()
             # See all available players and info
             elif organizer_input == "4":
                 self.run_all_players_view()
@@ -816,3 +816,62 @@ class UIController:
 
             if user_input == "b":
                 in_player_info = False
+
+    def run_all_teams_view(self) -> None:
+        """Show a list of all teams in the system and allow selecting one."""
+        in_teams_menu = True
+
+        while in_teams_menu:
+            teams: list[Team] = self.logic_api.get_all_teams()
+
+            self.input_handler.clear_screen()
+
+            self.tournament_menu.display_tournament_teams(
+                tournament_name="Skráð lið",   # title line
+                teams=teams,
+            )
+
+            # allows organizer to pick a team by number
+            valid_inputs = {str(i) for i in range(1, len(teams) + 1)} | {"b"}
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn númer liðs til að skoða leikmenn eða 'b' til að fara til baka: ",
+                valid_inputs,
+            )
+
+            if user_input == "b":
+                in_teams_menu = False
+            else:
+                index = int(user_input) - 1
+                selected_team = teams[index]
+                self.run_team_players_for_team(selected_team)
+
+
+    def run_team_players_for_team(self, team: Team) -> None:
+        """Show all players in a given team from the organizer view."""
+        in_players_menu = True
+
+        while in_players_menu:
+            players: list[Player] = self.logic_api.get_players_for_team(team.team_name)
+
+            self.input_handler.clear_screen()
+
+            self.tournament_menu.display_team_players(
+                tournament_name = "Lið",
+                team_name = team.team_name,
+                players = players,
+            )
+
+            # Let user pick a player or go back
+            valid_inputs = {str(i) for i in range(1, len(players) + 1)} | {"b"}
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn númer leikmanns til að skoða nánar eða 'b' til að fara til baka: ",
+                valid_inputs,
+            )
+
+            if user_input == "b":
+                in_players_menu = False
+            else:
+                index = int(user_input) - 1
+                selected_player = players[index]
+                self.run_single_player_information(selected_player)
+
