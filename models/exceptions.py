@@ -38,3 +38,7 @@ class PermissionDeniedError(DataAccessError):
     """raised when user is not allowed access to resource"""
 
     pass
+
+class UserInterruptError(Exception):
+    """Raised when the user cancels input with CTRL+C."""
+    pass

@@ -675,7 +675,7 @@ class UIController:
                 self.run_display_menu()
 
             elif organizer_input == "3":
-                pass
+                self.run_all_teams_view()
             # See all available players and info
             elif organizer_input == "4":
                 self.run_all_players_view()
@@ -734,26 +734,56 @@ class UIController:
                 self.run_single_player_information(selected_player)
 
             # Creates new tournament
-
     def tournament_creation_flow(self):
+        """Run the tournament registration flow for an organizer."""
+        self.input_handler.clear_screen()
+        self.organizer_menu.display_organizer_registration_menu()
+
+        # Name
         tournament_name = self.input_handler.get_input_with_nav(
-        "Sláðu inn nafn móts:")
+            "Sláðu inn nafn móts: ")
+        if tournament_name == "QUIT" or tournament_name == "BACK":
+            return
+
+        # Venue
         tournament_venue = self.input_handler.get_input_with_nav(
-        "Sláðu inn staðsetningu:")
+            "Sláðu inn staðsetningu: ")
+        if tournament_venue == "QUIT" or tournament_venue == "BACK":
+            return
+
+        # Start date
         tournament_start_date = self.input_handler.get_input_with_nav(
-        "Sláðu inn upphafsdagsetningu:")
+            "Sláðu inn upphafsdagsetningu: ")
+        if tournament_start_date == "QUIT" or tournament_start_date == "BACK":
+            return
+
+        # End date
         tournament_end_date = self.input_handler.get_input_with_nav(
-        "Sláðu inn endadagsetningu:")
+            "Sláðu inn endadagsetningu: ")
+        if tournament_end_date == "QUIT" or tournament_end_date == "BACK":
+            return
+
+        # Contact name
         tournament_contact_name = self.input_handler.get_input_with_nav(
-        "Sláðu inn nafn tengiliðs:")
+            "Sláðu inn nafn tengiliðs: ")
+        if tournament_contact_name == "QUIT" or tournament_contact_name == "BACK":
+            return
+
+        # Contact email
         tournament_contact_email = self.input_handler.get_input_with_nav(
-        "Sláðu inn netfang tengiliðs: ")
+            "Sláðu inn netfang tengiliðs: ")
+        if tournament_contact_email == "QUIT" or tournament_contact_email == "BACK":
+            return
+        
+        # Contact phone
         tournament_contact_phone = self.input_handler.get_input_with_nav(
-        "Sláðu inn símanúmer tengiliðs:")
+            "Sláðu inn símanúmer tengiliðs: ")
+        if tournament_contact_phone == "QUIT" or tournament_contact_phone == "BACK":
+            return
 
         max_servers = 3
 
-        new_tournament = self.logic_api.create_tournament(
+        self.logic_api.create_tournament(
             name=tournament_name,
             venue=tournament_venue,
             start_date=tournament_start_date,
@@ -765,6 +795,7 @@ class UIController:
         )
 
         self.organizer_menu.display_tournament_creation_done()
+        self.input_handler.wait_for_enter()
 
     def run_single_player_information(self, player: Player) -> None:
         """Shows information about a single player."""
@@ -789,8 +820,67 @@ class UIController:
             print(f"Netfang: {player.email}")
 
             print("\n" + "*" * width + "\n")
-            # G
+            
             user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
 
             if user_input == "b":
                 in_player_info = False
+
+    def run_all_teams_view(self) -> None:
+        """Shows a list of all teams in the system and allows for selecting one for information"""
+        in_teams_menu = True
+
+        while in_teams_menu:
+            teams: list[Team] = self.logic_api.get_all_teams()
+
+            self.input_handler.clear_screen()
+
+            self.tournament_menu.display_tournament_teams(
+                tournament_name = "Skráð lið",   
+                teams = teams,
+            )
+
+            # allows organizer to pick a team by number
+            valid_inputs = {str(i) for i in range(1, len(teams) + 1)} | {"b"}
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn númer liðs til að skoða leikmenn eða 'b' til að fara til baka: ",
+                valid_inputs,
+            )
+
+            if user_input == "b":
+                in_teams_menu = False
+            else:
+                index = int(user_input) - 1
+                selected_team = teams[index]
+                self.run_team_players_for_team(selected_team)
+
+
+    def run_team_players_for_team(self, team: Team) -> None:
+        """Show all players in a given team from the organizer view."""
+        in_players_menu = True
+
+        while in_players_menu:
+            players: list[Player] = self.logic_api.get_players_for_team(team.team_name)
+
+            self.input_handler.clear_screen()
+
+            self.tournament_menu.display_team_players(
+                tournament_name = "Lið",
+                team_name = team.team_name,
+                players = players,
+            )
+
+            # Let user pick a player or go back
+            valid_inputs = {str(i) for i in range(1, len(players) + 1)} | {"b"}
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn númer leikmanns til að skoða nánar eða 'b' til að fara til baka: ",
+                valid_inputs,
+            )
+
+            if user_input == "b":
+                in_players_menu = False
+            else:
+                index = int(user_input) - 1
+                selected_player = players[index]
+                self.run_single_player_information(selected_player)
+
