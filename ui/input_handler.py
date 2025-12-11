@@ -74,3 +74,28 @@ class InputHandler:
     def wait_for_enter(self, prompt: str = 'Ýttu á ENTER til að halda áfram.') -> None:
         """Pauses program until user presses ENTER."""
         input(prompt)
+
+
+    def get_score(self) -> tuple[int, int]:
+        """Validates score format and prevents input errors"""
+        while True:
+            score_input = input('Skráðu stig leiks á forminu, 1-4: ')
+            if "-" not in score_input:
+                print("Villa! Skrifaðu á forminu: 1-4.")
+                continue
+
+            left, right = score_input.split("-", 1)
+
+            if not left.strip().isdigit() or not right.strip().isdigit():
+                print("Villa! Báðir hlutir þurfa að vera tölur, t.d. 1-4.")
+                continue
+
+            a = int(left.strip())
+            b = int(right.strip())
+
+            if a == b:
+                print('Jafntefli er ekki í boði')
+                continue
+
+            return a, b
+
