@@ -68,5 +68,18 @@ class PlayerLogic:
 
         return new_player
     
+    def update_player(self, update_player: Player) -> None:
+        """ """
+        players = self._data_api.read_all_players()
+
+        for index, player in enumerate(players):
+            if player.player_id == update_player.player_id:
+                players[index] = update_player
+                self._data_api.save_all_players(players)
+                return
+        
+        raise ValidationError("Leikmaður með þetta auðkenni fannst ekki.")
+    
+    
     
     

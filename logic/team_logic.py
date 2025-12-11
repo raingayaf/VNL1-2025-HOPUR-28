@@ -232,28 +232,29 @@ class TeamLogic:
 
     #------------------INTERNAL-HELPER-METHODS----------------------
 
-    # def _get_team_and_players(self, team_id: int):
-    #     """Finds a team by it's Id and all it's players"""
+    def get_team_and_players_by_name(self, team_name: str):
+        """Finds a team by it's Id and all it's players"""
 
-    #     #Loads all teams and players
-    #     teams = self._data_api.read_all_teams()
-    #     players = self._data_api.read_all_players()
+        #Loads all teams and players
+        teams = self._data_api.read_all_teams()
+        players = self._data_api.read_all_players()
 
-    #     #Finds the team matchit team_id
-    #     team = None
-    #     for t in teams:
-    #         if t.team_id == team_id:
-    #             team = t
+        #Finds the team matchit team_id
+        team = None
+        for t in teams:
+            if t.team_name == team_name:
+                team = t
+                break
 
-    #     if team is None:
-    #         raise ValidationError("Lið er ekki til")
-    #     #Collects all players belonging to team
-    #     team_players = []
-    #     for player in players:
-    #         if player.team_name == team.team_name:
-    #             team_players.append(player)
+        if team is None:
+            raise ValidationError("Lið er ekki til.")
+        #Collects all players belonging to team
+        team_players: list[Player] = []
+        for player in players:
+            if player.team_name == team.team_name:
+                team_players.append(player)
 
-    #     return team, players, team_players
+        return team, players, team_players
 
     def _generate_new_team_id(self, teams: list[Team]) -> int:
         """Return next integer ID after the current max or 1 if no teams."""
