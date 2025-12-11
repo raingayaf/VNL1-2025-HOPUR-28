@@ -318,5 +318,5 @@ Fínpússa skýrslunni
 Kóðinn
 Klára A-Kröfur
 Klára git handbók
+vantar myndband
 Staða hópmeðlima:
-myndbandið verður á morgun og lokaskil
