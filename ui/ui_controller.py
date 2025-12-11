@@ -811,14 +811,14 @@ class UIController:
             print(f"Netfang: {player.email}")
 
             print("\n" + "*" * width + "\n")
-            # G
+            
             user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
 
             if user_input == "b":
                 in_player_info = False
 
     def run_all_teams_view(self) -> None:
-        """Show a list of all teams in the system and allow selecting one."""
+        """Shows a list of all teams in the system and allows for selecting one for information"""
         in_teams_menu = True
 
         while in_teams_menu:
@@ -827,8 +827,8 @@ class UIController:
             self.input_handler.clear_screen()
 
             self.tournament_menu.display_tournament_teams(
-                tournament_name="Skráð lið",   # title line
-                teams=teams,
+                tournament_name = "Skráð lið",   
+                teams = teams,
             )
 
             # allows organizer to pick a team by number
