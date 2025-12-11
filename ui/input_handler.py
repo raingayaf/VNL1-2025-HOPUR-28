@@ -16,7 +16,7 @@ class InputHandler:
         while True:
             try:
                 user_input = input(prompt).strip().lower()
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
                 continue
 
@@ -29,7 +29,7 @@ class InputHandler:
         while True:
             try:
                 user_input = input(prompt).strip()
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
                 continue
             if user_input.lower() == 'b':
@@ -55,7 +55,7 @@ class InputHandler:
         while True:
             try:
                 user_input = input(prompt).strip()
-            except KeyboardInterrupt:
+            except (KeyboardInterrupt, EOFError):
                 print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
                 continue
             try:
