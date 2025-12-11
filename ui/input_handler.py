@@ -14,7 +14,12 @@ class InputHandler:
     def get_user_input(self, prompt: str, valid_input: set[str]) -> str:
         """Prompts the user until a valid input is entered."""
         while True:
-            user_input = input(prompt).strip().lower()
+            try:
+                user_input = input(prompt).strip().lower()
+            except KeyboardInterrupt:
+                print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
+                continue
+
             if user_input in valid_input:
                 return user_input
             print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
@@ -22,7 +27,11 @@ class InputHandler:
     def get_input_with_nav(self, prompt: str, allow_empty: bool = False):
         """ """
         while True:
-            user_input = input(prompt).strip()
+            try:
+                user_input = input(prompt).strip()
+            except KeyboardInterrupt:
+                print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
+                continue
             if user_input.lower() == 'b':
                 return 'BACK'
             if user_input.lower() == 'q':
@@ -42,8 +51,13 @@ class InputHandler:
 
     def get_int(self, prompt: str, min_value: int | None = None, max_value: int | None = None) -> int:
         """Prompts the user until a valid integer within allowed range is entered."""
+        # held að þetta er ekki búið að vera testað fyrir CTRL+C en
         while True:
-            user_input = input(prompt).strip()
+            try:
+                user_input = input(prompt).strip()
+            except KeyboardInterrupt:
+                print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
+                continue
             try:
                 value = int(user_input)
             except ValueError:
