@@ -167,6 +167,17 @@ class OrganizerMenuUI:
         print("*" * self.WIDTH + "\n")
         user_input = input("Q: Til baka:")
 
+    def display_organizer_registration_menu(self):
+        """Display tournament registration menu to organizer."""
+        print('\n' * 2 + '*' * self.WIDTH)
+        print('E-SPORTS'.center(self.WIDTH))                                                          
+        print('*' * self.WIDTH + '\n')
+        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
+        print('Skrá mót'.center(self.WIDTH))
+
+
+
 
  #Prufa
     # def display_all_players(self):

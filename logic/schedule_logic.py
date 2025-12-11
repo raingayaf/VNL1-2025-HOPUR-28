@@ -8,7 +8,7 @@ class ScheduleLogic:
     """Generates matchups and assign's times for matchup's"""
 
     def __init__(self, data_api):
-        self._data = data_api
+        self._data_api = data_api
 
     def generate_matchups(self, team_names: list[str]) -> list[tuple[str, str]]:
         """Create matchup where no team competes against the same team twice(including against itself)"""
@@ -57,5 +57,40 @@ class ScheduleLogic:
         matchups = self.generate_matchups(team_names)
 
         schedule = self.assign_times(matchups)
+
+        return schedule
+    
+    def organizer_save_schedule(self, tournament, schedule: list[dict]):
+        rows_to_save = []
+        for match in schedule:
+            rows_to_save.append({
+                "tournament_name": tournament.name,
+                "day": match["day"],
+                "time": match["time"],
+                "team_a": match["team_a"],
+                "team_b": match["team_b"],
+            })
+
+        return self._data_api.save_schedule(rows_to_save)
+
+    def find_saved_schedule(self, tournament):
+        all_rows = self._data_api.load_schedule()
+
+        schedule = []
+        for row in all_rows:
+            if row["tournament_name"] != tournament.name:
+                continue
+        
+        schedule.append({
+            "day": int(row["day"]),
+            "time": row["time"],
+            "team_a": row["team_a"],
+            "team_b": row["team_b"],
+        })
+    
+        def schedule_sort_key(row):
+            return row["day"], row["time"]
+        
+        schedule.sort(key=schedule_sort_key)
 
         return schedule
