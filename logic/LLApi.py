@@ -9,6 +9,7 @@ from models.model_tournament import Tournament
 from models.model_player import Player
 from models.model_team import Team
 from models.model_match import Match
+from models.exceptions import ValidationError
 
 class LLApi:
     """
@@ -115,6 +116,29 @@ class LLApi:
             website = website,
             logo = logo,
         )
+    
+    def get_team_info_for_captain(self, captain_handle: str, team_name: str):
+        """ """
+        teams = self._team_logic.get_all_teams()
+
+        matching_team = None
+        for team in teams:
+            if team.team_name == team_name and team.captain_handle == captain_handle:
+                matching_team = team
+                break 
+
+        if matching_team is None:
+            raise ValueError(f"Fyrirliði '{captain_handle}' tilheyrir ekki liðinu '{team_name}.")
+        
+        players = self._player_logic.get_players_for_team(team_name)
+
+        return {
+            "team": matching_team,
+            "players": players,
+            "captain_handle": captain_handle,
+        }
+        
+
 
     def team_name_exists(self, team_name: str) -> bool:
         """ """
@@ -170,6 +194,10 @@ class LLApi:
     def get_all_player_names(self) -> list[str]:
         players = self.get_all_players()
         return [player.name for player in players]
+    
+    def update_player(self, player: Player) -> None:
+        """UI calls this to update a player's information."""
+        self._player_logic.update_player(player)
 
     #-------------------------MATCH-RELATED-METHODS---------------------------
 

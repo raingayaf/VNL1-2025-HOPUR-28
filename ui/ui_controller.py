@@ -609,48 +609,159 @@ class UIController:
 
     def run_captain_verification(self):
         """ """
-        self.input_handler.clear_screen()
-        self.captain_menu.display_captain_verification_menu()
+        in_captain_verification = True
+        step = 1
 
-        team_name = self.input_handler.get_non_empty_string(
-            "Sláðu inn heiti á liðinu þínu: "
-        )
-        captain_handle = self.input_handler.get_non_empty_string(
-            "Sláðu inn leikmanna nafn þitt: "
-        )
-        # TODO: kalla á logic/data layer til að staðfesta að fyrirliði tilheyri þessu liði
+        captain_handle = ""
+        team_name = ""
 
-        # dæmi!
-        players = ["Leikmaður 1", "Leikmaður 2", "Leikmaður 3"]
-
-        self.run_team_information(team_name, players)
-
-    def run_team_information(self, team_name: str, players: list[str]):
-        """ """
-        in_team_info = True
-
-        while in_team_info:
+        while in_captain_verification:
             self.input_handler.clear_screen()
-            self.captain_menu.display_team_information_menu(team_name)
-            # TODO: Falleg tafla yfir leikmenn liðs
+            self.captain_menu.display_captain_verification_menu()
 
+            if captain_handle:
+                print(f"Sláðu inn leikmanna nafn þitt(handle): {captain_handle}")
+
+            if team_name:
+                print(f"Sláðu inn heiti á liðinu þínu: {team_name}")
+
+            if step == 1:
+                user_input = self.input_handler.get_input_with_nav(
+                    "Sláðu inn leikmanna nafn þitt(handle): "
+                )
+                if user_input == "BACK":
+                    return
+                captain_handle = user_input
+                step = 2
+                continue
+
+            if step == 2:
+                user_input = self.input_handler.get_input_with_nav(
+                    "Sláðu inn heiti á liðinu þínu: "
+                )
+                if user_input == "BACK":
+                    captain_handle = ""
+                    step = 1
+                    continue
+
+                team_name = user_input
+
+                try: 
+                    team_info = self.logic_api.get_team_info_for_captain(
+                        captain_handle, team_name
+                    )
+                except ValueError as exc:
+                    print(f"\n{exc}")
+                    input("Ýttu á ENTER og reyndu aftur.")
+                    step = 1
+                    continue
+                self.run_team_information(team_info)
+                return
+
+
+    def run_team_information(self, team_info: dict):
+        """ """
+        WIDTH: int = 60
+
+        in_team_information = True
+        team = team_info["team"]
+        players = team_info["players"]
+
+        if not players:
+            self.input_handler.clear_screen()
+            self.captain_menu.display_team_players_menu(team.team_name)
+            print("Engir leikmenn eru skráðir í liðið.")
+            input("Ýttu á ENTER til að fara til baka.")
+            return
+
+        while in_team_information:
+            self.input_handler.clear_screen()
+            self.captain_menu.display_team_players_menu(team.team_name)
+
+            for number, player in enumerate(players, start = 1):
+                    print(f"{number}. {player.handle}")
+            print('\nb: Til baka\n')
+            print('*' * WIDTH + '\n')
+            print('Sláðu inn númer leikmanns til að skoða persónuupplýsingarnar')
+
+            valid_input = {str(i) for i in range(1, len(players) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
-                "Sláðu inn númer aðgerðar: ", {"1", "b"}
+                "hans eða farðu til baka: ",
+                valid_input,
             )
 
-            if user_input == "1":
-                self.run_player_indformation_selection(team_name, players)
+            if user_input == "b":
+                in_team_information = False
+            else:
+                index = int(user_input) - 1
+                selected_player = players[index]
+                self.run_player_information(selected_player)
 
-            elif user_input == "b":
-                in_team_info = False
 
-    def run_player_indformation_selection(self, team_name: str, players: list[str]):
-        """ """
-        pass
+    def run_player_information(self, player):
+        """Shows information for a player and allows editing."""
+        WIDTH: int = 60
+        in_player_info = True
+        while in_player_info:
+            self.input_handler.clear_screen()
+            self.captain_menu.display_player_information_menu(player.handle)
 
-    def run_player_information(self):
-        """ """
-        pass
+            print(f"1. Nafn: {player.name}")
+            print(f"2. Fæðingardagur: {player.date_of_birth}")
+            print(f"3. Heimilisfang: {player.address}")
+            print(f"4. Sími: {player.phone}")
+            print(f"5. Netfang: {player.email}")
+            print(f"6. Vefslóð: {player.link}")
+            print('\nb: Til baka\n')
+            print('*' * WIDTH + '\n')
+            print("Ef að þú vilt breyta einstökum upplýsingum sláðu þá")
+
+            valid_input = {str(i) for i in range(1, 7)} | {"b"}
+            user_input = self.input_handler.get_user_input(
+                "inn númer þess sem þú vilt breyta eða farðu til baka: ",
+                valid_input
+            )
+
+            if user_input == "b":
+                in_player_info = False
+                continue
+            elif user_input !="b":
+                print()
+            choice = int(user_input)
+            if choice == 1:
+                field_name = "name"
+                prompt = "Skráðu nýtt nafn: "
+            elif choice == 2:
+                field_name = "date_of_birth"
+                prompt = "Skráðu nýjan fæðingardag: "
+            elif choice == 3:
+                field_name = "address"
+                prompt = "Skráðu nýtt heimilisfang: "
+            elif choice == 4:
+                field_name = "phone"
+                prompt = "Skráðu nýtt símanúmer: "
+            elif choice == 5:
+                field_name = "email"
+                prompt = "Skráðu nýtt netfang: "
+            elif choice == 6:
+                field_name = "link"
+                prompt = "Skráðu nýja vefslóð: "
+            else:
+                continue
+
+            new_value = input(prompt).strip()
+
+            setattr(player, field_name, new_value)
+
+            try:
+                self.logic_api.update_player(player)
+                print("\n" + "Upplýsingunum hefur verið breytt.".center(WIDTH))
+            except Exception as exc:
+                error_updating = f"Tókst ekki að uppfæra leikmann: {exc}"
+                print("\n"+ error_updating.center(WIDTH))
+            input("Ýttu á ENTER til að halda áfram.".center(WIDTH))
+
+
 
     # -----------------------ORGANIZER-MENU-FLOW------------------------------
 
