@@ -19,8 +19,8 @@ class CaptainMenuUI:
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
-        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
+        print("ATH! Sláðu inn 'b~' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q~' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print('Skrá lið'.center(self.WIDTH))
 
     def display_player_registration_menu(self, team_name: str, player_index: int):
@@ -28,8 +28,8 @@ class CaptainMenuUI:
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
-        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
+        print("ATH! Sláðu inn 'b~' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q~' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print(team_name.center(self.WIDTH))
         subhead = f'Skrá upplýsingar um leikmann {player_index}'
         print(subhead.center(self.WIDTH) + '\n')

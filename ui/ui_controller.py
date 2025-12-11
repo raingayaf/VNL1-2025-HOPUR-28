@@ -52,7 +52,7 @@ class UIController:
             # Show menu and handle user selection
             self.main_menu.display_main_menu()
             user_input = self.input_handler.get_user_input(
-                messages.MENU_PROMPT, {"1", "2", "3", "q"}
+                "Sláðu inn númer aðgerðar: ", {"1", "2", "3", "q"}
             )
             # Routes user to chosen submenu or closes program
             if user_input == "1":
@@ -88,7 +88,7 @@ class UIController:
             # Valid options, each tournament number and b to go back
             valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
-                messages.TOURNAMENT_SELECTION_PROMPT, valid_input
+                'Sláðu inn númer móts eða farðu til baka: ', valid_input
             )
             if user_input == "b":
                 # Return to main menu
@@ -110,7 +110,7 @@ class UIController:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_menu(tournament.name)
             user_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT, {"1", "2", "3", "b"}
+                "Sláðu inn númer aðgerðar eða farðu til baka: ", {"1", "2", "3", "b"}
             )
             # Routes user to chosen submenu
             if user_input == "1":
@@ -133,7 +133,7 @@ class UIController:
             self.schedule_menu.display_user_schedule(tournament, schedule)
             
             #self.tournament_menu.display_tournament_schedule(tournament.name)
-            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
+            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
             if user_input == "b":
                 # Return to the previous menu
                 in_tournament_schedule = False
@@ -145,7 +145,7 @@ class UIController:
         while in_tournament_scoreboard:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournament_scoreboard(tournament.name)
-            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
+            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
             if user_input == "b":
                 # Return to the previous menu
                 in_tournament_scoreboard = False
@@ -160,7 +160,7 @@ class UIController:
             self.tournament_menu.display_tournament_teams(tournament.name, teams)
             valid_input = {str(i) for i in range(1, len(teams) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
-                messages.TEAM_SELECTION_PROMPT, valid_input
+                "Sláðu inn númer liðs eða farðu til baka: ", valid_input
             )
             if user_input == "b":
                 # Return to the previous menu
@@ -181,7 +181,7 @@ class UIController:
             self.tournament_menu.display_team_players(
                 tournament.name, team.team_name, players
             )
-            user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
+            user_input = self.input_handler.get_user_input("Sláðu inn númer liðs eða farðu til baka: ", {"b"})
             if user_input == "b":
                 # Return to the previous menu
                 in_team_players_menu = False
@@ -194,7 +194,7 @@ class UIController:
             self.input_handler.clear_screen()
             self.captain_menu.display_captain_menu()
             captain_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT, {"1", "2", "b"}
+                "Sláðu inn númer aðgerðar eða farðu til baka: ", {"1", "2", "b"}
             )
             if captain_input == "1":
                 self.run_team_registration()
