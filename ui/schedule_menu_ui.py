@@ -14,7 +14,7 @@ class ScheduleUI:
         self._logic_api: LLApi = logic_api
 
     def displey_schedule_menu(self, tournament, teams, day_to_show=1):
-        """Display schedule to anyone"""
+        """Display schedule to organizer"""
 
         schedule = self._logic_api.generate_schedule(teams)
 
@@ -39,5 +39,38 @@ class ScheduleUI:
             print(line)
         print("\n" + "*" * self.WIDTH)
         print("b: Til baka, s: Vista dagskrá.")
+    
+    def display_user_schedule(self, tournament, schedule, day_to_show=1):
+        """Display saved schedule to user schedule"""
+
+        print("*" * self.WIDTH)
+        print("E-SPORTS".center(self.WIDTH))
+        print("*" * self.WIDTH + "\n")
+        print(f"{tournament.name}".center(self.WIDTH))
+        print("Dagskrá".center(self.WIDTH) + "\n")
+        print(
+            f"Venue: {tournament.venue}\nStart: {tournament.start_date}\nEnd: {tournament.end_date}".center(
+                self.WIDTH
+            )
+        )
+
+        if not schedule:
+            print("Enginn vistuð dagskrá fyrir þetta mót".center(self.WIDTH))
+            print("\n" + "*" * self.WIDTH)
+            print("b: Til baka")
+        
+        day_matches = [m for m in schedule if m["day"] == day_to_show]
+        print(f"Dagur {day_to_show}".center(self.WIDTH))
+        print()
+        for match in day_matches:
+            time = match["time"]
+            team_a = match["team_a"]
+            team_b = match["team_b"]
+            line = f"{time}  |  {team_a} vs {team_b}"
+            print(line)
+        print("\n" + "*" * self.WIDTH)
+        print("b: Til baka")
+        
+
 
 

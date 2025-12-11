@@ -32,13 +32,13 @@ class InputHandler:
             except (KeyboardInterrupt, EOFError):
                 print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
                 continue
-            if user_input.lower() == 'b':
+            if user_input.lower() == 'b~':
                 return 'BACK'
-            if user_input.lower() == 'q':
+            if user_input.lower() == 'q~':
                 return 'QUIT'
             if not allow_empty and user_input == '':
                 print('\n' + 'Þú verður að skrá þessar upplýsingar'.center(self.WIDTH))
-                print('til að geta haldið áfram í skráningarferlinu.'.center(self.WIDTH) + '\n')
+                print('til að geta haldið áfram.'.center(self.WIDTH) + '\n')
                 continue
             return user_input
     
@@ -74,3 +74,32 @@ class InputHandler:
     def wait_for_enter(self, prompt: str = 'Ýttu á ENTER til að halda áfram.') -> None:
         """Pauses program until user presses ENTER."""
         input(prompt)
+
+    def try_again_enter(self, prompt: str = 'Ýttu á ENTER og reyndu aftur.') -> None:
+        """Tells user to press enter and try again."""
+        input(prompt)
+
+
+    def get_score(self) -> tuple[int, int]:
+        """Validates score format and prevents input errors"""
+        while True:
+            score_input = input('Skráðu stig leiks á forminu, 1-4: ')
+            if "-" not in score_input:
+                print("Villa! Skrifaðu á forminu: 1-4.")
+                continue
+
+            left, right = score_input.split("-", 1)
+
+            if not left.strip().isdigit() or not right.strip().isdigit():
+                print("Villa! Báðir hlutir þurfa að vera tölur, t.d. 1-4.")
+                continue
+
+            a = int(left.strip())
+            b = int(right.strip())
+
+            if a == b:
+                print('Jafntefli er ekki í boði')
+                continue
+
+            return a, b
+
