@@ -129,7 +129,10 @@ class UIController:
 
         while in_tournament_schedule:
             self.input_handler.clear_screen()
-            self.tournament_menu.display_tournament_schedule(tournament.name)
+            schedule = self.logic_api.get_saved_schedule(tournament)
+            self.schedule_menu.display_user_schedule(tournament, schedule)
+            
+            #self.tournament_menu.display_tournament_schedule(tournament.name)
             user_input = self.input_handler.get_user_input(messages.BACK_PROMPT, {"b"})
             if user_input == "b":
                 # Return to the previous menu
@@ -632,13 +635,13 @@ class UIController:
             # TODO: Falleg tafla yfir leikmenn liðs
 
             user_input = self.input_handler.get_user_input(
-                "Sláðu inn númer aðgerðar: ", {"1", "h"}
+                "Sláðu inn númer aðgerðar: ", {"1", "b"}
             )
 
             if user_input == "1":
                 self.run_player_indformation_selection(team_name, players)
 
-            elif user_input == "h":
+            elif user_input == "b":
                 in_team_info = False
 
     def run_player_indformation_selection(self, team_name: str, players: list[str]):
@@ -683,17 +686,23 @@ class UIController:
     def run_display_menu(self):
         in_display_menu = True
 
+        tournaments = self.logic_api.get_all_tournaments()
+        teams = self.logic_api.get_all_teams()
+        tournament = tournaments[0]
+        schedule = self.logic_api.generate_schedule(teams)
+
         while in_display_menu:
-            tournaments = self.logic_api.get_all_tournaments()
-            teams = self.logic_api.get_all_teams()
-            self.schedule_menu.displey_schedule_menu(tournaments[0], teams)
+            self.input_handler.clear_screen()
+            self.schedule_menu.displey_schedule_menu(tournament, teams)
 
             organizer_input = self.input_handler.get_user_input(
                 messages.ACTION_OR_BACK_PROMPT, {"b", "s"}
             )
 
             if organizer_input == "s":
-                pass
+                self.logic_api.organizer_save_schedule(tournament, schedule)
+                print("Dagskrá vistuð!")
+                self.input_handler.wait_for_enter()
             elif organizer_input == "b":
                 in_display_menu = False
 
