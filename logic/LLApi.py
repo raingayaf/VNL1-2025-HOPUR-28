@@ -158,6 +158,11 @@ class LLApi:
             "captain_handle": captain_handle,
         }
         
+    def get_tournaments_for_team(self, team_name: str) -> list[Tournament]:
+        return self._team_logic.get_tournaments_for_team(team_name)
+    
+    def get_team_captain(self, team: Team) -> Player | None:
+        return self._team_logic.get_team_captain(team)
 
 
     def team_name_exists(self, team_name: str) -> bool:

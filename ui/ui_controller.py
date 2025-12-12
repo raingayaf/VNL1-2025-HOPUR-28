@@ -177,11 +177,14 @@ class UIController:
 
         while in_team_players_menu:
             players: list[Player] = self.logic_api.get_players_for_team(team.team_name)
+            captain: Player | None = self.logic_api.get_team_captain(team)
+            team_tournaments: list[Tournament] = self.logic_api.get_tournaments_for_team(team.team_name)
+
             self.input_handler.clear_screen()
             self.tournament_menu.display_team_players(
-                tournament.name, team.team_name, players
-            )
-            user_input = self.input_handler.get_user_input("Sláðu inn númer liðs eða farðu til baka: ", {"b"})
+                current_tournament=tournament, team = team, players = players, captain = captain, tournaments = team_tournaments,)
+            
+            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
             if user_input == "b":
                 # Return to the previous menu
                 in_team_players_menu = False
