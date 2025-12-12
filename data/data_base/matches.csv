@@ -14,3 +14,11 @@ match_id,tournament_id,match_number,round,team_a_name,team_b_name,match_date,mat
 13,1,1,SF,SegFault Spartans,Chuck Norris Fan Club,2025-12-07,10:00,SRV-PEPSI,0,2,Chuck Norris Fan Club,TRUE
 14,1,2,SF,CacheHit Crusaders,RaceCondition Racers,2025-12-07,10:00,SRV-CHUCK,1,2,RaceCondition Racers,TRUE
 15,1,1,Final,Chuck Norris Fan Club,RaceCondition Racers,2025-12-07,13:00,SRV-PEPSI,3,2,Chuck Norris Fan Club,TRUE
+16,2,1,R16,CompileTime Crushers,BitShift Buccaneers,1,08:00,1,0,0,,FALSE
+17,2,2,R16,ThreadSafe Titans,Overflow Outlaws,1,09:30,2,0,0,,FALSE
+18,2,3,R16,Quantum Bit Breakers,Heisenbug Hunters,1,11:00,3,0,0,,FALSE
+19,2,4,R16,Kernel Panic Pirates,Virtual Machine Vikings,1,12:30,4,0,0,,FALSE
+20,2,5,R16,Deadlock Dragons,Runtime Error Rebels,1,14:00,5,0,0,,FALSE
+21,2,6,R16,Garbage Collector Guild,Checksum Sentinels,1,15:30,6,0,0,,FALSE
+22,2,7,R16,BlueScreen Brawlers,Infinite Loop Legion,1,17:00,7,0,0,,FALSE
+23,2,8,R16,Memory Leak Marauders,Pointer Arithmetic Aces,1,18:30,8,0,0,,FALSE

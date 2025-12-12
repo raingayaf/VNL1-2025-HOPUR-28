@@ -30,7 +30,7 @@ class ScheduleUI:
         session_title = ""
         if day_matches:
             session_title = day_matches[0].get("session", "")
-        round_title = round_filter if round_filter else ""
+        round_title = round_filter if round_filter else (day_matches[0]["round"] if day_matches else "")
         print(f"{session_title} | Riðill {round_title}".center(self.WIDTH))
         print()
         for match in day_matches:
@@ -40,7 +40,7 @@ class ScheduleUI:
             line = f"{time}  | {(round_title)}  {team_a} vs {team_b}"
             print(line)
         print("\n" + "*" * self.WIDTH)
-        print("b: Til baka, s: Vista dagskrá.")
+        print("b: Til baka")
     
     # def display_user_schedule(self, tournament, schedule, day_to_show=1):
     #     """Display saved schedule to user schedule"""
