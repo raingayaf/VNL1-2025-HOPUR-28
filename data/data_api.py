@@ -8,7 +8,7 @@ from data.matches_data import MatchesData
 from data.tournament_data import TournamentData
 from data.Team_data import TeamData
 from data.Player_data import PlayerData
-from data.schedule_data import ScheduleData
+#from data.schedule_data import ScheduleData
 
 
 class DataApi:
@@ -32,7 +32,7 @@ class DataApi:
         teams_path = os.path.join(base_path, "teams.csv")
         self._teams_repo = TeamData(teams_path)
 
-        self._data = ScheduleData()
+        #self._data = ScheduleData()
 
     #All of these below have functions called write_all(), read_all() that should be used by the repos.
     def read_all_matches(self) -> list[Match]:
@@ -66,9 +66,3 @@ class DataApi:
     def save_all_tournaments(self, tournaments: list[Tournament]) -> None:
         """Writes tournament objects into tournaments.csv file"""
         self._tournaments_repo.write_all(tournaments)
-
-    def save_schedule(self, rows):
-        self._data.write_schedule_csv(rows)
-
-    def load_schedule(self):
-        return self._data.read_schedule_csv()

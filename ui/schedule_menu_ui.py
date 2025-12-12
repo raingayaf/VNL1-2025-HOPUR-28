@@ -13,10 +13,8 @@ class ScheduleUI:
     def __init__(self, logic_api):
         self._logic_api: LLApi = logic_api
 
-    def displey_schedule_menu(self, tournament, teams, day_to_show=1):
+    def displey_schedule_menu(self, tournament, schedule, day_to_show=1):
         """Display schedule to organizer"""
-
-        schedule = self._logic_api.generate_schedule(teams)
 
         print("*" * self.WIDTH)
         print("E-SPORTS".center(self.WIDTH))
@@ -29,13 +27,17 @@ class ScheduleUI:
             )
         )
         day_matches = [m for m in schedule if m["day"] == day_to_show]
-        print(f"Dagur {day_to_show}".center(self.WIDTH))
+        if day_matches:
+            round_name = day_matches[0]["round"]
+        else:
+            round_name = "Óþekkt"
+        print(f"Dagur: {day_to_show} | Riðill {round_name}".center(self.WIDTH))
         print()
         for match in day_matches:
             time = match["time"]
             team_a = match["team_a"]
             team_b = match["team_b"]
-            line = f"{time}  |  {team_a} vs {team_b}"
+            line = f"{time}  | {(round_name)}  {team_a} vs {team_b}"
             print(line)
         print("\n" + "*" * self.WIDTH)
         print("b: Til baka, s: Vista dagskrá.")

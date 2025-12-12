@@ -59,16 +59,43 @@ class LLApi:
         """UI calls this to get a single tournament by its index."""
         return self._tournament_logic.get_tournament_by_index(index)
     
-    def generate_schedule(self, teams):
-        return self._schedule_logic.generate_schedule(teams)
+    def generate_round_of_16(self, tournament: Tournament, teams: list[Team]):
+        """generate day 1 matches (R16)"""
+        team_names = [t.team_name for t in teams]
+        return self._match_logic.generate_round_of_16(tournament.tournament_id, team_names)
     
-    def organizer_save_schedule(self, tournament, schedule):
-        return self._schedule_logic.organizer_save_schedule(tournament, schedule)
-
-    def get_saved_schedule(self, tournament):
-        return self._schedule_logic.find_saved_schedule(tournament)
+    def generate_quarterfinals(self, tournament: Tournament):
+        """Generate day 2 morning matches from R16 winners"""
+        return self._match_logic.generate_quarterfinals(tournament.tournament_id)
     
+    def generate_semifinals(self, tournament: Tournament):
+        """Generate day 2 later (SF) matches from QF winners"""
+        return self._match_logic.generate_semifinals(tournament.tournament_id)
     
+    def generate_final(self, tournament: Tournament):
+        """Generate day 3 final from SF winners"""
+        return self._match_logic.generate_final(tournament.tournament_id)
+    
+    def get_schedule_for_tournament(self, tournament):
+        """Build schedule for tournament"""
+        return self._schedule_logic.build_schedule_for_tournament(tournament)
+    
+    def record_match_result(self, match_id: int, score_a: int, score_b: int):
+        """Record match results"""
+        return self._match_logic.record_match_result(match_id, score_a, score_b)
+    
+    def get_matches_for_tournament(self, tournament) -> list[Match]:
+        """Gets matches for tournament"""
+        return self._match_logic.get_matches_for_tournament(tournament.tournament_id)
+    
+    # def ensure_bracket(self, tournament, teams):
+    #     """Generate bracket only if this tournament doesnt have matches"""
+    #     existing = self._match_logic.get_matches_for_tournament(tournament.tournament_id)
+    #     if existing:
+    #         return existing
+        
+    #     team_names = [t.team_name for to in teams]
+    #     return self._match_logic.generate_full_bracket(tournament.tournament_id, team_names)
     #-------------------------TEAM-RELATED-METHODS---------------------------
 
     def create_team(self,
