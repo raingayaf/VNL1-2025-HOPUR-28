@@ -901,7 +901,7 @@ class UIController:
             if choice == "1":
                 # Generate schedule for day 1 (R16)
                 try:
-                    self.logic_api.generate_round_of_16(tournament, teams)
+                    self.logic_api.generate_round_of_16(tournament)
                     print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
                 except Exception as e:
                     print(f"Villa: {e}")
@@ -965,54 +965,85 @@ class UIController:
             self.input_handler.wait_for_enter()
             return
         
+        round_filter = None
+
+        if day_to_show == 2:
+            print("\nDagur 2 inniheldur tvær umferðir:")
+            print("1. Morgun (QF)")
+            print("2. Kvöld (SF)")
+            part = input("Veldu 1 eða 2 (eða b til baka): ").strip().lower()
+
+            if part == "b":
+                return
+            elif part == "1":
+                round_filter = "QF"
+            elif part == "2":
+                round_filter = "SF"
+            else:
+                print("Ógilt val.")
+                self.input_handler.wait_for_enter()
+                return
+
         self.input_handler.clear_screen()
-        self.schedule_menu.displey_schedule_menu(tournament, schedule, day_to_show)
+        self.schedule_menu.displey_schedule_menu(
+            tournament, schedule, day_to_show, round_filter=round_filter
+        )
         self.input_handler.wait_for_enter()
-    
+
     def enter_match_result(self, tournament):
         """Enter match results on loop until finished or input b to quit"""
         in_enter_match_result = True
-        matches = self.logic_api.get_matches_for_tournament(tournament)
+
         while in_enter_match_result:
-            if not matches:
-                print("Engir leikir skráðir fyrir þetta mót.")
-                self.input_handler.wait_for_enter()
-                return
-            
-            round_order = ["R16", "QF", "SF", "F"]
-            current_round = None
-            for r in round_order:
-                if any(m.round == r and not m.completed for m in matches):
-                    current_round = r
-                    break
-            
-            if current_round is None:
-                print("Allir leikir hafa verið skráðir.")
+            self.input_handler.clear_screen()
+            schedule = self.logic_api.get_schedule_for_tournament(tournament)
+            incomplete = [row for row in schedule if not row["completed"]]
+
+            if not incomplete:
+                print("Allir leikir hafa verið skráðir fyrir þetta mót.")
                 self.input_handler.wait_for_enter()
                 return
 
             print("\nLeikir í þessu móti:")
-            for m in matches:
-                status = "✓" if m.completed else " "
-                print(f"[{status}] ID {m.match_id} - ({m.round}) {m.team_a_name} vs {m.team_b_name}")
+            for row in schedule:
+                status = "✓" if row["completed"] else " "
+                print(
+                    f"[{status}] ID {row['match_id']} - ({row['round']}) "
+                    f"{row['team_a']} vs {row['team_b']} kl. {row['time']} (dagur {row['day']})"
+                )
 
-            try:
-                match_id = int(input("\nSláðu inn ID leiks eða b~ til að hætta: ").strip())
-                score_a = int(input("Sláðu inn stig liðs A: ").strip())
-                score_b = int(input("Sláðu inn stig liðs B: ").strip())
-            except ValueError:
-                print("Ógilt gildi, verður að vera heiltala.")
-                self.input_handler.wait_for_enter()
+            user_input = input("\nSláðu inn ID leiks eða 'b~' til að hætta: ").strip()
+            if user_input.lower() == "b~":
                 return
 
             try:
+                match_id = int(user_input)
+            except ValueError:
+                print("Ógilt gildi fyrir ID.")
+                self.input_handler.wait_for_enter()
+                continue
+
+            valid_ids = {row["match_id"] for row in incomplete}
+            if match_id not in valid_ids:
+                print("Þetta ID tilheyrir ekki ókláruðum leik.")
+                self.input_handler.wait_for_enter()
+                continue
+
+            try:
+                score_a = int(input("Sláðu inn stig liðs A: ").strip())
+                score_b = int(input("Sláðu inn stig liðs B: ").strip())
+            except ValueError:
+                print("Ógilt gildi fyrir stig.")
+                self.input_handler.wait_for_enter()
+                continue
+
+            try:
                 self.logic_api.record_match_result(match_id, score_a, score_b)
-                print("Úrslit hafa verið skráð.")
+                print("Úrslit hafa verið skráðar.")
             except Exception as e:
                 print(f"Villa: {e}")
-            
-            if match_id == "b~":
-                in_enter_match_result = False
+
+            self.input_handler.wait_for_enter()
         
     def run_tournament_displey_selection(self):
         """Show available tournaments"""

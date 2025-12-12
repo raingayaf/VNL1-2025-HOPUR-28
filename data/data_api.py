@@ -8,14 +8,16 @@ from data.matches_data import MatchesData
 from data.tournament_data import TournamentData
 from data.Team_data import TeamData
 from data.Player_data import PlayerData
-#from data.schedule_data import ScheduleData
 
 
 class DataApi:
     """Api for the logic layer to be able to fetch from data layer"""
-    def __init__(self, base_path: str = "data/data_base"):
+    def __init__(self, base_path: str = None):
         """Creates a correct file path for the .csv file and makes repo 
     objects for reading and writing into them"""
+        if base_path is None:
+            here = os.path.dirname(__file__)
+            base_path = os.path.join(here, "data_base")
 
         #Connects matches repo to csv. file
         matches_path = os.path.join(base_path, "matches.csv")
@@ -31,8 +33,6 @@ class DataApi:
         #Connects teams repo to csv. file
         teams_path = os.path.join(base_path, "teams.csv")
         self._teams_repo = TeamData(teams_path)
-
-        #self._data = ScheduleData()
 
     #All of these below have functions called write_all(), read_all() that should be used by the repos.
     def read_all_matches(self) -> list[Match]:

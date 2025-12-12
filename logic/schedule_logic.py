@@ -17,18 +17,27 @@ class ScheduleLogic:
 
             if m.round == "R16":
                 day = 1
-            elif m.round in ("QF", "SF"):
+                session = "Dagur 1"
+            elif m.round in ("QF"):
                 day = 2
+                session = "Dagur 2 (morgun)"
+            elif m.round in ("SF"):
+                day = 2
+                session = "Dagur 2 (kvöld)"
             else:
                 day = 3
+                session = "Dagur 3"
             
             schedule.append({
+                "match_id": m.match_id,
                 "day": day,
+                "session": session,
                 "time": m.match_time,
                 "team_a": m.team_a_name,
                 "team_b": m.team_b_name,
                 "match_number": m.match_number,
                 "round": m.round,
+                "completed": m.completed,
             })
         
 

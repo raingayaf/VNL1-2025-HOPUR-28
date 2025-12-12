@@ -60,11 +60,24 @@ class LLApi:
         """UI calls this to get a single tournament by its index."""
         return self._tournament_logic.get_tournament_by_index(index)
     
-    def generate_round_of_16(self, tournament: Tournament, teams: list[Team]):
+    def generate_round_of_16(self, tournament: Tournament):
         """generate day 1 matches (R16)"""
-        team_names = [t.team_name for t in teams]
+        all_teams = self.get_all_teams()
+
+        start = (tournament.tournament_id - 1) * 16
+        end = start + 16
+
+        if tournament.tournament_id < 1:
+            raise ValueError("Ógilt tournament_id.")
+
+        if len(all_teams) < end:
+            raise ValueError("Það þarf að vera að minnsta kosti 16 lið laus fyrir þetta mót.")
+
+        selected_teams = all_teams[start:end]
+        team_names = [t.team_name for t in selected_teams]
+
         return self._match_logic.generate_round_of_16(tournament.tournament_id, team_names)
-    
+        
     def generate_quarterfinals(self, tournament: Tournament):
         """Generate day 2 morning matches from R16 winners"""
         return self._match_logic.generate_quarterfinals(tournament.tournament_id)
