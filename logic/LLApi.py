@@ -222,3 +222,17 @@ class LLApi:
             match_time,
             server_id,
         )
+    
+    #-------------------------VALIDATION-HELPERS-FOR-UI--------------------------
+    def validate_team_name_format(self, team_name: str) -> str:
+        return self._team_logic._validate_team_name_format(team_name)
+    
+    def validate_captain_handle_format(self, handle: str) -> str:
+        return self._team_logic._validate_handle_format(handle)
+    
+    def validate_team_website(self, website: str) -> str:
+        return self._team_logic.validate_team_website(website)
+    
+    def validate_team_logo(self, logo: str) -> str:
+        return self._team_logic.validate_logo_value(logo)
+    

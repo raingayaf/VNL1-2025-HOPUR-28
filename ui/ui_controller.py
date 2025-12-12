@@ -224,7 +224,7 @@ class UIController:
             if team_name:
                 print(f"Skráðu heiti liðsins: {team_name}")
             if captain_handle:
-                print(f"Skráðu leikmanna nafn fyrirliðans: {captain_handle}")
+                print(f"Skráðu leikmanna nafn fyrirliðans(handle): {captain_handle}")
             if number_of_players:
                 print(f"Skráðu fjölda leikmanna (3-5): {number_of_players}")
             if team_website or step == 5:
@@ -248,19 +248,24 @@ class UIController:
                 if user_input == "BACK":
                     in_team_registration = False
                     continue
-                if self.logic_api.team_name_exists(user_input):
-                    team_exists_message = f"Liðið '{user_input}' er nú þegar á skrá!"
+                try: 
+                    validated_name = self.logic_api.validate_team_name_format(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+
+                if self.logic_api.team_name_exists(validated_name):
+                    team_exists_message = f"Liðið '{validated_name}' er nú þegar á skrá!"
                     print("\n" + team_exists_message.center(self.input_handler.WIDTH))
                     print(
                         "Vinsamlegast veldu nafn sem er ekki í notkun.".center(
                             self.input_handler.WIDTH
                         )
                     )
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
-                team_name = user_input
+                team_name = validated_name
                 step = 2
                 continue
 
@@ -276,7 +281,15 @@ class UIController:
                     team_name = ""
                     step = 1
                     continue
-                if self.logic_api.handle_exists(user_input):
+        
+                try:
+                    validated_handle = self.logic_api.validate_captain_handle_format(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+                
+                if self.logic_api.handle_exists(validated_handle):
                     handle_exists_message = (
                         f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
                     )
@@ -286,11 +299,9 @@ class UIController:
                             self.input_handler.WIDTH
                         )
                     )
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
-                captain_handle = user_input
+                captain_handle = validated_handle
                 step = 3
                 continue
 
@@ -312,24 +323,18 @@ class UIController:
                             self.input_handler.WIDTH
                         )
                     )
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
                 number = int(user_input)
                 if number < 3:
                     num_below = f"Fjöldinn má ekki vera minni en 3!"
                     print("\n" + num_below.center(self.input_handler.WIDTH))
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
                 if number > 5:
                     num_above = f"Fjöldinn má ekki vera meiri en 5!"
                     print("\n" + num_above.center(self.input_handler.WIDTH))
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
                 number_of_players = number
                 step = 4
@@ -352,7 +357,13 @@ class UIController:
                     number_of_players = 0
                     step = 3
                     continue
-                team_website = user_input
+                try:
+                    team_website = self.logic_api.validate_team_website(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+
                 step = 5
                 continue
 
@@ -368,7 +379,13 @@ class UIController:
                     team_website = ""
                     step = 4
                     continue
-                team_logo = user_input
+                try: 
+                    team_logo = self.logic_api.validate_team_logo(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+
                 step = 6
                 continue
 
@@ -389,8 +406,8 @@ class UIController:
                 player_handles = [player["handle"] for player in players_on_team]
 
                 if captain_handle not in player_handles:
-                    print("Fyrirliði þarf að vera einn af leikmönnunum.")
-                    input("Ýttu á ENTER til að halda áfram.")
+                    print("Fyrirliði þarf að vera einn af leikmönnunum!")
+                    self.input_handler.try_again_enter()
                     step = 2
                     continue
                 registered_team_players = players_on_team
@@ -403,19 +420,28 @@ class UIController:
                     self.logic_api.create_team_with_players(
                         name=team_name,
                         captain_handle=captain_handle,
-                        registered_team_players=players_on_team,
+                        registered_team_players=registered_team_players,
                         website=team_website,
                         logo=team_logo,
                     )
-                    print(f"Liðið '{team_name}' hefur verið skráð!")
-                    input("Ýttu á ENTER til að fara aftur á heimasvæðið.")
-                    in_team_registration = False
+                except ValidationError as exception:
+                    print("\n" + "Óvænt villa við skráningu liðs :(".center(self.input_handler.WIDTH))
+                    print(str(exception))
+                    self.input_handler.try_again_enter()
+                    step = 1
+                    team_name = ""
+                    captain_handle = ""
+                    number_of_players = ""
+                    team_website = ""
+                    team_logo = ""
+                    registered_team_players = []
                     continue
-                except ValidationError:
-                    print(f"Óvænt villa við skráningu liðs!")
-                    input("Ýttu á ENTER til að reyna aftur.")
-                    in_team_registration = False
-                    continue
+                
+                self.input_handler.clear_screen()
+                self.captain_menu.display_team_registration_done(team_name)
+                self.input_handler.back_home_enter()
+                in_team_registration = False
+                continue
 
     def run_player_registration(self, team_name: str, number_of_players: int):
         """Runs registration on each player in team (collects data)."""
