@@ -738,7 +738,7 @@ class UIController:
         if not players:
             self.input_handler.clear_screen()
             self.captain_menu.display_team_players_menu(team.team_name)
-            print("Engir leikmenn eru skráðir í liðið.")
+            print("Engir leikmenn eru skráðir í liðið.".center(InputHandler.WIDTH) +"\n")
             input("Ýttu á ENTER til að fara til baka.")
             return
 
@@ -1268,7 +1268,7 @@ class UIController:
             print(f"\033[3m\033[4m\033[1mStöðutafla - {tournament.name}\033[0m\n".center(width))
 
             if not matches:
-                print("Engir leikir skráðir fyrir þetta mót.\n")
+                print("Engir leikir skráðir fyrir þetta mót".center(width) + "\n")
             else:
                 for match in matches:
                     status = "-> Á áætlun"
@@ -1337,7 +1337,7 @@ class UIController:
             print()
 
             if not matches:
-                print("Engir komandi leikir í þessu móti.\n")
+                print("Engir komandi leikir í þessu móti.".center(width) +"\n")
             else:
                 day_groups = self._group_matches_by_day(matches)
 
