@@ -15,6 +15,7 @@ from logic.LLApi import LLApi
 from models.model_tournament import Tournament
 from models.model_team import Team
 from models.model_player import Player
+from models.model_match import Match
 from models.exceptions import ValidationError
 
 
@@ -114,7 +115,7 @@ class UIController:
             )
             # Routes user to chosen submenu
             if user_input == "1":
-                self.run_tournament_schedule(tournament)
+                self.run_user_schedule(tournament)
             elif user_input == "2":
                 self.run_tournament_scoreboard(tournament)
             elif user_input == "3":
@@ -177,11 +178,14 @@ class UIController:
 
         while in_team_players_menu:
             players: list[Player] = self.logic_api.get_players_for_team(team.team_name)
+            captain: Player | None = self.logic_api.get_team_captain(team)
+            team_tournaments: list[Tournament] = self.logic_api.get_tournaments_for_team(team.team_name)
+
             self.input_handler.clear_screen()
             self.tournament_menu.display_team_players(
-                tournament.name, team.team_name, players
-            )
-            user_input = self.input_handler.get_user_input("Sláðu inn númer liðs eða farðu til baka: ", {"b"})
+                current_tournament=tournament, team = team, players = players, captain = captain, tournaments = team_tournaments,)
+            
+            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
             if user_input == "b":
                 # Return to the previous menu
                 in_team_players_menu = False
@@ -871,7 +875,7 @@ class UIController:
                 self.tournament_creation_flow()
             # Schedule tournament
             elif organizer_input == "2":
-                self.run_tournament_displey_selection() #velja mót sem ekki er komið dagskrá fyrir
+                self.run_tournament_displey_selection() 
 
             elif organizer_input == "3":
                 self.run_all_teams_view()
@@ -884,6 +888,7 @@ class UIController:
 
     def run_display_menu(self, tournament):
         """Organizer schedule/bracket workflow."""
+        print(f"DEBUG: run_display_menu for {tournament.name}, id={tournament.tournament_id}")
         in_display_menu = True
 
         teams = self.logic_api.get_all_teams()
@@ -903,6 +908,7 @@ class UIController:
                 try:
                     self.logic_api.generate_round_of_16(tournament)
                     print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
+                    print(f"fjöldi leikja: {len(matches)}")
                 except Exception as e:
                     print(f"Villa: {e}")
                 self.input_handler.wait_for_enter()
@@ -1288,3 +1294,78 @@ class UIController:
             user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
             if user_input == "b":
                 in_tournament_scoreboard = False
+
+#--------------------Scoreboard display for user-------------------
+    def _group_matches_by_day(self, matches: list[Match]) -> list[tuple[str, list[Match]]]:
+        """Group matches by their match_date and return a list of (day_label, matches_for_that_day)."""
+        # Group by only date key
+        grouped: dict[str, list[Match]] = {}
+        for m in matches:
+            day_key = m.match_date  
+            if day_key not in grouped:
+                grouped[day_key] = []
+            grouped[day_key].append(m)
+
+        # Sort day keys,so earlier dates/days come first
+        day_keys = sorted(grouped.keys())
+
+        # Builds a day schedule using key values for the date of matches
+        result: list[tuple[str, list[Match]]] = []
+        for index, day_key in enumerate(day_keys, start = 1):
+            day_label = f"Dagur {index}"
+            day_matches = grouped[day_key]
+
+            # Sort matches for one day by time,round and match_number
+            day_matches.sort(key = lambda m: (m.match_time, m.round, m.match_number))
+
+            result.append((day_label, day_matches))
+
+        return result
+    
+    def run_user_schedule(self, tournament: Tournament) -> None:
+        """Displays the tournament schedule (upcoming matches grouped by day)."""
+        in_tournament_schedule = True
+
+        while in_tournament_schedule:
+            self.input_handler.clear_screen()
+
+            # Get only upcoming (not completed) matches from logic layer
+            matches = self.logic_api.get_upcoming_matches_for_tournament(
+                tournament.tournament_id
+            )
+
+            width = self.input_handler.WIDTH
+
+            print("*" * width)
+            print("E-SPORTS".center(width))
+            print("*" * width + "\n")
+
+            print(f"Dagskrá - {tournament.name}".center(width))
+            print()
+
+            if not matches:
+                print("Engir komandi leikir í þessu móti.\n")
+            else:
+                day_groups = self._group_matches_by_day(matches)
+
+                for day_label, day_matches in day_groups:
+                    # Bold day header
+                    print(f"\033[3m\033[4m\033[1m{day_label}\033[0m")
+                    print("-" * width)
+
+                    for match in day_matches:
+                        print(
+                            f"{match.round} #{match.match_number} "
+                            f"þann {match.match_date} klukkan: {match.match_time} "
+                            f"[{match.server_id}]"
+                        )
+                        print(
+                            f"  {match.team_a_name} vs. {match.team_b_name}\n"
+                        )
+
+            user_input = self.input_handler.get_user_input(
+                "Sláðu inn 'b' til að fara til baka: ", {"b"}
+            )
+            if user_input == "b":
+                in_tournament_schedule = False
+

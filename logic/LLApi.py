@@ -100,16 +100,9 @@ class LLApi:
     
     def get_matches_for_tournament(self, tournament) -> list[Match]:
         """Gets matches for tournament"""
-        return self._match_logic.get_matches_for_tournament(tournament.tournament_id)
+        all_matches = self._data_api.read_all_matches()
+        return [m for m in all_matches if m.tournament_id == tournament.tournament_id]
     
-    # def ensure_bracket(self, tournament, teams):
-    #     """Generate bracket only if this tournament doesnt have matches"""
-    #     existing = self._match_logic.get_matches_for_tournament(tournament.tournament_id)
-    #     if existing:
-    #         return existing
-        
-    #     team_names = [t.team_name for to in teams]
-    #     return self._match_logic.generate_full_bracket(tournament.tournament_id, team_names)
     #-------------------------TEAM-RELATED-METHODS---------------------------
 
     def create_team(self,
@@ -178,6 +171,11 @@ class LLApi:
             "captain_handle": captain_handle,
         }
         
+    def get_tournaments_for_team(self, team_name: str) -> list[Tournament]:
+        return self._team_logic.get_tournaments_for_team(team_name)
+    
+    def get_team_captain(self, team: Team) -> Player | None:
+        return self._team_logic.get_team_captain(team)
 
 
     def team_name_exists(self, team_name: str) -> bool:
@@ -266,6 +264,11 @@ class LLApi:
     def get_matches_for_tournament(self, tournament_id: int) -> list[Match]:
         """UI calls this to get all matches for a given tournament."""
         return self._match_logic.get_matches_for_scoreboard(tournament_id)
+    
+    def get_upcoming_matches_for_tournament(self, tournament_id: int) -> list[Match]:
+        """UI calls this to get only upcoming matches in a tournament."""
+        return self._match_logic.get_upcoming_matches_for_tournament(tournament_id)
+
     #-------------------------VALIDATION-HELPERS-FOR-UI--------------------------
     def validate_team_name_format(self, team_name: str) -> str:
         return self._team_logic._validate_team_name_format(team_name)

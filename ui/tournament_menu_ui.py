@@ -1,3 +1,4 @@
+from models.model_tournament import Tournament
 from models.model_team import Team
 from models.model_player import Player
 
@@ -67,16 +68,29 @@ class TournamentMenuUI:
         print('\nb: Til baka')
         print('\n' + '*' * self.WIDTH + '\n')
 
-    def display_team_players(self, tournament_name: str, team_name: str, players: list[Player]) -> None:
+    def display_team_players(self, 
+        current_tournament: Tournament, 
+        team: Team,
+        players: list[Player],
+        captain: Player,
+        tournaments: list[Tournament]) -> None:
         """Display players on a selected team who participate/d in the tournament."""
         print('*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print(tournament_name.center(self.WIDTH) + '\n')
-        print(team_name.center(self.WIDTH) + '\n')
+        print(current_tournament.name.center(self.WIDTH))
+        print(team.team_name.center(self.WIDTH) + '\n') 
         print('Leikmenn:')
         for i, player in enumerate(players, start=1):
             print(f'{i}. {player.handle}')
+        if captain is not None:
+            print(f"\nFyrirliði: {captain.handle}")
+        else:
+            print(f"\nFyrirlið finnst ekki í kerfi.")
+        if tournaments:
+            print("\nMót sem lið hefur keppt á:")
+            for i, t in enumerate(tournaments, start = 1):
+                print(f"{i}. {t.name}") 
         print('\n' + '*' * self.WIDTH + '\n')
 
 
