@@ -48,28 +48,6 @@ class InputHandler:
             user_input = input(prompt).strip()
             if user_input:
                 return user_input
-
-    def get_int(self, prompt: str, min_value: int | None = None, max_value: int | None = None) -> int:
-        """Prompts the user until a valid integer within allowed range is entered."""
-        # held að þetta er ekki búið að vera testað fyrir CTRL+C en
-        while True:
-            try:
-                user_input = input(prompt).strip()
-            except (KeyboardInterrupt, EOFError):
-                print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
-                continue
-            try:
-                value = int(user_input)
-            except ValueError:
-                print('\n' + messages.INT_MUST_BE_NUMBER.center(self.WIDTH) + '\n')
-                continue
-            if min_value is not None and value < min_value:
-                print('\n' + messages.INT_BELOW_MIN.format(min_value=min_value).center(self.WIDTH) + '\n')
-                continue
-            if max_value is not None and value > max_value:
-                print('\n' + messages.INT_ABOVE_MAX.format(max_value=max_value).center(self.WIDTH) + '\n')
-                continue
-            return value
         
     def wait_for_enter(self, prompt: str = 'Ýttu á ENTER til að halda áfram.') -> None:
         """Pauses program until user presses ENTER."""

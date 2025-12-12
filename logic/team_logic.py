@@ -22,15 +22,6 @@ class TeamLogic:
         teams = self._data_api.read_all_teams()
         name_casefold = team_name.casefold()
         return any(team.team_name.casefold() == name_casefold for team in teams)
-    
-    # VEIT EKKI HVORT VIÐ NOTUM ÞETTA
-    def get_team_details(self, team_id: int) -> Team:
-        """Returns a Team object by ID."""
-        teams = self._data_api.read_all_teams()
-        for team in teams:
-            if team.team_id == team_id:
-                return team
-        raise ValidationError("Team not found.")
 
     def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
         """Return all matches from selected tournament."""
@@ -76,7 +67,7 @@ class TeamLogic:
             return result
         
     def get_team_captain(self, team: Team) -> Player | None:
-        """ """
+        """Reads all players and returns team captain"""
         if not team.captain_handle:
             return None
         
@@ -93,51 +84,12 @@ class TeamLogic:
         return self._validate_team_name_format(team_name)
 
     def validate_team_website(self, website: str) -> str:
-        """ """
+        """Public wrapper so UI/LLApi can validate team website."""
         return self._normalize_website(website)
     
     def validate_logo_value(self, logo: str) -> str:
+        """Public wrapper so UI/LLApi can validate logo"""
         return self._validate_logo_value(logo)
-    
-
-    # def list_team_players(self, team_id: int):
-    #     """Returns a list of Player models for a given team."""
-    #     teams = self._data_api.read_all_teams()
-    #     players = self._data_api.read_all_players()
-
-    #     wanted_team = None
-
-    #     for team in teams:
-    #         if team.team_id == team_id:
-    #             wanted_team = team
-
-    #     if wanted_team is None:
-    #         raise ValidationError("Lið með auðkenni {team_id} fannst ekki.")
-
-    #     team_players = []
-    #     for player in players:
-    #         if player.team_name == wanted_team.team_name:
-    #             team_players.append(player)
-
-    #     return team_players
-
-
-    # def validate_team_size(self, team_id: int) -> bool:
-    #     """Checks if the team satisfies the minimum and maximum size rules."""
-
-    #     teams = self._data_api.read_all_teams()
-    #     players = self._data_api.read_all_players()
-
-    #     validate_team = None
-    #     for team in teams:
-    #         if team.team_id == team_id:
-    #             validate_team = team
-
-    #     count = 0
-    #     for player in players:
-    #         if player.team_name == validate_team.team_name:
-    #             count += 1
-    #     return 3 <= count <= 5
 
     #------------------METHODS-THAT-CHANGE-DATA----------------------
     def create_team(self, 
@@ -209,75 +161,6 @@ class TeamLogic:
 
         return new_team
 
-
-    # def add_player(self, team_id: int, player_handle: str):
-    #     """Adds a player to an existing team."""
-
-    #     team, all_players, team_players = self._get_team_and_players(team_id)
-
-    #     # Check if player exists
-    #     player = next((p for p in all_players if p.handle == player_handle), None)
-    #     if player is None:
-    #         raise ValidationError(f"Leikmaður '{player_handle}' er ekki til.")
-
-    #     # Prevent player from joining multiple teams
-    #     if player.team_name and player.team_name != team.team_name:
-    #         raise ValidationError(
-    #             f"Leikmaður '{player_handle}' er nú þegar skráður í liðið: '{player.team_name}'."
-    #         )
-
-    #     # Prevent duplicates within this team
-    #     if any(p.handle == player_handle for p in team_players):
-    #         raise ValidationError("Leikmaður er nú þegar í liði.")
-
-    #     # Enforce max size
-    #     if len(team_players) >= 5:
-    #         raise ValidationError("Mest geta 5 verið í liði.")
-
-    #     # Assign player to this team
-    #     player.team_name = team.team_name
-    #     self._data_api.save_all_players(all_players)
-    #     return team
-
-
-    # def remove_player(self, team_id: int, player_handle: str):
-    #     """Removes a player from an existing team."""
-    #     team, all_players, team_players = self._get_team_and_players(team_id)
-
-    #     player_to_remove = None
-    #     for p in team_players:
-    #         if p.handle == player_handle:
-    #             player_to_remove = p
-
-    #     if player_to_remove is None:
-    #         raise ValidationError("Leikmaður er ekki í liði.")
-
-    #     if player_handle == team.captain_handle:
-    #         raise ValidationError("Ekki er hægt að fjarlægja fyrirliða úr liði.")
-
-    #     if len(team_players) < 3:
-    #         raise ValidationError("Minnst þarf þrjá leikmenn í lið")
-
-    #     #Removes player from team
-    #     for p in all_players:
-    #         if p.handle == player_handle:
-    #             p.team_name = ""
-    #     self._data_api.save_all_players(all_players)
-
-
-    # def change_captain(self, team_id: int, new_captain_handle: str):
-    #     """Assigns a new captain, ensuring player is in team."""
-    #     team, all_teams, team_players = self._get_team_and_players(team_id)
-    #     is_member = False
-    #     for player in team_players:
-    #         if player.handle == new_captain_handle:
-    #             is_member = True
-    #     if not is_member:
-    #         raise ValidationError("Fyrirliði verður að vera skráður í lið.")
-    #     team.captain_handle = new_captain_handle
-    #     self._data_api.save_all_teams(all_teams)
-    #     return team
-
     #------------------INTERNAL-HELPER-METHODS----------------------
 
     def get_team_and_players_by_name(self, team_name: str):
@@ -312,6 +195,7 @@ class TeamLogic:
         return max(existing_ids) + 1
     
     def _validate_team_name_format(self, team_name: str) -> str:
+        """Validate team name by length of name, size and alpha"""
         name = team_name.strip()
         if len(name) < 2:
             raise ValidationError("Nafn liðs verður að vera a.m.k. 2 stafir.")
@@ -324,6 +208,7 @@ class TeamLogic:
         return name
     
     def _validate_handle_format(self, handle: str) -> str:
+        """Validate player handle by name length, starts with and empty string"""
         h = handle.strip()
         if len(h) < 2:
             raise ValidationError("Leikmanna nafn (handle) verður að vera a.m.k. 2 stafir.")
@@ -338,6 +223,7 @@ class TeamLogic:
         return h
     
     def _normalize_website(self, website: str) -> str:
+        """Adds https:// and checks if website ends correctly"""
         w = website.strip()
         if not w:
             return ""
@@ -349,19 +235,11 @@ class TeamLogic:
         return w
     
     def _validate_logo_value(self, logo: str) -> str:
+        """Checks whether logo start with ASCII"""
         l = logo.strip()
         if not l:
             return ""
         if not l.startswith("ASCII_"):
             raise ValidationError("Logoið verður að byrja á 'ASCII_'.")
         return l
-    
-    
 
-
-    
-
-
-    
-
-    
