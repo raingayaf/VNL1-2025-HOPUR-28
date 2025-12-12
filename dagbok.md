@@ -327,8 +327,6 @@ Dagsetning 12/12/25
 Tími: 15:00
 Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn
 Staða verkefnis:
+allt er að verða tillbúið
 
-To-do listi:
-
-
-Staða hópmeðlima
+Staða hópmeðlima: allir eru að vinna í fullu að klára verkefnið
