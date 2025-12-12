@@ -300,3 +300,18 @@ class MatchLogic:
                 tournament_matches.append(match)
 
         return tournament_matches
+    
+
+    def get_upcoming_matches_for_tournament(self, tournament_id: int) -> list[Match]:
+        """Return only matches in this tournament that are not completed (for user schedule view)."""
+        all_matches = self._data_api.read_all_matches()
+        upcoming: list[Match] = []
+
+        #Filters not completed matches
+        for match in all_matches:
+            if match.tournament_id == tournament_id and not match.completed:
+                upcoming.append(match)
+
+        #sort by date, time, round, match number
+        upcoming.sort(key=lambda m: (m.match_date, m.match_time, m.round, m.match_number))
+        return upcoming
