@@ -138,17 +138,17 @@ class UIController:
                 # Return to the previous menu
                 in_tournament_schedule = False
 
-    def run_tournament_scoreboard(self, tournament: Tournament) -> None:
-        """Displays the tournament scoreboard until the user chooses to return to the previous menu."""
-        in_tournament_scoreboard = True
+    # def run_tournament_scoreboard(self, tournament: Tournament) -> None:
+    #     """Displays the tournament scoreboard until the user chooses to return to the previous menu."""
+    #     in_tournament_scoreboard = True
 
-        while in_tournament_scoreboard:
-            self.input_handler.clear_screen()
-            self.tournament_menu.display_tournament_scoreboard(tournament.name)
-            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
-            if user_input == "b":
-                # Return to the previous menu
-                in_tournament_scoreboard = False
+    #     while in_tournament_scoreboard:
+    #         self.input_handler.clear_screen()
+    #         self.tournament_menu.display_tournament_scoreboard(tournament.name)
+    #         user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
+    #         if user_input == "b":
+    #             # Return to the previous menu
+    #             in_tournament_scoreboard = False
 
     def run_tournament_teams(self, tournament: Tournament) -> None:
         """Displays the teams in the chosen tournament and routes the user based on their selection."""
@@ -1157,3 +1157,41 @@ class UIController:
                 selected_player = players[index]
                 self.run_single_player_information(selected_player)
 
+#---------------Scoreboard--------------------------
+    def run_tournament_scoreboard(self, tournament: Tournament) -> None:
+        """Displays the tournament scoreboard."""
+        in_tournament_scoreboard = True
+
+        while in_tournament_scoreboard:
+            self.input_handler.clear_screen()
+
+            matches = self.logic_api.get_matches_for_tournament(tournament.tournament_id)
+
+            width = self.input_handler.WIDTH
+
+            print("*" * width)
+            print("E-SPORTS".center(width))
+            print("*" * width + "\n")
+
+            print(f"\033[3m\033[4m\033[1mStöðutafla - {tournament.name}\033[0m\n".center(width))
+
+            if not matches:
+                print("Engir leikir skráðir fyrir þetta mót.\n")
+            else:
+                for match in matches:
+                    status = "-> Á áætlun"
+                    score_str = ""
+                    if match.completed:
+                        status = "-> Leik lokið"
+                        score_str = f"{match.score_a} - {match.score_b}"
+                    else:
+                        score_str = "vs."
+                    
+                    print(
+                        f"\033[1m{match.round} #{match.match_number} þann {match.match_date} "
+                        f"klukkan: {match.match_time} [{match.server_id}]\033[0m")                   
+                    line = f"  {match.team_a_name}  {score_str}  {match.team_b_name}  ({status})"
+                    print(f"\033[36m{line.ljust(width)}\033[0m")
+            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
+            if user_input == "b":
+                in_tournament_scoreboard = False
