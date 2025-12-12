@@ -15,4 +15,19 @@ team_id,team_name,captain_handle,website,logo
 14,RaceCondition Racers,RaceConditionRagnhildur,https://example.com/racecondition_racers,ASCII_CHECKERED_FLAG
 15,Undefined Behavior United,UBUnitedUlfar,https://example.com/ub_united,ASCII_GLITCHED_LOGO
 16,Pepsi Max Overflow,PepsiMaxOverflowPetra,https://example.com/pepsimax_overflow,ASCII_OVERFLOWING_CAN
-
+17,BitShift Buccaneers,ShiftLeftSiggi,https://example.com/bitshift_buccaneers,ASCII_SHIFT_ARROW
+18,Deadlock Dragons,MutexMagnus,https://example.com/deadlock_dragons,ASCII_LOCKED_DRAGON
+19,Heisenbug Hunters,ObserverOli,https://example.com/heisenbug_hunters,ASCII_QUANTUM_BUG
+20,Garbage Collector Guild,HeapHildur,https://example.com/gc_guild,ASCII_TRASH_CAN
+21,Kernel Panic Pirates,RootRagnar,https://example.com/kernel_panic_pirates,ASCII_SKULL_TERMINAL
+22,Memory Leak Marauders,LeakFinderLoki,https://example.com/memory_leak_marauders,ASCII_DRIPPING_RAM
+23,BlueScreen Brawlers,StopCodeSara,https://example.com/bluescreen_brawlers,ASCII_SAD_PC
+24,ThreadSafe Titans,AtomicAron,https://example.com/threadsafe_titans,ASCII_ATOM_LOCK
+25,CompileTime Crushers,TemplateTomas,https://example.com/compiletime_crushers,ASCII_COMPILER_GEAR
+26,Runtime Error Rebels,StackTraceStina,https://example.com/runtime_error_rebels,ASCII_EXCEPTION_TRACE
+27,Overflow Outlaws,CarryFlagKarl,https://example.com/overflow_outlaws,ASCII_BINARY_WAVE
+28,Infinite Loop Legion,LoopCounterLeo,https://example.com/infinite_loop_legion,ASCII_LOOP_SPIRAL
+29,Quantum Bit Breakers,QubitQuinn,https://example.com/quantum_bit_breakers,ASCII_QUBIT
+30,Pointer Arithmetic Aces,OffsetOskar,https://example.com/pointer_arithmetic_aces,ASCII_POINTER_GRID
+31,Checksum Sentinels,CRCClara,https://example.com/checksum_sentinels,ASCII_SHIELD_HASH
+32,Virtual Machine Vikings,JITJorunn,https://example.com/vm_vikings,ASCII_VM_HELMET

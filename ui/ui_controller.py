@@ -906,8 +906,7 @@ class UIController:
             if choice == "1":
                 # Generate schedule for day 1 (R16)
                 try:
-                    self.logic_api.generate_round_of_16(tournament, teams)
-                    matches = self.logic_api.get_matches_for_tournament(tournament)
+                    self.logic_api.generate_round_of_16(tournament)
                     print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
                     print(f"fjöldi leikja: {len(matches)}")
                 except Exception as e:
@@ -972,10 +971,31 @@ class UIController:
             self.input_handler.wait_for_enter()
             return
         
+        round_filter = None
+
+        if day_to_show == 2:
+            print("\nDagur 2 inniheldur tvær umferðir:")
+            print("1. Morgun (QF)")
+            print("2. Kvöld (SF)")
+            part = input("Veldu 1 eða 2 (eða b til baka): ").strip().lower()
+
+            if part == "b":
+                return
+            elif part == "1":
+                round_filter = "QF"
+            elif part == "2":
+                round_filter = "SF"
+            else:
+                print("Ógilt val.")
+                self.input_handler.wait_for_enter()
+                return
+
         self.input_handler.clear_screen()
-        self.schedule_menu.displey_schedule_menu(tournament, schedule, day_to_show)
+        self.schedule_menu.displey_schedule_menu(
+            tournament, schedule, day_to_show, round_filter=round_filter
+        )
         self.input_handler.wait_for_enter()
-    
+
     def enter_match_result(self, tournament):
         """Enter match results on loop until finished or input b to quit"""
         in_enter_match_result = True
@@ -983,7 +1003,6 @@ class UIController:
         while in_enter_match_result:
             self.input_handler.clear_screen()
             schedule = self.logic_api.get_schedule_for_tournament(tournament)
-
             incomplete = [row for row in schedule if not row["completed"]]
 
             if not incomplete:
@@ -991,8 +1010,8 @@ class UIController:
                 self.input_handler.wait_for_enter()
                 return
 
-            print("\nLeikir sem á eftir að skrá úrslit fyrir:")
-            for row in incomplete:
+            print("\nLeikir í þessu móti:")
+            for row in schedule:
                 status = "✓" if row["completed"] else " "
                 print(
                     f"[{status}] ID {row['match_id']} - ({row['round']}) "
@@ -1031,8 +1050,6 @@ class UIController:
                 print(f"Villa: {e}")
 
             self.input_handler.wait_for_enter()
-            
-
         
     def run_tournament_displey_selection(self):
         """Show available tournaments"""
