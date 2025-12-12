@@ -321,3 +321,12 @@ Klára git handbók
 vantar myndband
  
 Staða hópmeðlima:
+
+Færsla 15
+Dagsetning 12/12/25
+Tími: 15:00
+Viðstaddir: Herdís, Karl Jr, Karl Sr, Katrín Líf og Þorsteinn
+Staða verkefnis:
+allt er að verða tillbúið
+
+Staða hópmeðlima: allir eru að vinna í fullu að klára verkefnið
