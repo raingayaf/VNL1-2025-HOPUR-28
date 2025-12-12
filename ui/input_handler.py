@@ -83,6 +83,10 @@ class InputHandler:
         """Tells user to go back to home screen."""
         input(messages.BACK_HOME.center(self.WIDTH))
 
+    def back_enter(self) -> None:
+        """Tells user to go back by pressing ENTER."""
+        input(messages.BACK_ENTER.center(self.WIDTH))
+
     def get_score(self) -> tuple[int, int]:
         """Validates score format and prevents input errors"""
         while True:
