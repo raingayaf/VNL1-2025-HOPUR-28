@@ -98,10 +98,11 @@ class LLApi:
         """Record match results"""
         return self._match_logic.record_match_result(match_id, score_a, score_b)
     
-    def get_matches_for_tournament(self, tournament) -> list[Match]:
+    def get_matches_for_tournament_schedule(self, tournament) -> list[Match]:
         """Gets matches for tournament"""
         all_matches = self._data_api.read_all_matches()
         return [m for m in all_matches if m.tournament_id == tournament.tournament_id]
+
     
     #-------------------------TEAM-RELATED-METHODS---------------------------
 
