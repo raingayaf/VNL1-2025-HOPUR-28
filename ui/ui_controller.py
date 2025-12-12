@@ -898,7 +898,7 @@ class UIController:
             self.organizer_menu.display_tournament_schedule_menu(tournament)
 
             choice = self.input_handler.get_user_input(
-                "Sláðu inn númer aðgerðar eða 'b' til að fara til baka: ",
+                "Sláðu inn númer aðgerðar eða farðu til baka: ",
                 {"1", "2", "3", "4", "5", "6", "b"},
             )
 

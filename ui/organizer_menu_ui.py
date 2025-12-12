@@ -16,7 +16,6 @@ class OrganizerMenuUI:
         print(' b: Til baka' + '\n')
 
         print("*" * self.WIDTH + "\n")
-        # user_input = input("sláðu inn númer aðgerðar:")
 
     def display_tournament_options(self):
         """Display options for organizer to look at tournaments"""
@@ -82,17 +81,18 @@ class OrganizerMenuUI:
 
     def display_tournament_schedule_menu(self, tournament):
         print("*" * self.WIDTH)
-        print("Mótsdagskrá".center(self.WIDTH))
-        print("*" * self.WIDTH)
-        print(f"Mót: {tournament.name}\n")
+        print("E-SPORTS".center(self.WIDTH))
+        print("*" * self.WIDTH + "\n")
+        print("Útfæra mótsdagskrá".center(self.WIDTH))
+        print(f"Mót: {tournament.name}".center(self.WIDTH) + "\n")
         print(" 1. Búa til dagskrá fyrir dag 1 (R16)")
         print(" 2. Búa til dagskrá fyrir dag 2 (QF)")
         print(" 3. Búa til dagskrá fyrir dag 2 (SF)")
-        print(" 4. Búa til dagskrá fyrir dag 3 (Úrslitaleikur)")
+        print(" 4. Búa til dagskrá fyrir dag 3 (Úrslitaleikur)\n")
         print(" 5. Skoða dagskrá")
-        print(" 6. Færa inn úrslit leiks")
-        print(" b. Til baka")
-        print("*" * self.WIDTH)
+        print(" 6. Færa inn úrslit leiks\n")
+        print(" b: Til baka\n")
+        print("*" * self.WIDTH + "\n") 
 
     def display_team_information1(self):
         """Display for organizer to see a teams information"""
@@ -186,8 +186,8 @@ class OrganizerMenuUI:
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
-        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
+        print("ATH! Sláðu inn '/b' til að fara til baka eða".center(self.WIDTH)) 
+        print("'/q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print('Skrá mót'.center(self.WIDTH))
 
 
