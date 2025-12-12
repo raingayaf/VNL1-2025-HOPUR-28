@@ -23,12 +23,14 @@ class ScheduleLogic:
                 day = 3
             
             schedule.append({
+                "match_id": m.match_id,
                 "day": day,
                 "time": m.match_time,
                 "team_a": m.team_a_name,
                 "team_b": m.team_b_name,
                 "match_number": m.match_number,
                 "round": m.round,
+                "completed": m.completed,
             })
         
 

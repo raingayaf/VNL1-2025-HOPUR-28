@@ -87,16 +87,9 @@ class LLApi:
     
     def get_matches_for_tournament(self, tournament) -> list[Match]:
         """Gets matches for tournament"""
-        return self._match_logic.get_matches_for_tournament(tournament.tournament_id)
+        all_matches = self._data_api.read_all_matches()
+        return [m for m in all_matches if m.tournament_id == tournament.tournament_id]
     
-    # def ensure_bracket(self, tournament, teams):
-    #     """Generate bracket only if this tournament doesnt have matches"""
-    #     existing = self._match_logic.get_matches_for_tournament(tournament.tournament_id)
-    #     if existing:
-    #         return existing
-        
-    #     team_names = [t.team_name for to in teams]
-    #     return self._match_logic.generate_full_bracket(tournament.tournament_id, team_names)
     #-------------------------TEAM-RELATED-METHODS---------------------------
 
     def create_team(self,

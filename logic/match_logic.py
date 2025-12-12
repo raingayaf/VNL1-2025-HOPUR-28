@@ -80,7 +80,7 @@ class MatchLogic:
         matches = self._data_api.read_all_matches()
 
         for m in matches:
-            if m.tournament_id == tournament_id and m.round == "16":
+            if m.tournament_id == tournament_id and m.round == "R16":
                 return
             
         teams = team_names[:]
@@ -114,6 +114,7 @@ class MatchLogic:
         
         matches.extend(new_matches)
         self._data_api.save_all_matches(matches)
+        print(f"DEBUG: created {len(new_matches)} R16 matches for tournament_id {tournament_id}")
     
     def generate_quarterfinals(self, tournament_id: int):
         """Generate next 4 rounds of the winners of round R16"""
@@ -257,11 +258,6 @@ class MatchLogic:
 
         matches.append(final_match)
         self._data_api.save_all_matches(matches)
-            
-    
-    def get_matches_for_tournament(self, tournament_id: int) -> list[Match]:
-        all_matches = self._data_api.read_all_matches()
-        return [m for m in all_matches if m.tournament_id == tournament_id]
     
     def record_match_result(self, match_id: int, score_a: int, score_b: int) -> None:
         if score_a == score_b:
