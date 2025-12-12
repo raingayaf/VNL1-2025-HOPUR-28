@@ -19,3 +19,7 @@ INT_MUST_BE_NUMBER = 'Ógildur innsláttur! Vinsamlegast sláðu inn heiltölu.'
 INT_BELOW_MIN = 'Fjöldinn má ekki vera minni en {min_value}!'
 
 INT_ABOVE_MAX = 'Fjöldinn má ekki vera meiri en {max_value}!'
+
+TRY_AGAIN = "Ýttu á ENTER og reyndu aftur."
+
+BACK_HOME = "Ýttu á ENTER til að fara aftur á heimasvæðið."

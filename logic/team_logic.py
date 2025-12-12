@@ -12,16 +12,15 @@ class TeamLogic:
         self._data_api = data_api
 
     #------------------METHODS-THAT-GET-DATA------------------------
-    # ÞETTA ER NOTAÐ
     def get_all_teams(self) -> list[Team]:
         """Returns a list of all teams from the data layer."""
         return self._data_api.read_all_teams()
     
-    # VEIT EKKI HVORT VIÐ NOTUM ÞETTA
     def team_name_exists(self, team_name: str) -> bool:
         """Return True if a team name already exists."""
         teams = self._data_api.read_all_teams()
-        return any(team.team_name == team_name for team in teams)
+        name_casefold = team_name.casefold()
+        return any(team.team_name.casefold() == name_casefold for team in teams)
     
     # VEIT EKKI HVORT VIÐ NOTUM ÞETTA
     def get_team_details(self, team_id: int) -> Team:
@@ -32,14 +31,12 @@ class TeamLogic:
                 return team
         raise ValidationError("Team not found.")
 
-    # ÞETTA ER NOTAÐ
     def get_matches_for_tournaments(self, tournament_id: int) -> list[Match]:
         """Return all matches from selected tournament."""
         matches = self._data_api.read_all_matches()
         # Iterate over every match belonging to a given tournament ID and creates a list
         return [match for match in matches if match.tournament_id == tournament_id]
 
-    # ÞETTA ER NOTAÐ
     def get_teams_for_tournament(self, tournament_id: int) -> list[Team]:
         """Returns a list of all teams competing in a tournament"""
         #Gets a list of all matches belonging to a tournament id
@@ -57,6 +54,17 @@ class TeamLogic:
             team for team in all_teams if team.team_name in team_names
         ]
         return participating_teams
+    
+    def validate_team_name_format(self, team_name: str) -> str:
+        """Public wrapper so UI/LLApi can validate team name."""
+        return self._validate_team_name_format(team_name)
+
+    def validate_team_website(self, website: str) -> str:
+        """ """
+        return self._normalize_website(website)
+    
+    def validate_logo_value(self, logo: str) -> str:
+        return self._validate_logo_value(logo)
     
 
     # def list_team_players(self, team_id: int):
@@ -108,21 +116,28 @@ class TeamLogic:
     ) -> Team:
         """Creates a new team and assigns players to it."""
 
+        # validation
+        name = self._validate_team_name_format(name)
+        captain_handle = self._validate_handle_format(captain_handle)
+        website = self._normalize_website(website)
+        logo = self._validate_logo_value(logo)
+
         all_teams = self._data_api.read_all_teams()
 
         # Unique team name
-        if any(team.team_name == name for team in all_teams):
-            raise ValidationError(f"Liðið '{name}' er þegar til.")
+        name_casefold = name.casefold()
+        if any(team.team_name.casefold() == name_casefold for team in all_teams):
+            raise ValidationError(f"Liðið '{name}' er nú þegar á skrá!")
 
         # Validate player list contains captain
         if captain_handle not in player_handles:
-            raise ValidationError("Team captain þarf að vera skráður leikmaður.")
+            raise ValidationError("Fyrirliði þarf að vera einn af leikmönnunum!")
 
         # Check team size
         if len(player_handles) < 3:
-            raise ValidationError("Minnst 3 þurfa að vera í liði.")
+            raise ValidationError("Fjöldinn má ekki vera minni en 3!")
         if len(player_handles) > 5:
-            raise ValidationError("Mest 5 geta verið í hverju liði.")
+            raise ValidationError("Fjöldinn má ekki vera meiri en 5!")
 
         # Checks if player exists and is not in another team
         all_players = self._data_api.read_all_players()
@@ -263,7 +278,51 @@ class TeamLogic:
         existing_ids = [team.team_id for team in teams]
         return max(existing_ids) + 1
     
-
+    def _validate_team_name_format(self, team_name: str) -> str:
+        name = team_name.strip()
+        if len(name) < 2:
+            raise ValidationError("Nafn liðs verður að vera a.m.k. 2 stafir.")
+        if len(name) > 30:
+            raise ValidationError("Nafn liðs má ekki vera lengra en 30 stafir.")
+        if name.startswith("/"):
+            raise ValidationError("Nafn liðs má ekki byrja á '/'.")
+        if not any(ch.isalpha() for ch in name):
+            raise ValidationError("Nafn liðs verður að innihalda a.m.k einn bókstaf.")
+        return name
+    
+    def _validate_handle_format(self, handle: str) -> str:
+        h = handle.strip()
+        if len(h) < 2:
+            raise ValidationError("Leikmanna nafn (handle) verður að vera a.m.k. 2 stafir.")
+        if len(h) > 30:
+            raise ValidationError("Leikmanna nafn (handle) má ekki vera lengra en 30 stafir.")
+        if h.startswith("/"):
+            raise ValidationError("Leikmanna nafn (handle) má ekki byrja á '/'.")
+        if " " in h:
+            raise ValidationError("Leikmanna nafn (handle) má ekki innihalda bil.")
+        if not any(ch.isalpha() for ch in h):
+            raise ValidationError("Leikmanna nafn (handle) verður að innihalda a.m.k einn bókstaf.")
+        return h
+    
+    def _normalize_website(self, website: str) -> str:
+        w = website.strip()
+        if not w:
+            return ""
+        lower = w.lower()
+        if not (lower.endswith(".com") or lower.endswith(".is") or lower.endswith(".tv")):
+            raise ValidationError("Vefslóðin verður að enda á .is, .com eða .tv.")
+        if not (lower.startswith("http://") or lower.startswith("https://")):
+            w = "https://" + w
+        return w
+    
+    def _validate_logo_value(self, logo: str) -> str:
+        l = logo.strip()
+        if not l:
+            return ""
+        if not l.startswith("ASCII_"):
+            raise ValidationError("Logoið verður að byrja á 'ASCII_'.")
+        return l
+    
     
 
 

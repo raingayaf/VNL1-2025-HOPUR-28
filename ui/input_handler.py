@@ -32,9 +32,9 @@ class InputHandler:
             except (KeyboardInterrupt, EOFError):
                 print('\n' + messages.INVALID_INPUT.center(self.WIDTH) + '\n')
                 continue
-            if user_input.lower() == 'b~':
+            if user_input.lower() == '/b':
                 return 'BACK'
-            if user_input.lower() == 'q~':
+            if user_input.lower() == '/q':
                 return 'QUIT'
             if not allow_empty and user_input == '':
                 print('\n' + 'Þú verður að skrá þessar upplýsingar'.center(self.WIDTH))
@@ -75,10 +75,13 @@ class InputHandler:
         """Pauses program until user presses ENTER."""
         input(prompt)
 
-    def try_again_enter(self, prompt: str = 'Ýttu á ENTER og reyndu aftur.') -> None:
+    def try_again_enter(self) -> None:
         """Tells user to press enter and try again."""
-        input(prompt)
+        input(messages.TRY_AGAIN.center(self.WIDTH))
 
+    def back_home_enter(self) -> None:
+        """Tells user to go back to home screen."""
+        input(messages.BACK_HOME.center(self.WIDTH))
 
     def get_score(self) -> tuple[int, int]:
         """Validates score format and prevents input errors"""

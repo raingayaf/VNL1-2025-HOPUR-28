@@ -44,7 +44,7 @@ class PlayerData:
                             team_name,
                         )
                         players.append(player)
-                    except (KeyError, ValueError):                      
+                    except (KeyError, ValueError):
                         continue
             return players
 

@@ -224,7 +224,7 @@ class UIController:
             if team_name:
                 print(f"Skráðu heiti liðsins: {team_name}")
             if captain_handle:
-                print(f"Skráðu leikmanna nafn fyrirliðans: {captain_handle}")
+                print(f"Skráðu leikmanna nafn fyrirliðans(handle): {captain_handle}")
             if number_of_players:
                 print(f"Skráðu fjölda leikmanna (3-5): {number_of_players}")
             if team_website or step == 5:
@@ -248,19 +248,24 @@ class UIController:
                 if user_input == "BACK":
                     in_team_registration = False
                     continue
-                if self.logic_api.team_name_exists(user_input):
-                    team_exists_message = f"Liðið '{user_input}' er nú þegar á skrá!"
+                try: 
+                    validated_name = self.logic_api.validate_team_name_format(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+
+                if self.logic_api.team_name_exists(validated_name):
+                    team_exists_message = f"Liðið '{validated_name}' er nú þegar á skrá!"
                     print("\n" + team_exists_message.center(self.input_handler.WIDTH))
                     print(
                         "Vinsamlegast veldu nafn sem er ekki í notkun.".center(
                             self.input_handler.WIDTH
                         )
                     )
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
-                team_name = user_input
+                team_name = validated_name
                 step = 2
                 continue
 
@@ -276,7 +281,15 @@ class UIController:
                     team_name = ""
                     step = 1
                     continue
-                if self.logic_api.handle_exists(user_input):
+        
+                try:
+                    validated_handle = self.logic_api.validate_captain_handle_format(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+                
+                if self.logic_api.handle_exists(validated_handle):
                     handle_exists_message = (
                         f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
                     )
@@ -286,11 +299,9 @@ class UIController:
                             self.input_handler.WIDTH
                         )
                     )
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
-                captain_handle = user_input
+                captain_handle = validated_handle
                 step = 3
                 continue
 
@@ -312,24 +323,18 @@ class UIController:
                             self.input_handler.WIDTH
                         )
                     )
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
                 number = int(user_input)
                 if number < 3:
                     num_below = f"Fjöldinn má ekki vera minni en 3!"
                     print("\n" + num_below.center(self.input_handler.WIDTH))
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
                 if number > 5:
                     num_above = f"Fjöldinn má ekki vera meiri en 5!"
                     print("\n" + num_above.center(self.input_handler.WIDTH))
-                    input(
-                        "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                    )
+                    self.input_handler.try_again_enter()
                     continue
                 number_of_players = number
                 step = 4
@@ -352,7 +357,13 @@ class UIController:
                     number_of_players = 0
                     step = 3
                     continue
-                team_website = user_input
+                try:
+                    team_website = self.logic_api.validate_team_website(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+
                 step = 5
                 continue
 
@@ -368,7 +379,13 @@ class UIController:
                     team_website = ""
                     step = 4
                     continue
-                team_logo = user_input
+                try: 
+                    team_logo = self.logic_api.validate_team_logo(user_input)
+                except ValidationError as exception:
+                    print("\n" + str(exception).center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+
                 step = 6
                 continue
 
@@ -389,8 +406,8 @@ class UIController:
                 player_handles = [player["handle"] for player in players_on_team]
 
                 if captain_handle not in player_handles:
-                    print("Fyrirliði þarf að vera einn af leikmönnunum.")
-                    input("Ýttu á ENTER til að halda áfram.")
+                    print("Fyrirliði þarf að vera einn af leikmönnunum!")
+                    self.input_handler.try_again_enter()
                     step = 2
                     continue
                 registered_team_players = players_on_team
@@ -403,19 +420,28 @@ class UIController:
                     self.logic_api.create_team_with_players(
                         name=team_name,
                         captain_handle=captain_handle,
-                        registered_team_players=players_on_team,
+                        registered_team_players=registered_team_players,
                         website=team_website,
                         logo=team_logo,
                     )
-                    print(f"Liðið '{team_name}' hefur verið skráð!")
-                    input("Ýttu á ENTER til að fara aftur á heimasvæðið.")
-                    in_team_registration = False
+                except ValidationError as exception:
+                    print("\n" + "Óvænt villa við skráningu liðs :(".center(self.input_handler.WIDTH))
+                    print(str(exception))
+                    self.input_handler.try_again_enter()
+                    step = 1
+                    team_name = ""
+                    captain_handle = ""
+                    number_of_players = ""
+                    team_website = ""
+                    team_logo = ""
+                    registered_team_players = []
                     continue
-                except ValidationError:
-                    print(f"Óvænt villa við skráningu liðs!")
-                    input("Ýttu á ENTER til að reyna aftur.")
-                    in_team_registration = False
-                    continue
+                
+                self.input_handler.clear_screen()
+                self.captain_menu.display_team_registration_done(team_name)
+                self.input_handler.back_home_enter()
+                in_team_registration = False
+                continue
 
     def run_player_registration(self, team_name: str, number_of_players: int):
         """Runs registration on each player in team (collects data)."""
@@ -783,7 +809,7 @@ class UIController:
                 self.tournament_creation_flow()
             # Schedule tournament
             elif organizer_input == "2":
-                self.run_display_menu()
+                self.run_tournament_displey_selection() #velja mót sem ekki er komið dagskrá fyrir
 
             elif organizer_input == "3":
                 self.run_all_teams_view()
@@ -794,28 +820,164 @@ class UIController:
 
                 in_orginizer_menu = False
 
-    def run_display_menu(self):
+    def run_display_menu(self, tournament):
+        """Organizer schedule/bracket workflow."""
         in_display_menu = True
 
-        tournaments = self.logic_api.get_all_tournaments()
         teams = self.logic_api.get_all_teams()
-        tournament = tournaments[0]
-        schedule = self.logic_api.generate_schedule(teams)
 
         while in_display_menu:
             self.input_handler.clear_screen()
-            self.schedule_menu.displey_schedule_menu(tournament, teams)
 
-            organizer_input = self.input_handler.get_user_input(
-                messages.ACTION_OR_BACK_PROMPT, {"b", "s"}
+            self.organizer_menu.display_tournament_schedule_menu(tournament)
+
+            choice = self.input_handler.get_user_input(
+                "Sláðu inn númer aðgerðar eða 'b' til að fara til baka: ",
+                {"1", "2", "3", "4", "5", "6", "b"},
             )
 
-            if organizer_input == "s":
-                self.logic_api.organizer_save_schedule(tournament, schedule)
-                print("Dagskrá vistuð!")
+            if choice == "1":
+                # Generate schedule for day 1 (R16)
+                try:
+                    self.logic_api.generate_round_of_16(tournament, teams)
+                    print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
+                except Exception as e:
+                    print(f"Villa: {e}")
                 self.input_handler.wait_for_enter()
-            elif organizer_input == "b":
+
+            elif choice == "2":
+                # Generate schedule for day 2 morning (QF)
+                try:
+                    self.logic_api.generate_quarterfinals(tournament)
+                    print("Dagskrá fyrir dag 2 (QF) hefur verið búin til.")
+                except Exception as e:
+                    print(f"Villa: {e}")
+                self.input_handler.wait_for_enter()
+
+            elif choice == "3":
+                # Generate schedule for day 2 evening (SF)
+                try:
+                    self.logic_api.generate_semifinals(tournament)
+                    print("Dagskrá fyrir dag 2 (SF) hefur verið búin til.")
+                except Exception as e:
+                    print(f"Villa: {e}")
+                self.input_handler.wait_for_enter()
+
+            elif choice == "4":
+                # Generate schedule for day 3 (Finals)
+                try:
+                    self.logic_api.generate_final(tournament)
+                    print("Dagskrá fyrir dag 3 (úrslitaleik) hefur verið búin til.")
+                except Exception as e:
+                    print(f"Villa: {e}")
+                self.input_handler.wait_for_enter()
+
+            elif choice == "5":
+                # View schedule – ask which day to show
+                self.show_schedule_for_tournament(tournament)
+
+            elif choice == "6":
+                # Enter result for a match
+                self.enter_match_result(tournament)
+
+            elif choice == "b":
                 in_display_menu = False
+    
+    def show_schedule_for_tournament(self, tournament):
+        schedule = self.logic_api.get_schedule_for_tournament(tournament)
+
+        if not schedule:
+            print("Engin dagskrá til fyrir þetta mót")
+            self.input_handler.wait_for_enter()
+            return
+        
+        days = sorted(set(row["day"] for row in schedule))
+
+        print("\nTiltækir dagar í dagskrá:", ",".join(str(d) for d in days))
+        day_input = input("Veldu dag til að skoða (t.d. 1): ").strip()
+
+        try:
+            day_to_show = int(day_input)
+        except ValueError:
+            print("Ógilt gildi fyrir dag, veldu tölu")
+            self.input_handler.wait_for_enter()
+            return
+        
+        self.input_handler.clear_screen()
+        self.schedule_menu.displey_schedule_menu(tournament, schedule, day_to_show)
+        self.input_handler.wait_for_enter()
+    
+    def enter_match_result(self, tournament):
+        """Enter match results on loop until finished or input b to quit"""
+        in_enter_match_result = True
+        matches = self.logic_api.get_matches_for_tournament(tournament)
+        while in_enter_match_result:
+            if not matches:
+                print("Engir leikir skráðir fyrir þetta mót.")
+                self.input_handler.wait_for_enter()
+                return
+            
+            round_order = ["R16", "QF", "SF", "F"]
+            current_round = None
+            for r in round_order:
+                if any(m.round == r and not m.completed for m in matches):
+                    current_round = r
+                    break
+            
+            if current_round is None:
+                print("Allir leikir hafa verið skráðir.")
+                self.input_handler.wait_for_enter()
+                return
+
+            print("\nLeikir í þessu móti:")
+            for m in matches:
+                status = "✓" if m.completed else " "
+                print(f"[{status}] ID {m.match_id} - ({m.round}) {m.team_a_name} vs {m.team_b_name}")
+
+            try:
+                match_id = int(input("\nSláðu inn ID leiks eða b~ til að hætta: ").strip())
+                score_a = int(input("Sláðu inn stig liðs A: ").strip())
+                score_b = int(input("Sláðu inn stig liðs B: ").strip())
+            except ValueError:
+                print("Ógilt gildi, verður að vera heiltala.")
+                self.input_handler.wait_for_enter()
+                return
+
+            try:
+                self.logic_api.record_match_result(match_id, score_a, score_b)
+                print("Úrslit hafa verið skráð.")
+            except Exception as e:
+                print(f"Villa: {e}")
+            
+            if match_id == "b~":
+                in_enter_match_result = False
+        
+    def run_tournament_displey_selection(self):
+        """Show available tournaments"""
+        tournament_names = self.logic_api.get_tournament_name_list()
+        # If none, user goes back to main menu and error message is shown
+        if not tournament_names:
+                return False
+
+        in_tournament_menu = True
+
+        # Show menu with tournaments and handle user selection
+        while in_tournament_menu:
+            self.input_handler.clear_screen()
+            self.tournament_menu.display_tournaments(tournament_names)
+            # Valid options, each tournament number and b to go back
+            valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {"b"}
+            user_input = self.input_handler.get_user_input(
+                messages.TOURNAMENT_SELECTION_PROMPT, valid_input
+            )
+            if user_input == "b":
+                # Return to main menu
+                in_tournament_menu = False
+            else:
+                # Open options for selected tournament
+                index = int(user_input) - 1
+                selected_tournament = self.logic_api.get_tournament_by_index(index)
+                self.run_display_menu(selected_tournament)
 
     def run_all_players_view(self):
         """Show all players in system. Reuses display_team_players code without the team filters"""
