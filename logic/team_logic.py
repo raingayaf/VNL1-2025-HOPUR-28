@@ -2,6 +2,7 @@ from data.data_api import DataApi
 from models.model_team import Team
 from models.model_match import Match
 from models.model_player import Player
+from models.model_tournament import Tournament
 from models.exceptions import ValidationError
 
 class TeamLogic:
@@ -55,6 +56,38 @@ class TeamLogic:
         ]
         return participating_teams
     
+    def get_tournaments_for_team(self, team_name: str) -> list[Tournament]:
+        """Return all tournaments a selected team has participated in."""
+        all_matches = self._data_api.read_all_matches()
+        all_tournaments = self._data_api.read_all_tournaments()
+
+        tournament_ids: set[int] = set()
+        for match in all_matches:
+            if match.team_a_name == team_name or match.team_b_name == team_name:
+                tournament_ids.add(match.tournament_id)
+        
+        tournaments_by_id: dict[int, Tournament] = {t.tournament_id: t for t in all_tournaments}
+
+        result: list[Tournament] = []
+        for tid in tournament_ids:
+            tournament = tournaments_by_id.get(tid)
+            if tournament is not None:
+                result.append(tournament)
+            return result
+        
+    def get_team_captain(self, team: Team) -> Player | None:
+        """ """
+        if not team.captain_handle:
+            return None
+        
+        all_players = self._data_api.read_all_players()
+        for player in all_players:
+            if (player.handle == team.captain_handle
+            and player.team_name == team.team_name):
+                return player
+        return None
+
+
     def validate_team_name_format(self, team_name: str) -> str:
         """Public wrapper so UI/LLApi can validate team name."""
         return self._validate_team_name_format(team_name)
@@ -150,8 +183,8 @@ class TeamLogic:
             player = players_by_handle.get(player_handle)
             if player is None:
                 raise ValidationError(f"Leikmaður {player_handle} er ekki til.")
-        if player.team_name and player.team_name != name:
-            raise ValidationError(f"Leikmaður {player_handle} er nú þegar skráður í liðið {player.team_name}.")
+            if player.team_name and player.team_name != name:
+                raise ValidationError(f"Leikmaður {player_handle} er nú þegar skráður í liðið {player.team_name}.")
 
         # Make new team ID
         new_id = self._generate_new_team_id(all_teams)
