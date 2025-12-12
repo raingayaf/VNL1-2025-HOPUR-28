@@ -1,5 +1,5 @@
-
 class OrganizerMenuUI:
+    """All organizer display menus"""
 
     WIDTH: int = 60
 
@@ -189,41 +189,3 @@ class OrganizerMenuUI:
         print("ATH! Sláðu inn '/b' til að fara til baka eða".center(self.WIDTH)) 
         print("'/q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print('Skrá mót'.center(self.WIDTH))
-
-
-
-
- #Prufa
-    # def display_all_players(self):
-    #     """Display all players in system for organizer menu"""
-    #     print('\n' * 2 + '*' * self.WIDTH)
-    #     print('E-SPORTS'.center(self.WIDTH))                                                          
-    #     print('*' * self.WIDTH + '\n')
-    #     # print(team_name.center(self.WIDTH))
-    #     print('Leikmenn á skrá'.center(self.WIDTH) + '\n')
-    #     print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
-    #     print('Aðgerðir:')
-    #     print('1. Breyta upplýsingum um einstaka leikmenn')
-    #     print('h: Fara aftur á heimasvæði' + '\n')
-    #     print('*' * self.WIDTH + '\n')
-        #user_input = input('Sláðu inn númer aðgerðar: ')
-#------------------------------------
-#       TIL AÐ PRUFU KEYRA
-#------------------------------------
-
-# if __name__ == "__main__":
-#     o_menu = OrganizerMenuUI()
-
-#     o_menu.display_organizer_menu()
-#     o_menu.display_tournament_options()
-#     o_menu.display_competing_teams()
-#     o_menu.display_competition_results()
-#     o_menu.display_tournament_creation()
-#     o_menu.display_results_input()
-#     o_menu.display_team_information1()
-#     o_menu.display_team_information2()
-#     o_menu.display_team_information3()
-#     o_menu.display_schedule_done()
-#     o_menu.display_tournament_creation_done()
-#     o_menu.display_results_input_done()
-#     o_menu.display_schedule_done()

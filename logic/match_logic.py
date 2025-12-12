@@ -1,5 +1,3 @@
-from datetime import datetime, timezone
-gmt_dt = datetime.now(timezone.utc)
 import random
 from models.model_match import Match
 from models.exceptions import ValidationError
@@ -269,6 +267,7 @@ class MatchLogic:
         self._data_api.save_all_matches(matches)
     
     def record_match_result(self, match_id: int, score_a: int, score_b: int) -> None:
+        """Lets organizer record match results"""
         if score_a == score_b:
             raise ValidationError("Leikur má ekki enda með jafntefli í útsláttarkeppni.")
         
@@ -292,6 +291,7 @@ class MatchLogic:
         self._data_api.save_all_matches(matches)
 
     def _get_next_match_id(self) -> int:
+        """Finds ID for next match"""
         matches = self._data_api.read_all_matches()
         if not matches:
             return 1

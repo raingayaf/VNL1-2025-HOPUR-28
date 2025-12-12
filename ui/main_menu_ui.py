@@ -14,7 +14,3 @@ class MainMenuUI:
         print(' 3. Mótshaldari' + '\n')
         print(' q: Loka forriti' + '\n')
         print('*' * self.WIDTH + '\n')
-
-# main_menu = MainMenuUI()
-# main_menu.display_main_menu()
-# --> Ef þið viljið sjá hvernig þetta prentast út 

@@ -204,7 +204,3 @@ class PlayerLogic:
         if not (lower.startswith("http://") or lower.startswith("https://")):
             l = "https://" + l
         return l
-
-        
-    
-    

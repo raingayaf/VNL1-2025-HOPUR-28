@@ -75,27 +75,6 @@ class CaptainMenuUI:
         print('*' * self.WIDTH + '\n')
         print('XXXX'.center(self.WIDTH)) # XXXX er heitið á liðinu
         print('Breyta leikmanni'.center(self.WIDTH) + '\n')
-        print('Table with player information' + '\n') # dæmi
+        print('Table with player information' + '\n') 
         print('*' * self.WIDTH + '\n')
-        #user_input = input('Sláðu inn númer þess sem þú vilt breyta: ')
-    
-
-    # sé fyrir mér að notandinn fer í númer þess sem hann vill breyta, breytir því og þegar hann ýtir á enter fer hann aftur til baka og hefur valmöguleikann á að breyta einhverju öðru eða fara tilbaka eða á heimasvæði.
-
-
-# ------------------------------------
-#        TIL AÐ PRUFU KEYRA
-# ------------------------------------
-
-if __name__ == "__main__":
-    c_menu = CaptainMenuUI()
-
-    #c_menu.display_captain_menu()
-    #c_menu.display_team_registration_menu()
-    #c_menu.display_player_registration_menu()
-    #c_menu.display_captain_verification_menu()
-    #c_menu.display_team_information_menu()
-    #c_menu.display_select_player_menu()
-    #c_menu.display_player_information_menu()
- 
 

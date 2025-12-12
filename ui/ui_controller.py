@@ -863,8 +863,6 @@ class UIController:
         """Organizer schedule/bracket workflow."""
         in_display_menu = True
 
-        teams = self.logic_api.get_all_teams()
-
         while in_display_menu:
             self.input_handler.clear_screen()
 
@@ -939,7 +937,7 @@ class UIController:
             day_to_show = int(day_input)
         except ValueError:
             print("Ógilt gildi fyrir dag, veldu tölu")
-            self.input_handler.try_again_enterenter()
+            self.input_handler.try_again_enter()
             return
         
         round_filter = None
@@ -958,7 +956,7 @@ class UIController:
                 round_filter = "SF"
             else:
                 print("Ógilt val.")
-                self.input_handler.try_again_enter_enter()
+                self.input_handler.try_again_enter()
                 return
 
         self.input_handler.clear_screen()
