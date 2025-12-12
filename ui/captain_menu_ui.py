@@ -19,8 +19,8 @@ class CaptainMenuUI:
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
-        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
+        print("ATH! Sláðu inn 'b~' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q~' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print('Skrá lið'.center(self.WIDTH))
 
     def display_player_registration_menu(self, team_name: str, player_index: int):
@@ -28,8 +28,8 @@ class CaptainMenuUI:
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print("ATH! Sláðu inn 'b' til að fara til baka eða".center(self.WIDTH)) 
-        print("'q' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
+        print("ATH! Sláðu inn 'b~' til að fara til baka eða".center(self.WIDTH)) 
+        print("'q~' til að hætta í skráningarferlinu.".center(self.WIDTH) + '\n')
         print(team_name.center(self.WIDTH))
         subhead = f'Skrá upplýsingar um leikmann {player_index}'
         print(subhead.center(self.WIDTH) + '\n')
@@ -40,40 +40,26 @@ class CaptainMenuUI:
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
         print('Liðið mitt'.center(self.WIDTH) + '\n')
-        #team_name = input('Sláðu inn heiti á liðinu þínu: ')
-        #captain_handle = input('Sláðu inn leikmanna nafn þitt: ')
 
-    def display_team_information_menu(self, team_name: str):
-        """Display information on team players to team captain and provide options to make changes or go back."""
+    def display_team_players_menu(self, team_name: str):
+        """Display team players to team captain."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
         print(team_name.center(self.WIDTH))
-        print('Leikmenn'.center(self.WIDTH) + '\n')
-        # Hér á að koma listi yfir leikmenn liðsins og upplýsingarnar um þá
-        print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
-        print('Aðgerðir:')
-        print('1. Breyta upplýsingum um einstaka leikmenn')
-        print('b: Til baka' + '\n')
-        print('*' * self.WIDTH + '\n')
-        #user_input = input('Sláðu inn númer aðgerðar: ')
-    
+        print('Leikmenn:'.center(self.WIDTH))
 
-    def display_select_player_menu(self, team_name: str):
-        """Display information on team players and prompt user to choose player to make changes on."""
+    def display_player_information_menu(self, selected_player: str):
+        """Display information on selected team player to team captain."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
-        print(team_name.center(self.WIDTH))
-        print('Breyta upplýsingum um leikmenn'.center(self.WIDTH) + '\n')
-        # Hér á að koma listi yfir leikmenn liðsins og upplýsingarnar um þá
-        print('Tafla með upplýsingum um leikmenn' + '\n') # dæmi
-        print('*' * self.WIDTH + '\n')
-        #user_input = input('Sláðu inn númer leikmanns sem á að breyta: ')
+        title = f"Upplýsingar um {selected_player}"
+        print(title.center(self.WIDTH) + '\n')
         
 
-    def display_player_information_menu(self):
-        """Display information on selected player and provide options to change information."""
+    def display_players(self):
+        """Display players in selected team."""
         print('\n' * 2 + '*' * self.WIDTH)
         print('E-SPORTS'.center(self.WIDTH))                                                          
         print('*' * self.WIDTH + '\n')
