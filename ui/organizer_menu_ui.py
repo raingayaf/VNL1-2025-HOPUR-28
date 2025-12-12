@@ -80,6 +80,20 @@ class OrganizerMenuUI:
         print("*" * self.WIDTH + "\n")
         organizer_input = input("S: Vista upplýsingar:")
 
+    def display_tournament_schedule_menu(self, tournament):
+        print("*" * self.WIDTH)
+        print("Mótsdagskrá".center(self.WIDTH))
+        print("*" * self.WIDTH)
+        print(f"Mót: {tournament.name}\n")
+        print(" 1. Búa til dagskrá fyrir dag 1 (R16)")
+        print(" 2. Búa til dagskrá fyrir dag 2 (QF)")
+        print(" 3. Búa til dagskrá fyrir dag 2 (SF)")
+        print(" 4. Búa til dagskrá fyrir dag 3 (Úrslitaleikur)")
+        print(" 5. Skoða dagskrá")
+        print(" 6. Færa inn úrslit leiks")
+        print(" b. Til baka")
+        print("*" * self.WIDTH)
+
     def display_team_information1(self):
         """Display for organizer to see a teams information"""
         print("*" * self.WIDTH)
