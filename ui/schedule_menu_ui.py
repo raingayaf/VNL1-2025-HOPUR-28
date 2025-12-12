@@ -39,8 +39,7 @@ class ScheduleUI:
             team_b = match["team_b"]
             line = f"{time}  | {(round_title)}  {team_a} vs {team_b}"
             print(line)
-        print("\n" + "*" * self.WIDTH)
-        print("b: Til baka, s: Vista dagskrá.")
+        print("\n" + "*" * self.WIDTH + "\n")
     
     # def display_user_schedule(self, tournament, schedule, day_to_show=1):
     #     """Display saved schedule to user schedule"""
