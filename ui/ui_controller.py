@@ -1235,8 +1235,9 @@ class UIController:
             print("*" * width)
             print("E-SPORTS".center(width))
             print("*" * width + "\n")
+            title = f"\033[3m\033[4m\033[1mStöðutafla - {tournament.name}\033[0m\n"
 
-            print(f"\033[3m\033[4m\033[1mStöðutafla - {tournament.name}\033[0m\n".center(width))
+            print(title.center(width))
 
             if not matches:
                 print("Engir leikir skráðir fyrir þetta mót".center(width) + "\n")
