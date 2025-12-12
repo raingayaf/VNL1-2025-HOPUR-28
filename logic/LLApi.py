@@ -251,6 +251,11 @@ class LLApi:
     def get_matches_for_tournament(self, tournament_id: int) -> list[Match]:
         """UI calls this to get all matches for a given tournament."""
         return self._match_logic.get_matches_for_scoreboard(tournament_id)
+    
+    def get_upcoming_matches_for_tournament(self, tournament_id: int) -> list[Match]:
+        """UI calls this to get only upcoming matches in a tournament."""
+        return self._match_logic.get_upcoming_matches_for_tournament(tournament_id)
+
     #-------------------------VALIDATION-HELPERS-FOR-UI--------------------------
     def validate_team_name_format(self, team_name: str) -> str:
         return self._team_logic._validate_team_name_format(team_name)
