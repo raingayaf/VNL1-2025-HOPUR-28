@@ -114,7 +114,6 @@ class MatchLogic:
         
         matches.extend(new_matches)
         self._data_api.save_all_matches(matches)
-        print(f"DEBUG: created {len(new_matches)} R16 matches for tournament_id {tournament_id}")
     
     def generate_quarterfinals(self, tournament_id: int):
         """Generate next 4 rounds of the winners of round R16"""

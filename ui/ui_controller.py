@@ -888,7 +888,6 @@ class UIController:
 
     def run_display_menu(self, tournament):
         """Organizer schedule/bracket workflow."""
-        print(f"DEBUG: run_display_menu for {tournament.name}, id={tournament.tournament_id}")
         in_display_menu = True
 
         teams = self.logic_api.get_all_teams()
@@ -908,7 +907,6 @@ class UIController:
                 try:
                     self.logic_api.generate_round_of_16(tournament)
                     print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
-                    print(f"fjöldi leikja: {len(matches)}")
                 except Exception as e:
                     print(f"Villa: {e}")
                 self.input_handler.wait_for_enter()
