@@ -178,7 +178,7 @@ class MatchLogic:
         ]
         completed_qf = [m for m in qf_matches if m.completed]
         if len(completed_qf) != 4:
-            raise ValidationError(f"Það þarf að klára alla síðustu 4 leiki ")
+            raise ValidationError(f"Það þarf að klára að skrá alla síðustu 4 leiki í QF")
         
         def qf_sort_key(m):
             return m.match_number
@@ -221,22 +221,32 @@ class MatchLogic:
         matches = self._data_api.read_all_matches()
 
         for m in matches:
-            if m.tournament_id == tournament_id and m.round == "F":
+            if m.tournament_id == tournament_id and m.round in ("F", "Final"):
                 return
                 
-        sf_matches = [
-                m for m in matches
-                if m.tournament_id == tournament_id and m.round == "SF"
-            ]
-        completed_sf = [m for m in sf_matches if m.completed]
-        if len(completed_sf) != 4:
-            raise ValidationError(f"Það þarf að klára síðustu 2 leiki ")
+        sf_matches = []
+        for m in matches:
+            if m.tournament_id == tournament_id and m.round == "SF":
+                sf_matches.append(m)
+
+        if len(sf_matches) != 2:
+            raise ValueError("Búðu til SF dagskrá fyrst")
+        
+        completed_sf = []
+        for m in sf_matches:
+            if m.completed and m.winner_team_name:
+                completed_sf.append(m)
+        
+        if len(completed_sf) != 2:
+            raise ValueError("Það þarf að klára að skrá síðust 2 leiki í SF")
         
         def sf_sort_key(m):
             return m.match_number
         completed_sf.sort(key=sf_sort_key)
 
-        winners = [m.winner_team_name for m in completed_sf]
+        team_a = completed_sf[0].winner_team_name
+        team_b = completed_sf[1].winner_team_name
+
         next_id = self._get_next_match_id()
 
         final_match = Match(
@@ -244,10 +254,10 @@ class MatchLogic:
             tournament_id=tournament_id,
             round="F",
             match_number=15,
-            team_a_name=winners[0],
-            team_b_name=winners[1],
+            team_a_name=team_a,
+            team_b_name=team_b,
             match_date="3",
-            match_time=GAME_TIMES[0],
+            match_time=GAME_TIMES[4],
             server_id="15",
             score_a=0,
             score_b=0,

@@ -124,33 +124,6 @@ class UIController:
                 # Return to the previous menu
                 in_tournament_options = False
 
-    def run_tournament_schedule(self, tournament: Tournament) -> None:
-        """Displays the tournament schedule until the user chooses to return to the previous menu."""
-        in_tournament_schedule = True
-
-        while in_tournament_schedule:
-            self.input_handler.clear_screen()
-            schedule = self.logic_api.get_saved_schedule(tournament)
-            self.schedule_menu.display_user_schedule(tournament, schedule)
-            
-            #self.tournament_menu.display_tournament_schedule(tournament.name)
-            user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
-            if user_input == "b":
-                # Return to the previous menu
-                in_tournament_schedule = False
-
-    # def run_tournament_scoreboard(self, tournament: Tournament) -> None:
-    #     """Displays the tournament scoreboard until the user chooses to return to the previous menu."""
-    #     in_tournament_scoreboard = True
-
-    #     while in_tournament_scoreboard:
-    #         self.input_handler.clear_screen()
-    #         self.tournament_menu.display_tournament_scoreboard(tournament.name)
-    #         user_input = self.input_handler.get_user_input("Sláðu inn 'b' til að fara til baka: ", {"b"})
-    #         if user_input == "b":
-    #             # Return to the previous menu
-    #             in_tournament_scoreboard = False
-
     def run_tournament_teams(self, tournament: Tournament) -> None:
         """Displays the teams in the chosen tournament and routes the user based on their selection."""
         in_tournament_teams = True
