@@ -189,20 +189,11 @@ class MatchLogic:
         next_id = self._get_next_match_id()
         new_matches: list[Match] = []
 
-    def get_matches_for_scoreboard(self, tournament_id: int) -> list[Match]:
-        """Return all matches that belong to one tournament."""
-        all_matches = self._data_api.read_all_matches()
-        tournament_matches: list[Match] = []
 
-        for match in all_matches:
-            if match.tournament_id == tournament_id:
-                tournament_matches.append(match)
-
-        return tournament_matches
-            for i in range (2):
-                team_a = winners[2 * i]
-                team_b = winners[2 * i + 1]
-                match_number = 13 + i
+        for i in range (2):
+            team_a = winners[2 * i]
+            team_b = winners[2 * i + 1]
+            match_number = 13 + i
 
             match3 = Match(
                 match_id = next_id,
@@ -301,3 +292,15 @@ class MatchLogic:
             return 1
         ids = [m.match_id for m in matches]
         return max(ids) + 1
+
+
+    def get_matches_for_scoreboard(self, tournament_id: int) -> list[Match]:
+        """Return all matches that belong to one tournament."""
+        all_matches = self._data_api.read_all_matches()
+        tournament_matches: list[Match] = []
+
+        for match in all_matches:
+            if match.tournament_id == tournament_id:
+                tournament_matches.append(match)
+
+        return tournament_matches
