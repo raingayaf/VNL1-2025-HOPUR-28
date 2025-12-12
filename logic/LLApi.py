@@ -282,3 +282,23 @@ class LLApi:
     def validate_team_logo(self, logo: str) -> str:
         return self._team_logic.validate_logo_value(logo)
     
+    def validate_player_name(self, name: str) -> str:
+        return self._player_logic.validate_player_name(name)
+
+    def validate_player_date_of_birth(self, dob_str: str) -> str:
+        return self._player_logic.validate_player_date_of_birth(dob_str)
+    
+    def validate_player_address(self, address: str) -> str:
+        return self._player_logic.validate_player_address(address)
+    
+    def validate_player_phone(self, phone: str) -> str:
+        return self._player_logic.validate_player_phone(phone)
+    
+    def validate_player_email(self, email: str) -> str:
+        return self._player_logic.validate_player_email(email)
+    
+    def validate_player_link(self, link: str) -> str:
+        return self._player_logic.validate_player_link(link)
+    
+    def validate_player_handle(self, handle: str) -> str:
+        return self._player_logic.validate_player_handle(handle)
