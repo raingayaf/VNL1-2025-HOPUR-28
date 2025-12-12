@@ -165,63 +165,73 @@ class MatchLogic:
         self._data_api.save_all_matches(matches)
 
     def generate_semifinals(self, tournament_id: int):
-            """Generate round SF, of winners of QF"""
-            matches = self._data_api.read_all_matches()
+        """Generate round SF, of winners of QF"""
+        matches = self._data_api.read_all_matches()
 
-            for m in matches:
-                if m.tournament_id == tournament_id and m.round == "SF":
-                    return
-            
-            qf_matches = [
-                m for m in matches
-                if m.tournament_id == tournament_id and m.round == "QF"
-            ]
-            completed_qf = [m for m in qf_matches if m.completed]
-            if len(completed_qf) != 4:
-                raise ValidationError(f"Það þarf að klára alla síðustu 4 leiki ")
-            
-            def qf_sort_key(m):
-                return m.match_number
-            completed_qf.sort(key=qf_sort_key)
+        for m in matches:
+            if m.tournament_id == tournament_id and m.round == "SF":
+                return
+        
+        qf_matches = [
+            m for m in matches
+            if m.tournament_id == tournament_id and m.round == "QF"
+        ]
+        completed_qf = [m for m in qf_matches if m.completed]
+        if len(completed_qf) != 4:
+            raise ValidationError(f"Það þarf að klára alla síðustu 4 leiki ")
+        
+        def qf_sort_key(m):
+            return m.match_number
+        completed_qf.sort(key=qf_sort_key)
 
-            winners = [m.winner_team_name for m in completed_qf]
+        winners = [m.winner_team_name for m in completed_qf]
 
-            next_id = self._get_next_match_id()
-            new_matches: list[Match] = []
+        next_id = self._get_next_match_id()
+        new_matches: list[Match] = []
 
+    def get_matches_for_scoreboard(self, tournament_id: int) -> list[Match]:
+        """Return all matches that belong to one tournament."""
+        all_matches = self._data_api.read_all_matches()
+        tournament_matches: list[Match] = []
+
+        for match in all_matches:
+            if match.tournament_id == tournament_id:
+                tournament_matches.append(match)
+
+        return tournament_matches
             for i in range (2):
                 team_a = winners[2 * i]
                 team_b = winners[2 * i + 1]
                 match_number = 13 + i
 
-                match3 = Match(
-                    match_id = next_id,
-                    tournament_id = tournament_id,
-                    round = "SF",
-                    match_number = match_number,
-                    team_a_name = team_a,
-                    team_b_name = team_b,
-                    match_date = "2",
-                    match_time = GAME_TIMES[4 + i],
-                    server_id = str(match_number),
-                    score_a = 0,
-                    score_b = 0,
-                    winner_team_name = "",
-                    completed = False
-                )
-                new_matches.append(match3)
-                next_id += 1
-        
-            matches.extend(new_matches)
-            self._data_api.save_all_matches(matches)
+            match3 = Match(
+                match_id = next_id,
+                tournament_id = tournament_id,
+                round = "SF",
+                match_number = match_number,
+                team_a_name = team_a,
+                team_b_name = team_b,
+                match_date = "2",
+                match_time = GAME_TIMES[4 + i],
+                server_id = str(match_number),
+                score_a = 0,
+                score_b = 0,
+                winner_team_name = "",
+                completed = False
+            )
+            new_matches.append(match3)
+            next_id += 1
+    
+        matches.extend(new_matches)
+        self._data_api.save_all_matches(matches)
 
     def generate_final(self, tournament_id: int):
         """Generate final game"""
         matches = self._data_api.read_all_matches()
 
         for m in matches:
-                if m.tournament_id == tournament_id and m.round == "F":
-                    return
+            if m.tournament_id == tournament_id and m.round == "F":
+                return
                 
         sf_matches = [
                 m for m in matches
