@@ -30,6 +30,34 @@ class PlayerLogic:
     def validate_handle_format(self, handle: str) -> str:
         """Public wrapper so UI/LLApi can validate a handle."""
         return self._validate_handle_format(handle)
+    
+    def validate_player_name(self, name: str) -> str:
+        """ """
+        return self._validate_person_name(name)
+    
+    def validate_player_date_of_birth(self, dob_str: str) -> str:
+        """ """
+        return self._validate_date_of_birth(dob_str)
+    
+    def validate_player_address(self, address: str) -> str:
+        """ """
+        return self._validate_address(address)
+    
+    def validate_player_phone(self, phone: str) -> str:
+        """ """
+        return self._normalize_phone(phone)
+    
+    def validate_player_email(self, email: str) -> str:
+        """ """
+        return self._validate_email(email)
+    
+    def validate_player_link(self, link: str) -> str:
+        """ """
+        return self._normalize_player_link(link)
+    
+    def validate_player_handle(self, handle: str) -> str:
+        """ """
+        return self._validate_handle_format(handle)
 
     #------------------METHODS-THAT-CHANGE-DATA----------------------
     def create_player(self,
@@ -131,6 +159,13 @@ class PlayerLogic:
         return a
     
     def _normalize_phone(self, phone: str) -> str:
+        phone = phone.strip()
+        if phone.startswith("+354"):
+            digits = "".join(ch for ch in phone if ch.isdigit())
+            if len(digits) != 10:
+                raise ValidationError("Ógilt íslenskt símanúmer.")
+            return "+354" + digits[-7:]
+
         digits = "".join(ch for ch in phone if ch.isdigit())
         if len(digits) != 7:
             raise ValidationError("Símanúmer verður að vera 7 tölustafir.")
