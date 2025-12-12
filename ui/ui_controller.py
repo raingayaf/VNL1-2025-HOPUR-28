@@ -789,33 +789,57 @@ class UIController:
             if user_input == "b":
                 in_player_info = False
                 continue
-            elif user_input !="b":
-                print()
             choice = int(user_input)
+
             if choice == 1:
                 field_name = "name"
                 prompt = "Skráðu nýtt nafn: "
+                validator = self.logic_api.validate_player_name
+                allow_empty = False
             elif choice == 2:
                 field_name = "date_of_birth"
-                prompt = "Skráðu nýjan fæðingardag: "
+                prompt = "Skráðu nýjan fæðingardag(YYYY-MM-DD): "
+                validator = self.logic_api.validate_player_date_of_birth
+                allow_empty = False
             elif choice == 3:
                 field_name = "address"
                 prompt = "Skráðu nýtt heimilisfang: "
+                validator = self.logic_api.validate_player_address
+                allow_empty = False
             elif choice == 4:
                 field_name = "phone"
-                prompt = "Skráðu nýtt símanúmer: "
+                prompt = "Skráðu nýtt símanúmer(XXXXXXX): "
+                validator = self.logic_api.validate_player_phone
+                allow_empty = False
             elif choice == 5:
                 field_name = "email"
                 prompt = "Skráðu nýtt netfang: "
+                validator = self.logic_api.validate_player_email
+                allow_empty = False
             elif choice == 6:
                 field_name = "link"
                 prompt = "Skráðu nýja vefslóð: "
+                validator = self.logic_api.validate_player_link
+                allow_empty = True
             else:
                 continue
 
-            new_value = input(prompt).strip()
-
-            setattr(player, field_name, new_value)
+            if allow_empty:
+                new_value = input("\n" + prompt).strip()
+            else:
+                new_value = input("\n" + prompt).strip()
+                if not new_value:
+                    print("\n" + "Þú verður að skrá þessar upplýsingar.".center(WIDTH))
+                    self.input_handler.try_again_enter()
+                    continue
+            try: 
+                changed_info = validator(new_value)
+            except ValidationError as exception:
+                print("\n" + str(exception).center(WIDTH))
+                self.input_handler.try_again_enter()
+                continue
+            
+            setattr(player, field_name, changed_info)
 
             try:
                 self.logic_api.update_player(player)
@@ -823,7 +847,7 @@ class UIController:
             except Exception as exc:
                 error_updating = f"Tókst ekki að uppfæra leikmann: {exc}"
                 print("\n"+ error_updating.center(WIDTH))
-            input("Ýttu á ENTER til að halda áfram.".center(WIDTH))
+            self.input_handler.try_again_enter()
 
 
 
