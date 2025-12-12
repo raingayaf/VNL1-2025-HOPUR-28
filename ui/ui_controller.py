@@ -232,7 +232,7 @@ class UIController:
                     "\n"
                     + "Valkvæðar upplýsingar um lið.".center(self.input_handler.WIDTH)
                 )
-                print("Ýtir á ENTER til að sleppa.".center(self.input_handler.WIDTH))
+                print("Ýttu á ENTER til að sleppa.".center(self.input_handler.WIDTH))
                 print(f"Vefslóð liðsins: {team_website or ''}")
             if team_logo or step == 6:
                 print(f"Logo liðsins: {team_logo or ''}")
@@ -319,7 +319,7 @@ class UIController:
                     continue
                 if not user_input.isdigit():
                     print(
-                        "\nÓgilur innsláttur! Vinsamlegast sláðu inn heiltölu frá 3-5.".center(
+                        "\nÓgildur innsláttur! Vinsamlegast sláðu inn heiltölu frá 3-5.".center(
                             self.input_handler.WIDTH
                         )
                     )
@@ -346,7 +346,7 @@ class UIController:
                     "\n"
                     + "Valkvæðar upplýsingar um lið.".center(self.input_handler.WIDTH)
                 )
-                print("Ýtir á ENTER til að sleppa.".center(self.input_handler.WIDTH))
+                print("Ýttu á ENTER til að sleppa.".center(self.input_handler.WIDTH))
                 user_input = self.input_handler.get_input_with_nav(
                     "Vefslóð liðsins: ", allow_empty=True
                 )
@@ -392,7 +392,7 @@ class UIController:
             # Step 6 - Player registration
             if step == 6:
                 players_on_team = self.run_player_registration(
-                    team_name, number_of_players
+                    team_name, number_of_players, captain_handle
                 )
 
                 if players_on_team == "QUIT":
@@ -403,13 +403,6 @@ class UIController:
                     step = 5
                     continue
 
-                player_handles = [player["handle"] for player in players_on_team]
-
-                if captain_handle not in player_handles:
-                    print("Fyrirliði þarf að vera einn af leikmönnunum!")
-                    self.input_handler.try_again_enter()
-                    step = 2
-                    continue
                 registered_team_players = players_on_team
                 step = 7
                 continue
@@ -443,7 +436,7 @@ class UIController:
                 in_team_registration = False
                 continue
 
-    def run_player_registration(self, team_name: str, number_of_players: int):
+    def run_player_registration(self, team_name: str, number_of_players: int, captain_handle: str):
         """Runs registration on each player in team (collects data)."""
         in_player_registration = True
         current_player = 1
@@ -451,15 +444,16 @@ class UIController:
 
         while in_player_registration:
             if current_player > number_of_players:
-                break
+                player_handles = [p["handle"] for p in players_on_team]
 
-            player_name = ""
-            player_date_of_birth = ""
-            player_address = ""
-            player_phone = ""
-            player_email = ""
-            player_link = ""
-            player_handle = ""
+                if captain_handle not in player_handles:
+                    self.input_handler.clear_screen()
+                    print("Fyrirliði þarf að vera einn af leikmönnunum!".center(self.input_handler.WIDTH))
+                    print(f"Vinsamlegast breyttu leikmanna nafni (handle) hjá einum leikmanni í '{captain_handle}'.".center(self.input_handler.WIDTH))
+                    self.input_handler.try_again_enter()
+                    current_player = number_of_players
+                    continue
+                break 
 
             # If information already collected
             if current_player <= len(players_on_team):
@@ -470,9 +464,16 @@ class UIController:
                 player_phone = existing["phone"]
                 player_email = existing["email"]
                 player_link = existing["link"]
-                player_handle = ""
+                player_handle = ["handle"]
                 step = 7
             else:
+                player_name = ""
+                player_date_of_birth = ""
+                player_address = ""
+                player_phone = ""
+                player_email = ""
+                player_link = ""
+                player_handle = ""
                 step = 1
 
             while step <= 7 and in_player_registration:
@@ -484,17 +485,17 @@ class UIController:
                 if player_name:
                     print(f"Skráðu fullt nafn: {player_name}")
                 if player_date_of_birth:
-                    print(f"Skráðu fæðingardag og ár: {player_date_of_birth}")
+                    print(f"Skráðu fæðingardag(YYYY-MM-DD): {player_date_of_birth}")
                 if player_address:
                     print(f"Skráðu heimilisfang: {player_address}")
                 if player_phone:
-                    print(f"Skráðu símanúmer: {player_phone}")
+                    print(f"Skráðu símanúmer(XXXXXXX): {player_phone}")
                 if player_email:
                     print(f"Skráðu netfang: {player_email}")
                 if player_link:
-                    print(f"Skráðu vefslóð: {player_link}")
+                    print(f"Skráðu vefslóð(valkvætt): {player_link}")
                 if player_handle:
-                    print(f"Skráðu leikmanna nafn: {player_handle}")
+                    print(f"Skráðu leikmanna nafn(handle): {player_handle}")
 
                 # Step 1 - Name
                 if step == 1:
@@ -508,14 +509,20 @@ class UIController:
                             return "BACK"
                         current_player -= 1
                         break # Goes back to previous player
-                    player_name = user_input
+                    try:
+                        player_name = self.logic_api.validate_player_name(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
+                
                     step = 2
                     continue
 
                 # Step 2 - Date of birth
                 if step == 2:
                     user_input = self.input_handler.get_input_with_nav(
-                        "Skráðu fæðingardag og ár: "
+                        "Skráðu fæðingardag(YYYY-MM-DD): "
                     )
                     if user_input == "QUIT":
                         return "QUIT"
@@ -523,7 +530,13 @@ class UIController:
                         player_name = ""
                         step = 1
                         continue
-                    player_date_of_birth = user_input
+                    try:
+                        player_date_of_birth = self.logic_api.validate_player_date_of_birth(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
+
                     step = 3
                     continue
 
@@ -539,14 +552,19 @@ class UIController:
                         player_date_of_birth = ""
                         step = 2
                         continue
-                    player_address = user_input
+                    try: 
+                        player_address = self.logic_api.validate_player_address(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
                     step = 4
                     continue
 
                 # Step 4 - Phone
                 if step == 4:
                     user_input = self.input_handler.get_input_with_nav(
-                        "Skráðu símanúmer: "
+                        "Skráðu símanúmer(XXXXXXX): "
                     )
                     if user_input == "QUIT":
                         return "QUIT"
@@ -554,7 +572,12 @@ class UIController:
                         player_address = ""
                         step = 3
                         continue
-                    player_phone = user_input
+                    try:
+                        player_phone = self.logic_api.validate_player_phone(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
                     step = 5
                     continue
 
@@ -569,14 +592,19 @@ class UIController:
                         player_phone = ""
                         step = 4
                         continue
-                    player_email = user_input
+                    try:
+                        player_email = self.logic_api.validate_player_email(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
                     step = 6
                     continue
 
                 # Step 6 - Link
                 if step == 6:
                     user_input = self.input_handler.get_input_with_nav(
-                        "Skráðu vefslóð: ", allow_empty=True
+                        "Skráðu vefslóð(valkvætt): ", allow_empty=True
                     )
                     if user_input == "QUIT":
                         return "QUIT"
@@ -584,14 +612,19 @@ class UIController:
                         player_email = ""
                         step = 5
                         continue
-                    player_link = user_input
+                    try:
+                        player_link = self.logic_api.validate_player_link(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
                     step = 7
                     continue
 
                 # Step 7 - Handle
                 if step == 7:
                     user_input = self.input_handler.get_input_with_nav(
-                        "Skráðu leikmanna nafn: "
+                        "Skráðu leikmanna nafn(handle): "
                     )
                     if user_input == "QUIT":
                         return "QUIT"
@@ -599,9 +632,15 @@ class UIController:
                         player_link = ""
                         step = 6
                         continue
-                    if self.logic_api.handle_exists(user_input):
+                    try:
+                        validated_handle = self.logic_api.validate_player_handle(user_input)
+                    except ValidationError as exception:
+                        print("\n" + str(exception).center(self.input_handler.WIDTH))
+                        self.input_handler.try_again_enter()
+                        continue
+                    if self.logic_api.handle_exists(validated_handle):
                         handle_exists_message = (
-                            f"Leikmanna nafnið '{user_input}' er nú þegar á skrá."
+                            f"Leikmanna nafnið '{validated_handle}' er nú þegar á skrá."
                         )
                         print("\n" + handle_exists_message.center(self.input_handler.WIDTH))
                         print(
@@ -609,12 +648,11 @@ class UIController:
                                 self.input_handler.WIDTH
                             )
                         )
-                        input(
-                            "Ýttu á ENTER og reyndu aftur.".center(self.input_handler.WIDTH)
-                        )
+                        self.input_handler.try_again_enter()
                         continue
-                    player_handle = user_input
+                    player_handle = validated_handle
 
+                    # Save current player
                     player_data = {
                         "name": player_name,
                         "date_of_birth": player_date_of_birth,
