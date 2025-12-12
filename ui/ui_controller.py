@@ -1054,26 +1054,21 @@ class UIController:
     def run_tournament_displey_selection(self):
         """Show available tournaments"""
         tournament_names = self.logic_api.get_tournament_name_list()
-        # If none, user goes back to main menu and error message is shown
         if not tournament_names:
                 return False
 
         in_tournament_menu = True
 
-        # Show menu with tournaments and handle user selection
         while in_tournament_menu:
             self.input_handler.clear_screen()
             self.tournament_menu.display_tournaments(tournament_names)
-            # Valid options, each tournament number and b to go back
             valid_input = {str(i) for i in range(1, len(tournament_names) + 1)} | {"b"}
             user_input = self.input_handler.get_user_input(
                 messages.TOURNAMENT_SELECTION_PROMPT, valid_input
             )
             if user_input == "b":
-                # Return to main menu
                 in_tournament_menu = False
             else:
-                # Open options for selected tournament
                 index = int(user_input) - 1
                 selected_tournament = self.logic_api.get_tournament_by_index(index)
                 self.run_display_menu(selected_tournament)
