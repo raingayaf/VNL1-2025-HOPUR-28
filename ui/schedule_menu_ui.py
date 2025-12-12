@@ -15,11 +15,10 @@ class ScheduleUI:
         print("*" * self.WIDTH + "\n")
         print(f"{tournament.name}".center(self.WIDTH))
         print("Dagskrá".center(self.WIDTH) + "\n")
-        print(
-            f"Venue: {tournament.venue}\nStart: {tournament.start_date}\nEnd: {tournament.end_date}".center(
-                self.WIDTH
-            )
-        )
+        print(f"Venue: {tournament.venue}")
+        print(f"Start: {tournament.start_date}")
+        print(f"End: {tournament.end_date}")
+              
         day_matches = []
         for m in schedule:
             if m["day"] != day_to_show:
