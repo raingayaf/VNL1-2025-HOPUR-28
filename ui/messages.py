@@ -23,3 +23,5 @@ INT_ABOVE_MAX = 'Fjöldinn má ekki vera meiri en {max_value}!'
 TRY_AGAIN = "Ýttu á ENTER og reyndu aftur."
 
 BACK_HOME = "Ýttu á ENTER til að fara aftur á heimasvæðið."
+
+BACK_ENTER = "Ýttu á ENTER til að fara til baka."

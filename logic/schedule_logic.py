@@ -15,19 +15,18 @@ class ScheduleLogic:
             if m.tournament_id != tournament.tournament_id:
                 continue
 
-            if m.round == "R16":
-                day = 1
+            day = int(m.match_date)
+            if day == 1:
                 session = "Dagur 1"
-            elif m.round in ("QF"):
-                day = 2
+            elif day == 2 and m.round == ("QF"):
                 session = "Dagur 2 (morgun)"
-            elif m.round in ("SF"):
-                day = 2
+            elif day == 2 and m.round == ("SF"):
                 session = "Dagur 2 (kvöld)"
-            else:
-                day = 3
+            elif day == 3:
                 session = "Dagur 3"
-            
+            else:
+                session = f"Dagur {day}"
+                
             schedule.append({
                 "match_id": m.match_id,
                 "day": day,
