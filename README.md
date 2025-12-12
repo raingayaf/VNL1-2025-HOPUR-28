@@ -28,3 +28,8 @@ cd = change directory
 2. Þegar kveikt er á cmd er gott að athuga hvort þú sért ekki örugglega með python útgáfu nýrri en 3.8 þá ertu öruggur. Sláðu inn "python --version" eða "py --version".
 3. Notaðu cd til að færa þig að möppunni þar sem forritið er geymt. t.d. "cd C:/Users/karla/Documents/GitHub/VNL1-2025-HOPUR-28" var mín leið til að komast að forritinu sem er geymt hjá mér.
 4. Sláðu inn "py main.py" eða "python main.py" og byrjar þú þá á heimaskjá forritsins.
+
+
+# youtube linkur:
+https://www.youtube.com/watch?v=BEI9qRqiKVM
+
