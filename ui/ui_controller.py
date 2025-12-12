@@ -711,7 +711,7 @@ class UIController:
         if not players:
             self.input_handler.clear_screen()
             self.captain_menu.display_team_players_menu(team.team_name)
-            print("Engir leikmenn eru skráðir í liðið.")
+            print("Engir leikmenn eru skráðir í liðið.".center(InputHandler.WIDTH) +"\n")
             input("Ýttu á ENTER til að fara til baka.")
             return
 
@@ -882,7 +882,7 @@ class UIController:
                     print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
                 except Exception as e:
                     print(f"Villa: {e}")
-                self.input_handler.wait_for_enter()
+                self.input_handler.back_enter()
 
             elif choice == "2":
                 # Generate schedule for day 2 morning (QF)
@@ -891,7 +891,7 @@ class UIController:
                     print("Dagskrá fyrir dag 2 (QF) hefur verið búin til.")
                 except Exception as e:
                     print(f"Villa: {e}")
-                self.input_handler.wait_for_enter()
+                self.input_handler.back_enter()
 
             elif choice == "3":
                 # Generate schedule for day 2 evening (SF)
@@ -900,7 +900,7 @@ class UIController:
                     print("Dagskrá fyrir dag 2 (SF) hefur verið búin til.")
                 except Exception as e:
                     print(f"Villa: {e}")
-                self.input_handler.wait_for_enter()
+                self.input_handler.back_enter()
 
             elif choice == "4":
                 # Generate schedule for day 3 (Finals)
@@ -909,7 +909,7 @@ class UIController:
                     print("Dagskrá fyrir dag 3 (úrslitaleik) hefur verið búin til.")
                 except Exception as e:
                     print(f"Villa: {e}")
-                self.input_handler.wait_for_enter()
+                self.input_handler.back_enter()
 
             elif choice == "5":
                 # View schedule – ask which day to show
@@ -927,7 +927,7 @@ class UIController:
 
         if not schedule:
             print("Engin dagskrá til fyrir þetta mót")
-            self.input_handler.wait_for_enter()
+            self.input_handler.back_enter()
             return
         
         days = sorted(set(row["day"] for row in schedule))
@@ -939,7 +939,7 @@ class UIController:
             day_to_show = int(day_input)
         except ValueError:
             print("Ógilt gildi fyrir dag, veldu tölu")
-            self.input_handler.wait_for_enter()
+            self.input_handler.try_again_enterenter()
             return
         
         round_filter = None
@@ -958,14 +958,14 @@ class UIController:
                 round_filter = "SF"
             else:
                 print("Ógilt val.")
-                self.input_handler.wait_for_enter()
+                self.input_handler.try_again_enter_enter()
                 return
 
         self.input_handler.clear_screen()
         self.schedule_menu.displey_schedule_menu(
             tournament, schedule, day_to_show, round_filter=round_filter
         )
-        self.input_handler.wait_for_enter()
+        self.input_handler.back_enter()
 
     def enter_match_result(self, tournament):
         """Enter match results on loop until finished or input b to quit"""
@@ -997,13 +997,13 @@ class UIController:
                 match_id = int(user_input)
             except ValueError:
                 print("Ógilt gildi fyrir ID.")
-                self.input_handler.wait_for_enter()
+                self.input_handler.try_again_enter()
                 continue
 
             valid_ids = {row["match_id"] for row in incomplete}
             if match_id not in valid_ids:
                 print("Þetta ID tilheyrir ekki ókláruðum leik.")
-                self.input_handler.wait_for_enter()
+                self.input_handler.try_again_enter()
                 continue
 
             try:
@@ -1011,7 +1011,7 @@ class UIController:
                 score_b = int(input("Sláðu inn stig liðs B: ").strip())
             except ValueError:
                 print("Ógilt gildi fyrir stig.")
-                self.input_handler.wait_for_enter()
+                self.input_handler.try_again_enter()
                 continue
 
             try:
@@ -1020,7 +1020,7 @@ class UIController:
             except Exception as e:
                 print(f"Villa: {e}")
 
-            self.input_handler.wait_for_enter()
+            self.input_handler.back_enter()
         
     def run_tournament_displey_selection(self):
         """Show available tournaments"""
@@ -1241,7 +1241,7 @@ class UIController:
             print(f"\033[3m\033[4m\033[1mStöðutafla - {tournament.name}\033[0m\n".center(width))
 
             if not matches:
-                print("Engir leikir skráðir fyrir þetta mót.\n")
+                print("Engir leikir skráðir fyrir þetta mót".center(width) + "\n")
             else:
                 for match in matches:
                     status = "-> Á áætlun"
@@ -1310,7 +1310,7 @@ class UIController:
             print()
 
             if not matches:
-                print("Engir komandi leikir í þessu móti.\n")
+                print("Engir komandi leikir í þessu móti.".center(width) +"\n")
             else:
                 day_groups = self._group_matches_by_day(matches)
 

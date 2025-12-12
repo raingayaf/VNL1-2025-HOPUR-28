@@ -15,11 +15,9 @@ class ScheduleUI:
         print("*" * self.WIDTH + "\n")
         print(f"{tournament.name}".center(self.WIDTH))
         print("Dagskrá".center(self.WIDTH) + "\n")
-        print(
-            f"Venue: {tournament.venue}\nStart: {tournament.start_date}\nEnd: {tournament.end_date}".center(
-                self.WIDTH
-            )
-        )
+        print(f"Venue: {tournament.venue}")
+        print(f"Start: {tournament.start_date}")
+        print(f"End: {tournament.end_date}")
         day_matches = []
         for m in schedule:
             if m["day"] != day_to_show:
@@ -39,8 +37,7 @@ class ScheduleUI:
             team_b = match["team_b"]
             line = f"{time}  | {(round_title)}  {team_a} vs {team_b}"
             print(line)
-        print("\n" + "*" * self.WIDTH)
-        print("b: Til baka")
+        print("\n" + "*" * self.WIDTH + "\n")
     
     # def display_user_schedule(self, tournament, schedule, day_to_show=1):
     #     """Display saved schedule to user schedule"""
