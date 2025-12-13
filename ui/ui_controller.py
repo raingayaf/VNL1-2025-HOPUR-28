@@ -879,7 +879,7 @@ class UIController:
                     self.logic_api.generate_round_of_16(tournament)
                     print("Dagskrá fyrir dag 1 (R16) hefur verið búin til.")
                 except Exception as e:
-                    print(f"Villa: {e}")
+                    print(f"\n{e}")
                 self.input_handler.back_enter()
 
             elif choice == "2":

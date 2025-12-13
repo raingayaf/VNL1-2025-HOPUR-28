@@ -71,7 +71,7 @@ class LLApi:
             raise ValueError("Ógilt tournament_id.")
 
         if len(all_teams) < end:
-            raise ValueError("Það þarf að vera að minnsta kosti 16 lið laus fyrir þetta mót.")
+            raise ValueError("ATH! Nú þurfa fyrirliðar að skrá 16 ný lið í kerfið svo að það sé hægt að búa til mótsdagskrá.")
 
         selected_teams = all_teams[start:end]
         team_names = [t.team_name for t in selected_teams]
