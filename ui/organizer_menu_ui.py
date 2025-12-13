@@ -157,10 +157,11 @@ class OrganizerMenuUI:
         print("*" * self.WIDTH)
         print("E-SPORTS".center(self.WIDTH))
         print("*" * self.WIDTH + "\n")
-        print("Skrá mót".center(self.WIDTH))
-        print("SKRÁNING TÓKST")
-        print("*" * self.WIDTH + "\n")
-        user_input = input("Q: Til baka:")
+        print("Skrá mót".center(self.WIDTH)+ "\n")
+        print("SKRÁNING TÓKST!".center(self.WIDTH)+ "\n")
+        print("ATH! Núna þurfa fyrirliðar að skrá 16 ný lið í kerfið".center(self.WIDTH))
+        print("til að hægt sé að útfæra mótsdagskrá.".center(self.WIDTH))
+        print("\n" + "*" * self.WIDTH + "\n")
 
     def display_results_input_done(self):
         """Display that show organizer that regestering results worked"""

@@ -1097,13 +1097,13 @@ class UIController:
 
         # Start date
         tournament_start_date = self.input_handler.get_input_with_nav(
-            "Sláðu inn upphafsdagsetningu: ")
+            "Sláðu inn upphafsdagsetningu(YYYY-MM-DD): ")
         if tournament_start_date == "QUIT" or tournament_start_date == "BACK":
             return
 
         # End date
         tournament_end_date = self.input_handler.get_input_with_nav(
-            "Sláðu inn endadagsetningu: ")
+            "Sláðu inn endadagsetningu(YYYY-MM-DD): ")
         if tournament_end_date == "QUIT" or tournament_end_date == "BACK":
             return
 
@@ -1137,7 +1137,8 @@ class UIController:
             contact_phone=tournament_contact_phone,
             max_servers=max_servers,
         )
-
+        
+        self.input_handler.clear_screen()
         self.organizer_menu.display_tournament_creation_done()
         self.input_handler.wait_for_enter()
 
