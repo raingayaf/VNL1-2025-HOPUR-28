@@ -958,6 +958,14 @@ class UIController:
                 print("Ógilt val.")
                 self.input_handler.try_again_enter()
                 return
+            
+        filtered_schedule = [
+            row for row in schedule
+            if row["day"] == day_to_show and (round_filter is None or row["round"] == round_filter)]
+        if not filtered_schedule:
+            print("Engir leikir fundust fyrir valinn dag/umferð.")
+            self.input_handler.back_enter()
+            return    
 
         self.input_handler.clear_screen()
         self.schedule_menu.displey_schedule_menu(
