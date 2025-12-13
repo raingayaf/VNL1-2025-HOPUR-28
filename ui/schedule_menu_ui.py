@@ -16,20 +16,31 @@ class ScheduleUI:
         print("*" * self.WIDTH + "\n")
         print(f"{tournament.name}".center(self.WIDTH))
         print("Dagskrá".center(self.WIDTH) + "\n")
+        
         print(f"Venue: {tournament.venue}")
         print(f"Start: {tournament.start_date}")
         print(f"End: {tournament.end_date}")
         day_matches = []
         for m in schedule:
-            if m["day"] != day_to_show:
+            try:
+                match_day = int(m["day"])
+            except (TypeError, ValueError): 
+                continue
+        
+            if match_day != int(day_to_show):
                 continue
             if round_filter is not None and m["round"] != round_filter:
                 continue
             day_matches.append(m)
-        session_title = ""
-        if day_matches:
-            session_title = day_matches[0].get("session", "")
-        round_title = round_filter if round_filter else (day_matches[0]["round"] if day_matches else "")
+        
+        if not day_matches:
+            print()
+            print(f"Engir leikir fundust fyrir dag {day_to_show}" + (f" ({round_filter})" if round_filter else "")  )
+            return
+
+        session_title = day_matches[0].get("session", "")
+        round_title = round_filter if round_filter else day_matches[0]["round"]
+        
         print(f"{session_title} | Riðill {round_title}".center(self.WIDTH))
         print()
         for match in day_matches:
